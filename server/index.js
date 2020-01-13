@@ -20,11 +20,11 @@ app.get('/api/health-check', (req, res, next) => {
 });
 
 app.get('/api/products', (req, res, next) => {
-  const getAllSql = `
+  const getAllProductsSql = `
     SELECT "productId", "name", "price", "image", "shortDescription"
       FROM "products"
     `;
-  db.query(getAllSql)
+  db.query(getAllProductsSql)
     .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
