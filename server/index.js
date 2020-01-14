@@ -46,7 +46,7 @@ app.get('/api/products/:productId', (req, res, next) => {
     db.query(getAllProductsSql, value)
       .then(result => {
         if (!result.rows[0]) {
-          next(new ClientError(`cannot ${req.method} find id ${id}`), 404);
+          next(new ClientError(`cannot ${req.method} find id ${productId}`), 404);
         } else {
           return res.json(result.rows);
         }

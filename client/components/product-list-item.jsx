@@ -2,7 +2,9 @@ import React from 'react';
 
 function ProductListItem(props) {
   return (
-    <div className='container border col-md-3 card-group m-2 shadow bg-white rounded' style={{ height: '60vh' }}>
+    <div className='container border col-md-3 card-group m-2 shadow bg-white rounded'
+      style={{ height: '60vh', cursor: 'pointer' }}
+      onClick={() => { props.setView('details', { productId: props.key }); }}>
       <div className='row'>
         <div className='card border-0'>
           <img src={props.product.image} className='card-img-top' style={{ objectFit: 'contain', height: '35vh' }} />
