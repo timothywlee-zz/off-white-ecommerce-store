@@ -26,12 +26,12 @@ export default class App extends React.Component {
   }
 
   setView(name, params) {
-    this.setState = {
-      view: { // when user clicks on ProductListItem, App's view gets replaced with
-        name: name, // replaced with --> name: 'details'
-        params: params // replaced with --> params : { productId: props.key }
+    this.setState({
+      view: {
+        name: name,
+        params: params
       }
-    };
+    });
   }
 
   render() {

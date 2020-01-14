@@ -21,38 +21,34 @@ class ProductDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-        this.setState = {
+        this.setState({
           product: data
-        };
+        });
       })
       .catch(err => console.error(err));
   }
 
   render() {
     const { product } = this.state;
-    return this.state.product
+    return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
         <div className='container'>
           <div className='row'>
-            <div className='image/productdetailsContainer'>
-              <div onClick={() => this.props.setView('catalog', {})}>
+            <div>
+              <div className='backToCatalog text-muted' onClick={() => this.props.setView('catalog', {})}>
                 {'< Back To Catalog'}
               </div>
-              <img src={this.state.product.image}/>
-              <div className='productDetails'>
-                <div>
-                  <p> {product.name} </p>
-                </div>
-                <div>
-                  <p> {product.price} </p>
-                </div>
-                <div>
-                  <p> {product.shortDescription} </p>
+              <div className='d-flex flex-row my-5'>
+                <img src={product.image} className='mx-4' style={{ height: '35vh' }} />
+                <div className='productDetails mx-4'>
+                  <h1 className='font-weight-bold' style={{ fontSize: '1.5rem' }}> {product.name} </h1>
+                  <div className='text-muted'> ${(product.price / 100).toFixed(2)} </div>
+                  <p className='mt-2' style={{ fontSize: '0.8rem' }}> {product.shortDescription} </p>
                 </div>
               </div>
-              <div className='longDescriptionSection'>
-                <p> {product.LongDescription} </p>
+              <div>
+                <p className='m-4'> {product.longDescription} </p>
               </div>
             </div>
           </div>
@@ -62,7 +58,3 @@ class ProductDetails extends React.Component {
 }
 
 export default ProductDetails;
-
-/* SELF_NOTES */
-// check to see if you need to put the <p> tags inside a div each time, check if you can do it without any divs. all <p>s inside one div
-// instead of using <p> tags, you can use h1-h6 tags for size. <p> tags are used for elements that contian a paragraph text.
