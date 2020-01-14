@@ -38,11 +38,14 @@ app.get('/api/products/:productId', (req, res, next) => {
   `;
   const value = [id];
   db.query(getAllProductsSql, value)
-    .then(result => res.json(result.rows))
-    .catch(err => {
-      next(err);
-      res.status(500).json({ error: 'An unexpected error occured.' });
-    });
+    .then(result => {
+      if (!result.rows[0]) {
+        next(new ClientError(`cannot ${req.method} find id ${id}`), 404);
+      } else {
+        return res.json(result.rows);
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
