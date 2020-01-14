@@ -30,22 +30,29 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.get('/api/products/:productId', (req, res, next) => {
-  const id = parseInt(req.params.productId);
-  const getAllProductsSql = `
+  const productId = parseInt(req.params.productId);
+
+  if (productId < 0 || isNaN(productId)) {
+    res.status(400).json({
+      error: 'id must be a positive integer'
+    });
+  } else {
+    const getAllProductsSql = `
     SELECT *
       FROM "products"
      WHERE "productId" = $1
   `;
-  const value = [id];
-  db.query(getAllProductsSql, value)
-    .then(result => {
-      if (!result.rows[0]) {
-        next(new ClientError(`cannot ${req.method} find id ${id}`), 404);
-      } else {
-        return res.json(result.rows[0]);
-      }
-    })
-    .catch(err => next(err));
+    const value = [productId];
+    db.query(getAllProductsSql, value)
+      .then(result => {
+        if (!result.rows[0]) {
+          next(new ClientError(`cannot ${req.method} find id ${productId}`), 404);
+        } else {
+          return res.json(result.rows[0]);
+        }
+      })
+      .catch(err => next(err));
+  }
 });
 
 app.use('/api', (req, res, next) => {
