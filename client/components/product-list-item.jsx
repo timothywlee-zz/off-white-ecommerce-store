@@ -12,7 +12,7 @@ function ProductListItem(props) {
             <p className='card-title font-weight-bold'> {props.product.name} </p>
           </div>
           <div>
-            <p className='card-title text-muted'> {props.product.price} </p>
+            <p className='card-title text-muted'> ${(props.product.price / 100).toFixed(2)} </p>
           </div>
           <div>
             <p className='card-text' style={{ fontSize: '0.8rem' }}> {props.product.shortDescription}</p>
