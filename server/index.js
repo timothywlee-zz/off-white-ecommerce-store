@@ -29,6 +29,22 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products/:productId', (req, res, next) => {
+  const id = parseInt(req.params.productId);
+  const getAllProductsSql = `
+    SELECT *
+      FROM "products"
+     WHERE "productId" = $1
+  `;
+  const value = [id];
+  db.query(getAllProductsSql, value)
+    .then(result => res.json(result.rows))
+    .catch(err => {
+      next(err);
+      res.status(500).json({ error: 'An unexpected error occured.' });
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
