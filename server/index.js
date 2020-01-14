@@ -42,7 +42,7 @@ app.get('/api/products/:productId', (req, res, next) => {
       if (!result.rows[0]) {
         next(new ClientError(`cannot ${req.method} find id ${id}`), 404);
       } else {
-        return res.json(result.rows);
+        return res.json(result.rows[0]);
       }
     })
     .catch(err => next(err));
