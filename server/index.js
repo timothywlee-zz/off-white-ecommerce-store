@@ -59,7 +59,6 @@ app.get('/api/cart', (req, res, next) => {
   if (!req.session.cartId) {
     return res.status(200).json([]);
   }
-  console.log(req.session.cartId);
 
   const getAllProductsFromCartSql = `
       SELECT "c"."cartItemId",
@@ -76,7 +75,7 @@ app.get('/api/cart', (req, res, next) => {
 
   db.query(getAllProductsFromCartSql, value)
     .then(result => {
-      return res.status(200).json(result.rows);
+      res.status(200).json(result.rows);
     })
     .catch(err => next(err));
 });
