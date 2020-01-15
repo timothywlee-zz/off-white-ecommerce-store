@@ -39,8 +39,6 @@ export default class App extends React.Component {
         this.setState({
           cart: data
         });
-        console.log('items in cart: ', this.state.cart);
-
       })
       .catch(err => console.error(err));
   }

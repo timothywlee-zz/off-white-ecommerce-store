@@ -2,10 +2,6 @@ import React from 'react';
 import CartSummaryItem from './cart-summary-item';
 
 class CartSummary extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   createListOfItemsInCart() {
     return (
       this.props.itemsInCart.map(item =>
