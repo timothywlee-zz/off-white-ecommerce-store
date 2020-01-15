@@ -7,6 +7,7 @@ class ProductDetails extends React.Component {
       product: null
     };
     this.getProductsById = this.getProductsById.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -17,15 +18,20 @@ class ProductDetails extends React.Component {
     fetch(`/api/products/${this.props.viewParams.productId}`, {
       method: 'GET'
     })
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
         this.setState({
           product: data
         });
       })
       .catch(err => console.error(err));
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.addToCart({
+      productId: this.props.viewParams.productId
+    });
   }
 
   render() {
@@ -36,8 +42,9 @@ class ProductDetails extends React.Component {
         <div className='container'>
           <div className='row'>
             <div>
-              <div className='backToCatalog text-muted m-3' onClick={() => this.props.setView('catalog', {})}>
-                {'< Back To Catalog'}
+              <div className='backToCatalog text-muted col-2 m-3 d-flex flex-row' onClick={() => this.props.setView('catalog', {})} style={{ cursor: 'pointer' }}>
+                <i className="fas fa-arrow-left mr-2 mt-1"></i>
+                <div>{'Back To Catalog'}</div>
               </div>
               <div className='d-flex flex-row my-5'>
                 <img src={product.image} className='mx-4' style={{ height: '35vh' }} />
@@ -45,6 +52,7 @@ class ProductDetails extends React.Component {
                   <h1 className='font-weight-bold' style={{ fontSize: '1.5rem' }}> {product.name} </h1>
                   <div className='text-muted'> ${(product.price / 100).toFixed(2)} </div>
                   <p className='mt-2' style={{ fontSize: '0.8rem' }}> {product.shortDescription} </p>
+                  <button type='button' className='btn btn-primary' onClick={this.handleSubmit} style={{ cursor: 'pointer' }}> Add To Cart </button>
                 </div>
               </div>
               <div>
