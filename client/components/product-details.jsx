@@ -36,7 +36,7 @@ class ProductDetails extends React.Component {
         <div className='container'>
           <div className='row'>
             <div>
-              <div className='backToCatalog text-muted' onClick={() => this.props.setView('catalog', {})}>
+              <div className='backToCatalog text-muted m-3' onClick={() => this.props.setView('catalog', {})}>
                 {'< Back To Catalog'}
               </div>
               <div className='d-flex flex-row my-5'>
