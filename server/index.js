@@ -85,7 +85,7 @@ app.post('/api/cart/', (req, res, next) => {
   const { productId } = req.body;
 
   if (productId < 0 || isNaN(productId)) {
-    next(new ClientError(`productId=${productId} must be a positive integer`));
+    next(new ClientError(`productId=${productId} must be a positive integer`), 400);
   }
 
   const getProductPriceSql = `
@@ -108,23 +108,23 @@ app.post('/api/cart/', (req, res, next) => {
           price: result.rows[0].price
         };
         return cart;
-      }
-
-      const addACart = `
+      } else {
+        const addACart = `
         INSERT INTO "carts" ("cartId", "createdAt")
              VALUES (default, default)
           RETURNING "cartId"
       `;
-      return (
-        db.query(addACart)
-          .then(cartResult => {
-            const createdCart = {
-              cartId: cartResult.rows[0].cartId, // from cartResult
-              price: result.rows[0].price // from result from above
-            };
-            return createdCart;
-          })
-      );
+        return (
+          db.query(addACart)
+            .then(cartResult => {
+              const createdCart = {
+                cartId: cartResult.rows[0].cartId, // from cartResult
+                price: result.rows[0].price // from result from above
+              };
+              return createdCart;
+            })
+        );
+      }
     })
   // 2. .then()
     .then(data => {
@@ -170,6 +170,39 @@ app.post('/api/cart/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// POST endpoint to /api/orders
+app.post('/api/orders', (req, res, next) => {
+  const { name, creditCard, shippingAddress } = req.body;
+
+  if (!req.session.cartId) {
+    throw (new ClientError('Cannot find cartId', 400));
+  }
+
+  if (!(name && creditCard && shippingAddress)) {
+    throw (new ClientError(`Cannot find all name=${name}, creditCard=${creditCard}, and shippingAddress=${shippingAddress}`, 400));
+  }
+
+  const addAnOrder = `
+        INSERT INTO "orders" ("cartId", "name", "creditCard", "shippingAddress")
+             VALUES ($1, $2, $3, $4)
+          RETURNING *
+      `;
+
+  const values = [req.session.cartId, name, creditCard, shippingAddress];
+
+  db.query(addAnOrder, values)
+    .then(result => {
+      delete req.session.cartId;
+      res.status(201).json({
+        orderId: result.rows[0].orderId,
+        createdAt: result.rows[0].createdAt,
+        name: result.rows[0].name,
+        creditCard: result.rows[0].creditCard,
+        shippingAddress: result.rows[0].shippingAddress
+      });
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
@@ -189,3 +222,5 @@ app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port', process.env.PORT);
 });
+
+// console.log('****** THIS HAPPPENED ***** ');
