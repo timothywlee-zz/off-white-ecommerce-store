@@ -39,20 +39,37 @@ class ProductDetails extends React.Component {
     return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
-        <div className='container'>
+        <div className='container border border-dark rounded mt-5'>
           <div className='row'>
             <div>
-              <div className='backToCatalog text-muted col-2 m-3 d-flex flex-row' onClick={() => this.props.setView('catalog', {})} style={{ cursor: 'pointer' }}>
+              <div
+                className='text-muted col-2 m-3 d-flex flex-row'
+                onClick={() => this.props.setView('catalog', {})}
+                style={{ cursor: 'pointer' }}>
                 <i className="fas fa-arrow-left mr-2 mt-1"></i>
                 <div>{'Back To Catalog'}</div>
               </div>
               <div className='d-flex flex-row my-5'>
-                <img src={product.image} className='mx-4' style={{ height: '35vh' }} />
-                <div className='productDetails mx-4'>
-                  <h1 className='font-weight-bold' style={{ fontSize: '1.5rem' }}> {product.name} </h1>
+                <img
+                  src={product.image}
+                  className='mx-4'
+                  style={{ height: '35vh' }} />
+                <div className='mx-4'>
+                  <h1
+                    className='font-weight-bold'
+                    style={{ fontSize: '1.5rem' }}> {product.name}
+                  </h1>
                   <div className='text-muted'> ${(product.price / 100).toFixed(2)} </div>
-                  <p className='mt-2' style={{ fontSize: '0.8rem' }}> {product.shortDescription} </p>
-                  <button type='button' className='btn btn-primary' onClick={this.handleSubmit} style={{ cursor: 'pointer' }}> Add To Cart </button>
+                  <p
+                    className='mt-2'
+                    style={{ fontSize: '0.8rem' }}> {product.shortDescription}
+                  </p>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={this.handleSubmit}
+                    style={{ cursor: 'pointer' }}> Add To Cart
+                  </button>
                 </div>
               </div>
               <div>

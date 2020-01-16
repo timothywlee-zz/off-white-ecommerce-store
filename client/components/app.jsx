@@ -3,6 +3,7 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
+import CheckoutForm from './checkout-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
+    this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +74,34 @@ export default class App extends React.Component {
     });
   }
 
+  placeOrder(userInformation) {
+    fetch('api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInformation)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          cart: [],
+          view: {
+            name: 'catalog',
+            params: {}
+          }
+        });
+      });
+  }
+
+  calculateCartTotalCost() {
+    const { cart } = this.state;
+    const arrayOfTotalAmount = cart.map(item => item.price);
+    const totalSum = arrayOfTotalAmount.reduce((a, b) => { return a + b; }, 0);
+    const itemTotal = (totalSum / 100).toFixed(2);
+    return itemTotal;
+  }
+
   displayPage() {
     const { view, cart } = this.state;
     if (view.name === 'catalog') {
@@ -90,7 +121,14 @@ export default class App extends React.Component {
         <CartSummary
           setView={this.setView}
           itemsInCart={cart}
-        />
+          itemTotal={this.calculateCartTotalCost()} />
+      );
+    } else if (view.name === 'checkout') {
+      return (
+        <CheckoutForm
+          setView={this.setView}
+          placeOrder={this.placeOrder}
+          itemTotal={this.calculateCartTotalCost()} />
       );
     }
   }
@@ -103,10 +141,13 @@ export default class App extends React.Component {
       ? <h1>Testing connections...</h1>
       : (
         <React.Fragment>
-          <Header title='Wicked Sales' cartItemCount={cart.length} setView={this.setView} />
-          <main className='container p-30' style={{ backgroundColor: '#f2f2f2' }}>
+          <Header
+            title='Wicked Sales'
+            cartItemCount={cart.length}
+            setView={this.setView} />
+          <main className='container'>
             <div className='row'>
-              <div> {displayContent} </div>
+              <div className='col-12'> {displayContent} </div>
             </div>
           </main>
         </React.Fragment>
