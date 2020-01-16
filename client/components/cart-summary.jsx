@@ -5,7 +5,7 @@ class CartSummary extends React.Component {
   createListOfItemsInCart() {
     return (
       this.props.itemsInCart.map(item =>
-        <CartSummaryItem key={item.cartItemId} product={item}/>
+        <CartSummaryItem key={item.cartItemId} product={item} deleteItem={this.props.deleteItem} />
       )
     );
   }

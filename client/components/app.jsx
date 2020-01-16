@@ -20,6 +20,7 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.deleteFromCart = this.deleteFromCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
   }
@@ -47,6 +48,7 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
+    console.log('product: ', product);
     fetch('api/cart', {
       method: 'POST',
       headers: {
@@ -56,10 +58,34 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
+        console.log('data: ', data);
         const arrayDeepCopy = this.state.cart.map(item => Object.assign({}, item));
         arrayDeepCopy.push(data);
         this.setState({
           cart: arrayDeepCopy
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  // create delete from cart here
+  deleteFromCart(cartItemId) {
+    console.log('cartItemId: ', cartItemId);
+    fetch(`/api/cart/${cartItemId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        console.log('response: ', response);
+        return response.json();
+      })
+      .then(data => {
+        console.log('data: ', data);
+        const undeletedItems = this.state.cart.filter(item => item.cartItemId !== cartItemId);
+        this.setState({
+          cart: undeletedItems
         });
       })
       .catch(err => console.error(err));
@@ -121,7 +147,8 @@ export default class App extends React.Component {
         <CartSummary
           setView={this.setView}
           itemsInCart={cart}
-          itemTotal={this.calculateCartTotalCost()} />
+          itemTotal={this.calculateCartTotalCost()}
+          deleteItem={this.deleteFromCart} />
       );
     } else if (view.name === 'checkout') {
       return (

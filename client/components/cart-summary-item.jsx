@@ -15,6 +15,13 @@ function CartSummaryItem(props) {
             className='my-2'
             style={{ fontSize: '0.9rem' }}> {props.product.shortDescription} </div>
         </div>
+        <div>
+          <button
+            className='btn btn-danger'
+            type='button'
+            onClick={() => props.deleteItem(props.product.cartItemId)}> DELETE ITEM
+          </button>
+        </div>
       </div>
     </div>
   );
