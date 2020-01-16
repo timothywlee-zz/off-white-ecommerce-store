@@ -117,7 +117,6 @@ export default class App extends React.Component {
           addToCart={this.addToCart} />
       );
     } else if (view.name === 'cart') {
-      this.calculateCartTotalCost();
       return (
         <CartSummary
           setView={this.setView}
