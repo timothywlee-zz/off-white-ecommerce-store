@@ -142,8 +142,11 @@ export default class App extends React.Component {
       ? <h1>Testing connections...</h1>
       : (
         <React.Fragment>
-          <Header title='Wicked Sales' cartItemCount={cart.length} setView={this.setView} />
-          <main className='container' style={{ backgroundColor: '#f2f2f2' }}>
+          <Header
+            title='Wicked Sales'
+            cartItemCount={cart.length}
+            setView={this.setView} />
+          <main className='container'>
             <div className='row'>
               <div className='col-12'> {displayContent} </div>
             </div>
