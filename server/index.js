@@ -80,6 +80,34 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// DELETE endpoint for /api/cart
+app.delete('/api/cart/:cartItemId', (req, res, next) => {
+  const deleteId = parseInt(req.params.cartItemId);
+
+  if (deleteId < 0 || isNaN(deleteId)) {
+    throw (new ClientError(`cartItemId=${deleteId} must be a positive integer`, 400));
+  } else {
+    const deleteAnItemSql = `
+      DELETE FROM "cartItems"
+            WHERE "cartItemId" = $1
+    `;
+    const value = [deleteId];
+    db.query(deleteAnItemSql, value)
+      .then(result => {
+        const item = result.rowCount;
+        if (!item) {
+          next(new ClientError(`Unable to find cartItemId=${deleteId}`));
+        } else {
+          return res.status(201).json(item);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        next(new ClientError('An unexpected error occured.'));
+      });
+  }
+});
+
 // POST endpoint for /api/cart
 app.post('/api/cart/', (req, res, next) => {
   const { productId } = req.body;
