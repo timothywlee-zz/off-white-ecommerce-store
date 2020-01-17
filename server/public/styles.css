@@ -10,3 +10,10 @@
 .picture {
   width: 320px;
 }
+
+.fa-check {
+  color: green;
+}
+.fa-times{
+  color: red;
+}
