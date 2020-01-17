@@ -48,7 +48,6 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
-    console.log('product: ', product);
     fetch('api/cart', {
       method: 'POST',
       headers: {
@@ -58,7 +57,6 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('data: ', data);
         const arrayDeepCopy = this.state.cart.map(item => Object.assign({}, item));
         arrayDeepCopy.push(data);
         this.setState({
@@ -68,9 +66,7 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  // create delete from cart here
   deleteFromCart(cartItemId) {
-    console.log('cartItemId: ', cartItemId);
     fetch(`/api/cart/${cartItemId}`, {
       method: 'DELETE',
       headers: {
@@ -78,11 +74,9 @@ export default class App extends React.Component {
       }
     })
       .then(response => {
-        console.log('response: ', response);
         return response.json();
       })
       .then(data => {
-        console.log('data: ', data);
         const undeletedItems = this.state.cart.filter(item => item.cartItemId !== cartItemId);
         this.setState({
           cart: undeletedItems
