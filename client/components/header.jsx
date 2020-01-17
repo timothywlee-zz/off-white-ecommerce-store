@@ -5,7 +5,7 @@ function Header(props) {
 
   return (
     <div
-      className='text-light bg-dark col-12 m-0'
+      className='text-dark col-12 m-0'
       style={{ height: '7vh', padding: '1.7vh 9vh' }}>
       <div className='d-flex justify-content-between'>
         <div className=''>$ {props.title}</div>
