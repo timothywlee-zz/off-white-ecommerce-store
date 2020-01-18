@@ -41,7 +41,7 @@ class ProductList extends React.Component {
   render() {
     const createListOfItems = this.createListOfItems();
     return (
-      <div className='container'>
+      <div>
         <div className='row d-flex align-items-center justify-content-center'>
           {createListOfItems}
         </div>

@@ -25,3 +25,7 @@
 .headerCartText:hover{
   transform: scale(1.15);
 }
+
+.mainContent{
+  margin-top: 7rem;
+}
