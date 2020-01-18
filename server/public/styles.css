@@ -17,3 +17,11 @@
 .fa-times{
   color: red;
 }
+
+.headerCartText{
+  position: relative;
+  transition: all 0.4s ease;
+}
+.headerCartText:hover{
+  transform: scale(1.15);
+}
