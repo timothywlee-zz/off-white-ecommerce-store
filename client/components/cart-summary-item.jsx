@@ -6,7 +6,7 @@ function CartSummaryItem(props) {
       <div className='row d-flex flex-row'>
         <img
           src={props.product.image}
-          className='picture'
+          className='cartSummaryImg'
           style={{ objectFit: 'contain', height: '30vh' }}/>
         <div className='d-flex flex-column py-5 mx-4'>
           <h4> {props.product.name} </h4>

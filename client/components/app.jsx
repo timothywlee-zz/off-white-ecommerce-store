@@ -166,11 +166,12 @@ export default class App extends React.Component {
             title='Wicked Sales'
             cartItemCount={cart.length}
             setView={this.setView} />
-          <main className='container'>
-            <div className='row'>
+          <main id='mainContent'>
+            <div className='mainContent row'>
               <div className='col-12'> {displayContent} </div>
             </div>
           </main>
+          {/* <Footer /> */}
         </React.Fragment>
       );
   }

@@ -7,7 +7,7 @@
   transform: scale(1.20);
 }
 
-.picture {
+.cartSummaryImg {
   width: 320px;
 }
 
@@ -24,4 +24,8 @@
 }
 .headerCartText:hover{
   transform: scale(1.15);
+}
+
+.mainContent{
+  margin-top: 60px;
 }

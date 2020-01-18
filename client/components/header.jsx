@@ -7,7 +7,7 @@ function Header(props) {
     <nav
       id='headerContainer'
       className='navbar sticky-top bg-white pb-0 px-0'
-      style={{ height: '107px', paddingTop: '30px' }}>
+      style={{ height: '120px', paddingTop: '10px' }}>
       <div
         id='headerInnerContainer'
         className='d-flex flex-row justify-content-center col-12'
