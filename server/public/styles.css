@@ -7,7 +7,7 @@
   transform: scale(1.20);
 }
 
-.picture {
+.cartSummaryImg {
   width: 320px;
 }
 
@@ -27,5 +27,5 @@
 }
 
 .mainContent{
-  margin-top: 7rem;
+  margin-top: 60px;
 }
