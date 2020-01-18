@@ -4,24 +4,37 @@ function Header(props) {
   const itemsInCartCount = props.cartItemCount <= 1 ? 'item' : 'items';
 
   return (
-    <div
-      className='text-light bg-dark col-12 m-0'
-      style={{ height: '7vh', padding: '1.7vh 9vh' }}>
-      <div className='d-flex justify-content-between'>
-        <div className=''>$ {props.title}</div>
+    <nav
+      id='headerContainer'
+      className='navbar sticky-top bg-white pb-0 px-0'
+      style={{ height: '107px', paddingTop: '30px' }}>
+      <div
+        id='headerInnerContainer'
+        className='d-flex flex-row justify-content-center col-12'
+        style={{ height: '100%' }}>
+        <div className='col-2'></div>
         <div
-          className='d-flex flex-row'
-          onClick={() => props.setView('cart', {})}
-          style={{ cursor: 'pointer' }} >
-          <div className=' mx-1'>{props.cartItemCount}</div>
-          <div className='mr-2'> {itemsInCartCount} </div>
-          <i
-            className="fas fa-shopping-cart"
-            style={{ fontSize: '1.5rem' }}>
-          </i>
+          className='d-flex justify-content-center align-items-center col-8'>
+          <img
+            className='headerImg'
+            onClick={() => props.setView('catalog', {})}
+            src='/images/logo.png'
+            style={{ objectFit: 'contain', width: '206px', height: '76px', cursor: 'pointer' }}
+          />
+        </div>
+        <div className='headerCartContainer d-flex flex-row justify-content-center align-items-center col-2'>
+          <div
+            className='headerCartText d-flex flex-row justify-content-center align-items-center'
+            onClick={() => props.setView('cart', {})}
+            style={{ cursor: 'pointer', width: '100px', height: '50px' }} >
+            <div
+              className='mx-1 text-secondary'
+              style={{ fontSize: '15px' }}> Cart ({props.cartItemCount} {itemsInCartCount})
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

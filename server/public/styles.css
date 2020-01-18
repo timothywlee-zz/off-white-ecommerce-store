@@ -1,11 +1,11 @@
-/* .eachCard {
+.eachCard {
   position: relative;
   transition: all 0.4s ease;
 }
 
 .eachCard:hover{
-  transform: scale(1.04);
-} */
+  transform: scale(1.20);
+}
 
 .picture {
   width: 320px;
@@ -16,4 +16,12 @@
 }
 .fa-times{
   color: red;
+}
+
+.headerCartText{
+  position: relative;
+  transition: all 0.4s ease;
+}
+.headerCartText:hover{
+  transform: scale(1.15);
 }

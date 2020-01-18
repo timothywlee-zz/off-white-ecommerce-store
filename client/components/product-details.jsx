@@ -39,7 +39,7 @@ class ProductDetails extends React.Component {
     return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
-        <div className='container border border-dark rounded mt-5'>
+        <div className='container mt-5'>
           <div className='row'>
             <div>
               <div
