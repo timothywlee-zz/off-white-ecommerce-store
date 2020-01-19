@@ -14,18 +14,22 @@
 .fa-check {
   color: green;
 }
-.fa-times{
+.fa-times {
   color: red;
 }
 
-.headerCartText{
+.headerCartText {
   position: relative;
   transition: all 0.4s ease;
 }
-.headerCartText:hover{
+.headerCartText:hover {
   transform: scale(1.15);
 }
 
-.mainContent{
-  margin-top: 60px;
+.mainContent {
+  margin-top: 6vh;
+}
+
+.mailingListText:hover{
+  color: #DCDCDC
 }
