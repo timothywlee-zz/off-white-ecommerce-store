@@ -1,12 +1,15 @@
 import React from 'react';
 
-class MailingList extends React.Component {
+function MailingList(props) {
 
-  render() {
-    return (
-      <div className='border'>HI</div>
-    );
-  }
+  return (
+    <div
+      id='mailingListContainer'
+      className='border'
+      style={{ height: '66vh' }}>
+    </div>
+  );
+
 }
 
 export default MailingList;

@@ -14,7 +14,8 @@ function Header(props) {
         style={{ height: '100%' }}>
         <div className='col-2'></div>
         <div
-          className='d-flex justify-content-center align-items-center col-8'>
+          className='d-flex justify-content-center align-items-center col-8'
+          style={{ paddingLeft: '100px' }}>
           <img
             className='headerImg'
             onClick={() => props.setView('catalog', {})}
