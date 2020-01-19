@@ -6,6 +6,7 @@ import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Footer from './footer';
 import MailingList from './mailing-list';
+import ProductImages from './product-images';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -155,6 +156,13 @@ export default class App extends React.Component {
       return (
         <MailingList
           setView={this.setView}
+        />
+      );
+    } else if (view.name === 'images') {
+      return (
+        <ProductImages
+          setView={this.setView}
+          viewParams={view.params}
         />
       );
     }

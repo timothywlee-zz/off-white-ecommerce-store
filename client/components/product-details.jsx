@@ -50,11 +50,12 @@ class ProductDetails extends React.Component {
               <img
                 src={product.image}
                 className='productDetailImg col-6'
-                style={{ height: '66vh' }} />
+                style={{ height: '66vh' }}
+                onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
 
               <div
                 className='d-flex flex-column justify-content-center col-6'
-                style={{ height: '66vh', padding: '0 11rem 4rem 3rem' }}>
+                style={{ height: '66vh', padding: '0 7rem 2rem 3rem' }}>
                 <h1
                   className='font-weight-bold'
                   style={{ fontSize: '1.5rem' }}> {product.name}
