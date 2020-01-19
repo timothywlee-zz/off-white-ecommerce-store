@@ -5,6 +5,7 @@ import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Footer from './footer';
+import MailingList from './mailing-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -152,6 +153,12 @@ export default class App extends React.Component {
           placeOrder={this.placeOrder}
           itemTotal={this.calculateCartTotalCost()} />
       );
+    } else if (view.name === 'mailing') {
+      return (
+        <MailingList
+          setView={this.setView}
+        />
+      );
     }
   }
 
@@ -172,7 +179,7 @@ export default class App extends React.Component {
               <div className='col-12'> {displayContent} </div>
             </div>
           </main>
-          {/* <Footer /> */}
+          <Footer setView={this.setView}/>
         </React.Fragment>
       );
   }
