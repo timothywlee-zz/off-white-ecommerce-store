@@ -6,13 +6,12 @@ import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Footer from './footer';
 import MailingList from './mailing-list';
+import ProductImages from './product-images';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: null,
-      isLoading: true,
       view: {
         name: 'catalog',
         params: {}
@@ -159,6 +158,13 @@ export default class App extends React.Component {
           setView={this.setView}
         />
       );
+    } else if (view.name === 'images') {
+      return (
+        <ProductImages
+          setView={this.setView}
+          viewParams={view.params}
+        />
+      );
     }
   }
 
@@ -166,21 +172,21 @@ export default class App extends React.Component {
     const { cart } = this.state;
     const displayContent = this.displayPage();
 
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
-      : (
-        <React.Fragment>
-          <Header
-            title='Wicked Sales'
-            cartItemCount={cart.length}
-            setView={this.setView} />
-          <main id='mainContent'>
-            <div className='mainContent row'>
+    return (
+      <React.Fragment>
+        <Header
+          title='Wicked Sales'
+          cartItemCount={cart.length}
+          setView={this.setView} />
+        <main id='mainContent'>
+          <div className='mainContent'>
+            <div className='row'>
               <div className='col-12'> {displayContent} </div>
             </div>
-          </main>
-          <Footer setView={this.setView}/>
-        </React.Fragment>
-      );
+          </div>
+        </main>
+        <Footer setView={this.setView}/>
+      </React.Fragment>
+    );
   }
 }
