@@ -8,6 +8,7 @@ class ProductList extends React.Component {
       products: []
     };
     this.getProducts = this.getProducts.bind(this);
+    this.createListOfItems = this.createListOfItems.bind(this);
   }
 
   componentDidMount() {
@@ -33,7 +34,7 @@ class ProductList extends React.Component {
         <ProductListItem
           key={item.productId}
           product={item}
-          setView={this.props.setView}/>
+          setView={this.props.setView} />
       )
     );
   }
