@@ -13,20 +13,18 @@ module.exports = {
     path: publicPath
   },
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            '@babel/plugin-transform-react-jsx'
-          ]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              '@babel/plugin-transform-react-jsx'
+            ]
+          }
         }
       }
-    }, {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }
     ]
   },
   devtool: 'source-map',
