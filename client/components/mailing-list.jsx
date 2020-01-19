@@ -23,9 +23,7 @@ class MailingList extends React.Component {
     return (
       <div
         id='mailingListContainer'
-        className='border'
         style={{ height: '66vh' }}>
-
         <div
           id='innerMailingListContainer'
           className='d-flex flex-column col-12'>
