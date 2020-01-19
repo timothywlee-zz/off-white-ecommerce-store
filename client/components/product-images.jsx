@@ -30,7 +30,7 @@ class ProductImages extends React.Component {
   }
 
   testFunction() {
-    console.log('FINAL SHIT: ', this.state.product);
+    console.log('FINAL OUTCOME: ', this.state.product);
   }
 
   // write function that displays the product with a conditional that states whether if the productID matches it.
