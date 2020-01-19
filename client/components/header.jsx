@@ -27,7 +27,7 @@ function Header(props) {
           <div
             className='headerCartText d-flex flex-row justify-content-center align-items-center'
             onClick={() => props.setView('cart', {})}
-            style={{ cursor: 'pointer', width: '100px', height: '50px' }} >
+            style={{ cursor: 'pointer', width: '150px', height: '50px' }} >
             <div
               className='mx-1 text-secondary'
               style={{ fontSize: '15px' }}> Cart ({props.cartItemCount} {itemsInCartCount})

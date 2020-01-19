@@ -39,43 +39,59 @@ class ProductDetails extends React.Component {
     return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
-        <div className='container mt-5'>
-          <div className='row'>
-            <div>
+        <div
+          className='row'
+          style={{ height: '66vh' }}>
+          <div>
+            <div
+              className='d-flex flex-row col-12'
+              style={{ height: '66vh' }}>
+
+              <img
+                src={product.image}
+                className='productDetailImg col-6'
+                style={{ height: '66vh' }} />
+
               <div
-                className='text-muted col-2 m-3 d-flex flex-row'
-                onClick={() => this.props.setView('catalog', {})}
-                style={{ cursor: 'pointer' }}>
-                <i className="fas fa-arrow-left mr-2 mt-1"></i>
-                <div>{'Back To Catalog'}</div>
-              </div>
-              <div className='d-flex flex-row my-5'>
-                <img
-                  src={product.image}
-                  className='mx-4'
-                  style={{ height: '35vh' }} />
-                <div className='mx-4'>
-                  <h1
-                    className='font-weight-bold'
-                    style={{ fontSize: '1.5rem' }}> {product.name}
-                  </h1>
-                  <div className='text-muted'> ${(product.price / 100).toFixed(2)} </div>
-                  <p
-                    className='mt-2'
-                    style={{ fontSize: '0.8rem' }}> {product.shortDescription}
-                  </p>
+                className='d-flex flex-column justify-content-center col-6'
+                style={{ height: '66vh', padding: '0 11rem 4rem 3rem' }}>
+                <h1
+                  className='font-weight-bold'
+                  style={{ fontSize: '1.5rem' }}> {product.name}
+                </h1>
+
+                <div
+                  style={{ fontSize: '1.5rem' }}> ${(product.price / 100).toFixed(2)}
+                </div>
+
+                <p
+                  className='text-muted mt-2'
+                  style={{ fontSize: '0.8rem' }}> {product.shortDescription}
+                </p>
+
+                <div>
+                  <p className='text-muted'> {product.longDescription} </p>
+                </div>
+                <div>
                   <button
                     type='button'
-                    className='btn btn-primary'
+                    className='btn btn-outline-primary btn-lg'
                     onClick={this.handleSubmit}
-                    style={{ cursor: 'pointer' }}> Add To Cart
+                    style={{ cursor: 'pointer' }}> PURCHASE
                   </button>
                 </div>
-              </div>
-              <div>
-                <p className='m-4'> {product.longDescription} </p>
+
+                <div
+                  className='backToCatalog d-flex flex-row mt-3'
+                  onClick={() => this.props.setView('catalog', {})}
+                  style={{ cursor: 'pointer' }}>
+                  <i className="fas fa-arrow-left mt-1 mr-2"></i>
+                  <div>{'Back To Catalog'}</div>
+                </div>
+
               </div>
             </div>
+
           </div>
         </div>
       );

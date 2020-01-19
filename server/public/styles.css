@@ -1,6 +1,14 @@
-.eachCard {
+.eachCard,
+.headerCartText,
+.productDetailImg {
   position: relative;
   transition: all 0.4s ease;
+}
+
+.backToCatalog:hover,
+.mailingListText:hover,
+.subscribe:hover{
+    color: #DCDCDC
 }
 
 .eachCard:hover{
@@ -18,10 +26,6 @@
   color: red;
 }
 
-.headerCartText {
-  position: relative;
-  transition: all 0.4s ease;
-}
 .headerCartText:hover {
   transform: scale(1.15);
 }
@@ -30,10 +34,18 @@
   margin-top: 6vh;
 }
 
-.mailingListText:hover{
-  color: #DCDCDC
+.col-12 {
+  padding: 0 0;
 }
 
-.subscribe:hover{
-  color: #DCDCDC
+.row {
+  margin: 0 0;
+}
+
+.productDetailImg {
+  padding: 0 7vh 9vh 9vh;
+}
+.productDetailImg:hover{
+  transform: scale(1.10);
+  cursor:zoom-in;
 }
