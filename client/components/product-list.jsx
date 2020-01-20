@@ -8,7 +8,6 @@ class ProductList extends React.Component {
       products: []
     };
     this.getProducts = this.getProducts.bind(this);
-    this.createListOfItems = this.createListOfItems.bind(this);
   }
 
   componentDidMount() {

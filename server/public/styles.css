@@ -47,9 +47,18 @@
 }
 
 .productDetailImg {
-  padding: 0 7vh 9vh 9vh;
+  padding: 2vh 2vh 7vh 13vh;
 }
 .productDetailImg:hover{
   transform: scale(1.10);
   cursor:zoom-in;
+}
+
+
+.prevIcon {
+  padding-right: 12%;
+}
+
+.nextIcon {
+  padding-left: 12%;
 }

@@ -124,7 +124,7 @@ app.post('/api/cart/', (req, res, next) => {
   const value = [productId];
 
   db.query(getProductPriceSql, value)
-  // 1. .then()
+    // 1. .then()
     .then(result => {
       if (result.rows.length < 0) {
         throw (new ClientError(`Cannot find a product with the productId=${productId}`, 400));
@@ -154,7 +154,7 @@ app.post('/api/cart/', (req, res, next) => {
         );
       }
     })
-  // 2. .then()
+    // 2. .then()
     .then(data => {
       req.session.cartId = data.cartId;
 
@@ -173,7 +173,7 @@ app.post('/api/cart/', (req, res, next) => {
           })
       );
     })
-  // 3. .then()
+    // 3. .then()
     .then(finalData => {
       const finalSql = `
         SELECT "c"."cartItemId",
