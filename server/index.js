@@ -80,6 +80,17 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// GET endpoint for /api/images
+app.get('/api/images', (req, res, next) => {
+  const getImagesSql = `
+      SELECT "image1", "image2", "image3", "image4"
+        FROM "images"
+    `;
+  db.query(getImagesSql)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
 // DELETE endpoint for /api/cart
 app.delete('/api/cart/:cartItemId', (req, res, next) => {
   const deleteId = parseInt(req.params.cartItemId);

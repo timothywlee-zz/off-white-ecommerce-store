@@ -6,34 +6,33 @@ class ProductImages extends React.Component {
     super(props);
     this.state = {
       product: null,
+      images: null,
       productImagesArray: [],
       carouselIndicatorArray: [],
-      displayImagesArray: [],
-      productImages: [
-        ['/images/Jordan1RetroRed_1.jpg', '/images/Jordan1RetroRed_2.jpg', '/images/Jordan1RetroRed_3.jpg', '/images/Jordan1RetroRed_4.jpg'],
-        ['/images/Jordan1RetroBlue_1.jpg', '/images/Jordan1RetroBlue_2.jpg', '/images/Jordan1RetroBlue_3.jpg', '/images/Jordan1RetroBlue_4.jpg'],
-        ['/images/AirForce1_1.jpg', '/images/AirForce1_2.jpg', '/images/AirForce1_3.jpg', '/images/AirForce1_4.jpg'],
-        ['/images/NikeBlazer_1.jpg', '/images/NikeBlazer_2.jpg', '/images/NikeBlazer_3.jpg', '/images/NikeBlazer_4.jpg'],
-        ['/images/NikeDunkGreen_1.jpg', '/images/NikeDunkGreen_2.jpg', '/images/NikeDunkGreen_3.jpg', '/images/NikeDunkGreen_4.jpg'],
-        ['/images/AirForce1Volt_1.jpg', '/images/AirForce1Volt_2.jpg', '/images/AirForce1Volt_3.jpg', '/images/AirForce1Volt_4.jpg'],
-        ['/images/AirMax90_1.jpg', '/images/AirMax90_2.jpg', '/images/AirMax90_3.jpg', '/images/AirMax90_4.jpg'],
-        ['/images/AirPresto_1.jpg', '/images/AirPresto_2.jpg', '/images/AirPresto_3.jpg', '/images/AirPresto_4.jpg'],
-        ['/images/AirVaporMax_1.jpg', '/images/AirVaporMax_2.jpg', '/images/AirVaporMax_3.jpg', '/images/AirVaporMax_4.jpg']
-      ]
+      displayImagesArray: []
+      // productImages: [
+      //   ['/images/Jordan1RetroRed_1.jpg', '/images/Jordan1RetroRed_2.jpg', '/images/Jordan1RetroRed_3.jpg', '/images/Jordan1RetroRed_4.jpg'],
+      //   ['/images/Jordan1RetroBlue_1.jpg', '/images/Jordan1RetroBlue_2.jpg', '/images/Jordan1RetroBlue_3.jpg', '/images/Jordan1RetroBlue_4.jpg'],
+      //   ['/images/AirForce1_1.jpg', '/images/AirForce1_2.jpg', '/images/AirForce1_3.jpg', '/images/AirForce1_4.jpg'],
+      //   ['/images/NikeBlazer_1.jpg', '/images/NikeBlazer_2.jpg', '/images/NikeBlazer_3.jpg', '/images/NikeBlazer_4.jpg'],
+      //   ['/images/NikeDunkGreen_1.jpg', '/images/NikeDunkGreen_2.jpg', '/images/NikeDunkGreen_3.jpg', '/images/NikeDunkGreen_4.jpg'],
+      //   ['/images/AirForce1Volt_1.jpg', '/images/AirForce1Volt_2.jpg', '/images/AirForce1Volt_3.jpg', '/images/AirForce1Volt_4.jpg'],
+      //   ['/images/AirMax90_1.jpg', '/images/AirMax90_2.jpg', '/images/AirMax90_3.jpg', '/images/AirMax90_4.jpg'],
+      //   ['/images/AirPresto_1.jpg', '/images/AirPresto_2.jpg', '/images/AirPresto_3.jpg', '/images/AirPresto_4.jpg'],
+      //   ['/images/AirVaporMax_1.jpg', '/images/AirVaporMax_2.jpg', '/images/AirVaporMax_3.jpg', '/images/AirVaporMax_4.jpg']
+      // ]
     };
     this.getProductsById = this.getProductsById.bind(this);
+    this.getImages = this.getImages.bind(this);
     this.testFunction = this.testFunction.bind(this);
     this.renderProductById = this.renderProductById.bind(this);
     this.renderCarouselIndicatorsCount = this.renderCarouselIndicatorsCount.bind(this);
-    this.renderImages = this.renderImages.bind(this);
+    // this.renderImages = this.renderImages.bind(this);
   }
 
   componentDidMount() {
     this.getProductsById();
-  }
-
-  componentDidUpdate() {
-    this.renderImages();
+    this.getImages();
   }
 
   getProductsById() {
@@ -52,18 +51,32 @@ class ProductImages extends React.Component {
       .catch(err => console.error(err));
   }
 
+  getImages() {
+    fetch('/api/images', {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          images: data
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
   testFunction() {
     console.log('FINAL OUTCOME: ', this.state.product);
+    console.log('images from sql/backend: ', this.state.images);
   }
 
   renderProductById() {
-    const { product, productImagesArray, productImages } = this.state;
+    const { product, productImagesArray, images } = this.state;
     const array = [];
 
-    for (let carouselIndex = 0; carouselIndex < productImages.length; carouselIndex++) {
+    for (let carouselIndex = 0; carouselIndex < images.length; carouselIndex++) {
       const productToView = carouselIndex + 1;
       if (productToView === product) {
-        array.push(productImages[carouselIndex]);
+        array.push(images[carouselIndex]);
       }
     }
 
@@ -92,23 +105,24 @@ class ProductImages extends React.Component {
   }
 
   // make a key prop for each productImage
-  renderImages() {
-    const { productImagesArray, displayImagesArray } = this.state;
-    console.log('productImageArrayInRenderIMAGES: ', this.state.productImagesArray);
 
-    for (let productIndex = 1; productIndex <= 3; productIndex++) {
-      displayImagesArray.push(
-        <ImagesInCarousel
-          key={productIndex}
-          image={productImagesArray[productIndex]}/>
-      );
-    }
+  // renderImages() {
+  //   const { productImagesArray, displayImagesArray } = this.state;
+  //   console.log('productImageArrayInRenderIMAGES: ', this.state.productImagesArray);
 
-    // this.state.productImagesArray[productIndex]
+  //   for (let productIndex = 1; productIndex <= 3; productIndex++) {
+  //     displayImagesArray.push(
+  //       <ImagesInCarousel
+  //         key={productIndex}
+  //         image={productImagesArray[productIndex]}/>
+  //     );
+  //   }
 
-    console.log('this.state.displayImagesArray: ', this.state.displayImagesArray);
-    return displayImagesArray;
-  }
+  //   // this.state.productImagesArray[productIndex]
+
+  //   console.log('this.state.displayImagesArray: ', this.state.displayImagesArray);
+  //   return displayImagesArray;
+  // }
 
   render() {
     return (
@@ -123,7 +137,7 @@ class ProductImages extends React.Component {
               <div className="carousel-item active">
                 <img src={this.state.productImagesArray[0]} className='d-block w-100' />
               </div>
-              {this.renderImages()}
+              {/* {this.renderImages()} */}
             </div>
             <a className="prevIcon carousel-control-prev " href="#myCarousel" role="button" data-slide="prev">
               <span className="carousel-control-prev-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
