@@ -55,28 +55,31 @@ class ProductDetails extends React.Component {
 
               <div
                 className='d-flex flex-column justify-content-center col-6'
-                style={{ height: '66vh', padding: '0 7rem 2rem 3rem' }}>
+                style={{ height: '66vh', padding: '4vh 13vh 6vh 5vh' }}>
                 <h1
                   className='font-weight-bold'
-                  style={{ fontSize: '1.5rem' }}> {product.name}
+                  style={{ fontSize: '3vh' }}> {product.name}
                 </h1>
 
                 <div
-                  style={{ fontSize: '1.5rem' }}> ${(product.price / 100).toFixed(2)}
+                  style={{ fontSize: '3vh' }}> ${(product.price / 100).toFixed(2)}
                 </div>
 
                 <p
                   className='text-muted mt-2'
-                  style={{ fontSize: '0.8rem' }}> {product.shortDescription}
+                  style={{ fontSize: '1.5vh' }}> {product.shortDescription}
                 </p>
 
                 <div>
-                  <p className='text-muted'> {product.longDescription} </p>
+                  <p
+                    className='text-muted'
+                    style={{ fontSize: '1.7vh' }}> {product.longDescription}
+                  </p>
                 </div>
                 <div>
                   <button
                     type='button'
-                    className='btn btn-outline-primary btn-lg'
+                    className='btn btn-outline-primary btn-md'
                     onClick={this.handleSubmit}
                     style={{ cursor: 'pointer' }}> PURCHASE
                   </button>

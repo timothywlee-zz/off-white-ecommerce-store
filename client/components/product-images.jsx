@@ -4,13 +4,17 @@ class ProductImages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: null
+      product: null,
+      images: null,
+      productImagesArray: []
     };
     this.getProductsById = this.getProductsById.bind(this);
-    this.testFunction = this.testFunction.bind(this);
+    this.getImages = this.getImages.bind(this);
+    this.renderProductById = this.renderProductById.bind(this);
   }
 
   componentDidMount() {
+    this.getImages();
     this.getProductsById();
   }
 
@@ -20,57 +24,85 @@ class ProductImages extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('data.productId(product-images): ', data.productId);
         this.setState({
           product: data.productId
         });
-        this.testFunction();
+        this.renderProductById();
       })
       .catch(err => console.error(err));
   }
 
-  testFunction() {
-    console.log('FINAL SHIT: ', this.state.product);
+  getImages() {
+    fetch('/api/images', {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          images: data
+        });
+      })
+      .catch(err => console.error(err));
   }
 
-  // write function that displays the product with a conditional that states whether if the productID matches it.
+  renderProductById() {
+    const { product, images } = this.state;
+    const initialArray = [];
+
+    for (let imagesIndex = 0; imagesIndex < images.length; imagesIndex++) {
+      const productToView = imagesIndex + 1;
+      if (productToView === product) {
+        initialArray.push(images[imagesIndex]);
+      }
+    }
+    const imagesPosition = initialArray[0];
+    const selectedProductArray = Object.values(imagesPosition);
+
+    this.setState({
+      productImagesArray: selectedProductArray
+    });
+    return initialArray;
+  }
 
   render() {
     return (
-      <div
-        className='border'
-        style={{ height: '67vh' }}>TESTING
-
-        <div id='myCarousel' className='carousel slide border' data-ride='carousel'>
-          <ol className='carousel-indicators'>
-            <li data-target='myCarousel' data-slide-to='0' className='active' style={{ color: 'black' }}></li>
-            <li data-target='myCarousel' data-slide-to='1'></li>
-            <li data-target='myCarousel' data-slide-to='2'></li>
-          </ol>
-
-          <div className='carousel-inner border' style={{ height: '70vh', display: 'flex', alignItems: 'center' }}>
-            <div className='carousel-item active border'>
-              <img style={{ height: '100%', width: '40%' }} src='/images/Jordan1RetroRed_1.jpg' />
+      <div className='row d-flex justify-content-center align-items-center'>
+        <div className='px-0' style={{ width: '84vh', marginBottom: '4.5vh' }}>
+          <div id="myCarousel" className="carousel slide" data-ride="carousel">
+            <ol className="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+              <li data-target="#myCarousel" data-slide-to="1" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+              <li data-target="#myCarousel" data-slide-to="2" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+              <li data-target="#myCarousel" data-slide-to="3" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+            </ol>
+            <div className="carousel-inner" role="listbox">
+              <div className="carousel-item active">
+                <img src={this.state.productImagesArray[0]} className='d-block w-100' />
+              </div>
+              <div className="carousel-item">
+                <img src={this.state.productImagesArray[1]} className='d-block w-100' />
+              </div>
+              <div className="carousel-item">
+                <img src={this.state.productImagesArray[2]} className='d-block w-100' />
+              </div>
+              <div className="carousel-item">
+                <img src={this.state.productImagesArray[3]} className='d-block w-100' />
+              </div>
             </div>
-            <div className='carousel-item active border'>
-              <img style={{ height: '100%', width: '40%' }} src='/images/AirVaporMax_1.jpg' />
-            </div>
-            <div className='carousel-item active border'>
-              <img style={{ height: '100%', width: '40%' }} src='/images/NikeBlazer_1.jpg' />
-            </div>
+            <a className="prevIcon carousel-control-prev " href="#myCarousel" role="button" data-slide="prev">
+              <span className="carousel-control-prev-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
+              <span className="sr-only">Previous</span>
+            </a>
+            <a className="nextIcon carousel-control-next " href="#myCarousel" role="button" data-slide="next">
+              <span className="carousel-control-next-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
+              <span className="sr-only">Next</span>
+            </a>
           </div>
-
-          <a className="carousel-control-prev border" href="#myCarousel" data-slide="prev">
-            <span className="carousel-control-prev-icon border" style={{ height: '100px', width: '100px' }}></span>
-          </a>
-          <a className="carousel-control-next border" href="#myCarousel" data-slide="next">
-            <span className="carousel-control-next-icon border" style={{ height: '100px', width: '100px' }}></span>
-          </a>
-
         </div>
       </div>
     );
   }
+
 }
 
 export default ProductImages;

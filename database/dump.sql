@@ -18,16 +18,20 @@ SET row_security = off;
 
 ALTER TABLE ONLY public.products DROP CONSTRAINT products_pkey;
 ALTER TABLE ONLY public.orders DROP CONSTRAINT orders_pkey;
+ALTER TABLE ONLY public.images DROP CONSTRAINT images_pkey;
 ALTER TABLE ONLY public.carts DROP CONSTRAINT carts_pkey;
 ALTER TABLE ONLY public."cartItems" DROP CONSTRAINT "cartItems_pkey";
 ALTER TABLE public.products ALTER COLUMN "productId" DROP DEFAULT;
 ALTER TABLE public.orders ALTER COLUMN "orderId" DROP DEFAULT;
+ALTER TABLE public.images ALTER COLUMN "productId" DROP DEFAULT;
 ALTER TABLE public.carts ALTER COLUMN "cartId" DROP DEFAULT;
 ALTER TABLE public."cartItems" ALTER COLUMN "cartItemId" DROP DEFAULT;
 DROP SEQUENCE public."products_productId_seq";
 DROP TABLE public.products;
 DROP SEQUENCE public."orders_orderId_seq";
 DROP TABLE public.orders;
+DROP SEQUENCE public."images_productId_seq";
+DROP TABLE public.images;
 DROP SEQUENCE public."carts_cartId_seq";
 DROP TABLE public.carts;
 DROP SEQUENCE public."cartItems_cartItemId_seq";
@@ -129,6 +133,39 @@ ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
 
 
 --
+-- Name: images; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.images (
+    "productId" integer NOT NULL,
+    image1 text NOT NULL,
+    image2 text NOT NULL,
+    image3 text NOT NULL,
+    image4 text NOT NULL
+);
+
+
+--
+-- Name: images_productId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."images_productId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: images_productId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."images_productId_seq" OWNED BY public.images."productId";
+
+
+--
 -- Name: orders; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -211,6 +248,13 @@ ALTER TABLE ONLY public.carts ALTER COLUMN "cartId" SET DEFAULT nextval('public.
 
 
 --
+-- Name: images productId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images ALTER COLUMN "productId" SET DEFAULT nextval('public."images_productId_seq"'::regclass);
+
+
+--
 -- Name: orders orderId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -241,6 +285,23 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 
 
 --
+-- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.images ("productId", image1, image2, image3, image4) FROM stdin;
+1	/images/Jordan1RetroRed_1.jpg	/images/Jordan1RetroRed_2.jpg	/images/Jordan1RetroRed_3.jpg	/images/Jordan1RetroRed_4.jpg
+2	/images/Jordan1RetroBlue_1.jpg	/images/Jordan1RetroBlue_2.jpg	/images/Jordan1RetroBlue_3.jpg	/images/Jordan1RetroBlue_4.jpg
+3	/images/AirForce1_1.jpg	/images/AirForce1_2.jpg	/images/AirForce1_3.jpg	/images/AirForce1_4.jpg
+4	/images/NikeBlazer_1.jpg	/images/NikeBlazer_2.jpg	/images/NikeBlazer_3.jpg	/images/NikeBlazer_4.jpg
+5	/images/NikeDunkGreen_1.jpg	/images/NikeDunkGreen_2.jpg	/images/NikeDunkGreen_3.jpg	/images/NikeDunkGreen_4.jpg
+6	/images/AirForce1Volt_1.jpg	/images/AirForce1Volt_2.jpg	/images/AirForce1Volt_3.jpg	/images/AirForce1Volt_4.jpg
+7	/images/AirMax90_1.jpg	/images/AirMax90_2.jpg	/images/AirMax90_3.jpg	/images/AirMax90_4.jpg
+8	/images/AirPresto_1.jpg	/images/AirPresto_2.jpg	/images/AirPresto_3.jpg	/images/AirPresto_4.jpg
+9	/images/AirVaporMax_1.jpg	/images/AirVaporMax_2.jpg	/images/AirVaporMax_3.jpg	/images/AirVaporMax_4.jpg
+\.
+
+
+--
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -253,12 +314,15 @@ COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", 
 --
 
 COPY public.products ("productId", name, price, image, "shortDescription", "longDescription") FROM stdin;
-1	Shake Weight	2999	/images/shake-weight.jpg	Dynamic Inertia technology ignites muscles in arms, shoulders, and chest.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-2	ShamWow	2595	/images/shamwow.jpg	It's like a chamois, towel, and sponge, all in one! Soaks up to 10x it's weight in any liquid!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-3	Snuggie	2900	/images/snuggie.jpg	Super-Soft Fleece with pockets! One Size fits all Adults! Keeps you Warm & Your Hands-Free!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-4	Wax Vac	999	/images/wax-vac.jpg	Gentle way to remove ear wax. Safe and hygienic. Reduces the risk of painful infections.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-5	Ostrich Pillow	9900	/images/ostrich-pillow.jpg	Create your own snugly space in the world and feel-good anywhere with the ultimate cocoon pillow.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-6	Tater Mitts	830	/images/tater-mitts.jpg	8 Seconds is all you need with Tater Mitts. Quickly and easily prepare all your favorite potato dishes with Tater Mitts.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
+1	Jordan 1 Retro High Off-White Chicago	19000	/images/Jordan1RetroRed_1.jpg	STYLE AA3834-101 COLORWAY White/Black-Varsity Red RELEASE DATE 09/09/2017	The Off-White x Air Jordan 1 Retro High OG was one of the most highly anticipated footwear collaborations of 2017. It marked the first time Virgil Abloh, founder of the Milan-based fashion label and Jordan Brand had teamed up. Nicknamed "The 10" edition, this pair comes in the original Chicago-themed white, black and varsity red colorway. Featuring a white, red and black-based deconstructed leather upper with a Swooshless medial side branded with "Off-White for Nike Air Jordan 1, Beaverton, Oregon, USA © 1985."
+2	Jordan 1 Retro High Off-White University Blue	19000	/images/Jordan1RetroBlue_1.jpg	STYLE AQ0818-148 COLORWAY White/Dark Powder Blue-Cone RELEASE DATE 06/23/2018	Time for some Tobacco Road vibes with these Jordan 1 Retro Off-Whites. Also known as the “UNC” editions, these Jordan 1s are the third colorway designed by Virgil Abloh and made in collaboration with his Off-White label. The sneakers come in a white, dark powder blue and cone colorway, with a white and blue deconstructed leather upper and Off-White detailing throughout.
+3	Air Force 1 Low Off-White MCA University Blue	15000	/images/AirForce1_1.jpg	STYLE Cl1173-400 COLORWAY University Blue/Metallic Silver RELEASE DATE 07/20/2019	Virgil Abloh added yet another colorway to his coveted selection of Off-White Air Force 1 iterations that will forever preserve his Figures of Speech exhibit in sneaker history. Having the first pair exclusively gifted to Serena Williams in May of 2019, these Air Force 1 Low Off-White MCA University Blues were one of Virgils many highly anticipated releases of 2019.
+4	Nike Blazer Mid Off-White All Hallow’s Eve	13000	/images/NikeBlazer_1.jpg	STYLE AA3832-700 COLORWAY Canvas/Total Orange-Pale Vanilla RELEASE DATE 10/03/2018	Don’t sleep because Virgil Abloh continues to give the shoe game a nightmare with the Nike Blazer Mid Off-White All Hallow’s Eve. This pumpkin inspired half of the “Spooky Pack” comes with a pale vanilla upper, total orange “Swoosh”, and pale vanilla sole.
+5	Nike Dunk Low Off-White Pine Green	17000	/images/NikeDunkGreen_1.jpg	STYLE CT0856-1 COLORWAY White/Pine Green-Pine Green RELEASE DATE 12/20/2019	Virgil Abloh pays homage to skate culture’s adoption of 1980’s Nike Basketball silhouettes with the Nike Dunk Low Off-White Pine Green. This colorway was not a part of the original Be True To Your School collection in 1985; instead, it derives from the Gorge Green colorway that debuted in 2003 as part of a general release.
+6	Air Force 1 Low Off-White Volt	17000	/images/AirForce1Volt_1.jpg	STYLE A04606-700 COLORWAY Volt/Hyper Jade-Cone-Black RELEASE DATE 12/19/2018	Be more lit than a lightning bolt while wearing Nike and Virgil’s Air Force 1 Low Off-White Volt. This AF1 comes with a volt upper, black Nike “Swoosh”, volt midsole, and volt sole.
+7	Air Max 90 Off-White Desert Ore	16000	/images/AirMax90_1.jpg	STYLE AA7293-200 COLORWAY Desert Ore/Desert Ore-Hyper RELEASE DATE 02/07/2019	Virgil is doing his best attempt in trying to dry out the sneaker competition with the release of the Air Max 90 Off-White “Desert Ore”. This AM 90 comes with a beige upper, mango orange Nike “Swoosh”, beige midsole, and beige sole.
+8	Air Presto Off-White	16000	/images/AirPresto_1.jpg	STYLE AA3830-001 COLORWAY Black/Black-Muslin RELEASE DATE 09/09/2017	The Virgil Abloh’s Nike Air Presto Off White caused an absolute frenzy. It features a black Nike Swoosh sewn onto the lateral side. Finally, "AIR" is written in classic Virgil fashion on the side heel, completing this deconstructed, utilitarian #vibe.
+9	Air VaporMax Off-White	25000	/images/AirVaporMax_1.jpg	STYLE AA3831-001 COLORWAY Black/White-Clear RELEASE DATE 09/09/2017	Following up from “The Ten” collection in 2017, the Nike VaporMax Off-White are certainly “popular.” Designed by Virgil Abloh, these shoes are an extension of the original VaporMaxs featured in “The Ten” drop, the main difference being a white tongue and a Swoosh atop the clear outsole.
 \.
 
 
@@ -266,21 +330,28 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 139, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 192, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 38, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 43, true);
+
+
+--
+-- Name: images_productId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."images_productId_seq"', 9, true);
 
 
 --
 -- Name: orders_orderId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."orders_orderId_seq"', 13, true);
+SELECT pg_catalog.setval('public."orders_orderId_seq"', 17, true);
 
 
 --
@@ -304,6 +375,14 @@ ALTER TABLE ONLY public."cartItems"
 
 ALTER TABLE ONLY public.carts
     ADD CONSTRAINT carts_pkey PRIMARY KEY ("cartId");
+
+
+--
+-- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT images_pkey PRIMARY KEY ("productId");
 
 
 --
