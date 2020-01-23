@@ -29,7 +29,7 @@ class MailingList extends React.Component {
           className='d-flex flex-column col-12'>
           <div
             className='d-flex justify-content-center font-weight-bold'
-            style={{ fontSize: '50px', marginBottom: '15vh' }}> MAILING LIST
+            style={{ fontSize: '5vh', marginBottom: '15vh' }}> MAILING LIST
           </div>
           <div
             className='d-flex flex-column'
@@ -39,7 +39,7 @@ class MailingList extends React.Component {
               onSubmit={this.handleSubmit}>
               <div
                 className='d-flex justify-content-center mb-3'
-                style={{ fontSize: '30px' }}>Sign up for monthly updates
+                style={{ fontSize: '4vh' }}>Sign up for monthly updates
               </div>
               <label
                 style={{ borderBottom: '2px solid black' }}>
