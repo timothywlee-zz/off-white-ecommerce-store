@@ -80,6 +80,17 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// GET endpoint for /api/images
+app.get('/api/images', (req, res, next) => {
+  const getImagesSql = `
+      SELECT "image1", "image2", "image3", "image4"
+        FROM "images"
+    `;
+  db.query(getImagesSql)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
 // DELETE endpoint for /api/cart
 app.delete('/api/cart/:cartItemId', (req, res, next) => {
   const deleteId = parseInt(req.params.cartItemId);
@@ -124,7 +135,7 @@ app.post('/api/cart/', (req, res, next) => {
   const value = [productId];
 
   db.query(getProductPriceSql, value)
-  // 1. .then()
+    // 1. .then()
     .then(result => {
       if (result.rows.length < 0) {
         throw (new ClientError(`Cannot find a product with the productId=${productId}`, 400));
@@ -154,7 +165,7 @@ app.post('/api/cart/', (req, res, next) => {
         );
       }
     })
-  // 2. .then()
+    // 2. .then()
     .then(data => {
       req.session.cartId = data.cartId;
 
@@ -173,7 +184,7 @@ app.post('/api/cart/', (req, res, next) => {
           })
       );
     })
-  // 3. .then()
+    // 3. .then()
     .then(finalData => {
       const finalSql = `
         SELECT "c"."cartItemId",

@@ -68,3 +68,5 @@ class MailingList extends React.Component {
 }
 
 export default MailingList;
+
+// test

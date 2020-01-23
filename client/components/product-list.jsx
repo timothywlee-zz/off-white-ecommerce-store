@@ -33,7 +33,7 @@ class ProductList extends React.Component {
         <ProductListItem
           key={item.productId}
           product={item}
-          setView={this.props.setView}/>
+          setView={this.props.setView} />
       )
     );
   }
