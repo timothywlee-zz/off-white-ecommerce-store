@@ -246,7 +246,6 @@ app.post('/api/orders', (req, res, next) => {
 app.post('/api/emailSub', (req, res, next) => {
   const { email } = req.body;
 
-  console.log('email: ', req.body.email);
   if (!email) {
     throw (new ClientError(`Cannot find the email=${email}`, 400));
   }
@@ -258,7 +257,6 @@ app.post('/api/emailSub', (req, res, next) => {
   `;
 
   const values = [email];
-
   db.query(sql, values)
     .then(response => res.status(201).json({
       message: 'Email has been added to monthly subscriptions'
