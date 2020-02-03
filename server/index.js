@@ -242,6 +242,30 @@ app.post('/api/orders', (req, res, next) => {
     });
 });
 
+// POST endpoint for email subscriptions
+app.post('/api/emailSub', (req, res, next) => {
+  const { email } = req.body;
+
+  console.log('email: ', req.body.email);
+  if (!email) {
+    throw (new ClientError(`Cannot find the email=${email}`, 400));
+  }
+
+  const sql = `
+    INSERT INTO "emailSubs" ("email")
+         VALUES ($1)
+      RETURNING *
+  `;
+
+  const values = [email];
+
+  db.query(sql, values)
+    .then(response => res.status(201).json({
+      message: 'Email has been added to monthly subscriptions'
+    }))
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
