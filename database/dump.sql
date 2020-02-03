@@ -32,6 +32,7 @@ DROP SEQUENCE public."orders_orderId_seq";
 DROP TABLE public.orders;
 DROP SEQUENCE public."images_productId_seq";
 DROP TABLE public.images;
+DROP TABLE public."emailSubs";
 DROP SEQUENCE public."carts_cartId_seq";
 DROP TABLE public.carts;
 DROP SEQUENCE public."cartItems_cartItemId_seq";
@@ -130,6 +131,15 @@ CREATE SEQUENCE public."carts_cartId_seq"
 --
 
 ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
+
+
+--
+-- Name: emailSubs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."emailSubs" (
+    email text NOT NULL
+);
 
 
 --
@@ -281,6 +291,14 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: emailSubs; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."emailSubs" (email) FROM stdin;
 \.
 
 
