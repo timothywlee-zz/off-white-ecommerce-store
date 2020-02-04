@@ -63,6 +63,7 @@ app.get('/api/cart', (req, res, next) => {
   const getAllProductsFromCartSql = `
       SELECT "c"."cartItemId",
              "c"."price",
+             "c"."quantity",
              "p"."productId",
              "p"."image",
              "p"."name",
@@ -121,74 +122,91 @@ app.delete('/api/cart/:cartItemId', (req, res, next) => {
 
 // POST endpoint for /api/cart
 app.post('/api/cart/', (req, res, next) => {
-  const { productId } = req.body;
+  const { productId, quantity } = req.body;
+  const idIsValid = productId > 0 && typeof parseInt(productId) === 'number';
+  const quantityIsValid = quantity > 0 && typeof parseInt(quantity) === 'number';
 
-  if (productId < 0 || isNaN(productId)) {
-    next(new ClientError(`productId=${productId} must be a positive integer`), 400);
-  }
-
-  const getProductPriceSql = `
+  if (!idIsValid || !quantityIsValid) {
+    next(new ClientError('productId and quantity must be a positive integer'), 400);
+  } else {
+    const getProductPriceSql = `
       SELECT "price"
         FROM "products"
        WHERE "productId" = $1
     `;
-  const value = [productId];
+    const value = [productId];
 
-  db.query(getProductPriceSql, value)
-    // 1. .then()
-    .then(result => {
-      if (result.rows.length < 0) {
-        throw (new ClientError(`Cannot find a product with the productId=${productId}`, 400));
-      }
+    db.query(getProductPriceSql, value)
+      // 1. .then()
+      .then(result => {
+        if (result.rows.length < 0) {
+          throw (new ClientError(`Cannot find a product with the productId=${productId}`, 400));
+        }
 
-      if (req.session.cartId) {
-        const cart = {
-          cartId: req.session.cartId,
-          price: result.rows[0].price
-        };
-        return cart;
-      } else {
-        const addACart = `
+        if (req.session.cartId) {
+          const cart = {
+            cartId: req.session.cartId,
+            price: result.rows[0].price
+          };
+          return cart;
+        } else {
+          const addACart = `
         INSERT INTO "carts" ("cartId", "createdAt")
              VALUES (default, default)
           RETURNING "cartId"
       `;
+          return (
+            db.query(addACart)
+              .then(cartResult => {
+                const createdCart = {
+                  cartId: cartResult.rows[0].cartId, // from cartResult
+                  price: result.rows[0].price // from result from above
+                };
+                return createdCart;
+              })
+          );
+        }
+      })
+      // 2. .then()
+      .then(data => {
+        const { price, cartId } = data;
+        req.session.cartId = cartId;
+        const sql = `
+          SELECT *
+            FROM "cartItems"
+           WHERE "cartId" = $1 and "productId" = $2;
+        `;
+        const values = [cartId, productId];
         return (
-          db.query(addACart)
-            .then(cartResult => {
-              const createdCart = {
-                cartId: cartResult.rows[0].cartId, // from cartResult
-                price: result.rows[0].price // from result from above
-              };
-              return createdCart;
+          db.query(sql, values)
+            .then(result => {
+              if (result.rowCount === 0) {
+                const sql = `
+                  INSERT INTO "cartItems" ("cartId", "productId", "price", "quantity")
+                      VALUES ($1, $2, $3, $4)
+                    RETURNING "cartItemId";
+              `;
+                const values = [cartId, productId, price, quantity];
+                return db.query(sql, values);
+              } else {
+                const sql = `
+                  UPDATE "cartItems"
+                     SET "quantity" = "quantity" + $1
+                   WHERE "cartId" = $2 and "productId" = $3
+               RETURNING "cartItemId";
+              `;
+                const values = [quantity, cartId, productId];
+                return db.query(sql, values);
+              }
             })
         );
-      }
-    })
-    // 2. .then()
-    .then(data => {
-      req.session.cartId = data.cartId;
-
-      const newCartRow = `
-        INSERT INTO "cartItems" ("cartId", "productId", "price")
-             VALUES ($1, $2, $3)
-          RETURNING "cartItemId"
-      `;
-      const values = [data.cartId, productId, data.price];
-      return (
-        db.query(newCartRow, values)
-          .then(result => {
-            return {
-              cartItemId: result.rows[0].cartItemId
-            };
-          })
-      );
-    })
-    // 3. .then()
-    .then(finalData => {
-      const finalSql = `
+      })
+      // 3. .then()
+      .then(finalData => {
+        const finalSql = `
         SELECT "c"."cartItemId",
                "c"."price",
+               "c"."quantity",
                "p"."productId",
                "p"."image",
                "p"."name",
@@ -197,16 +215,17 @@ app.post('/api/cart/', (req, res, next) => {
           JOIN "products" as "p" using ("productId")
          WHERE "c"."cartItemId" = $1
       `;
-      const value = [finalData.cartItemId];
-      return (
-        db.query(finalSql, value)
-          .then(data => {
-            return res.status(201).json(data.rows[0]);
-          })
-      );
-    })
+        const value = [finalData.cartItemId];
+        return (
+          db.query(finalSql, value)
+            .then(data => {
+              return res.status(201).json(data.rows[0]);
+            })
+        );
+      })
 
-    .catch(err => next(err));
+      .catch(err => next(err));
+  }
 });
 
 // POST endpoint to /api/orders
@@ -240,6 +259,48 @@ app.post('/api/orders', (req, res, next) => {
         shippingAddress: result.rows[0].shippingAddress
       });
     });
+});
+
+// PUT endpoint for updating quantity amounts in cart-summary page
+app.put('/api/cart', (req, res, next) => {
+  const { quantity, cartItemId } = req.body;
+  if (!quantity || !cartItemId) {
+    next(new ClientError('Quantity and cartItemId must be a positive integer', 400));
+  }
+  const sql = `
+      UPDATE "cartItems"
+         SET "quantity" = $1
+       WHERE "cartItemId" = $2
+   RETURNING *;
+  `;
+  const values = [quantity, cartItemId];
+  db.query(sql, values)
+    .then(result => {
+      const updatedItem = result.rows[0];
+      if (!updatedItem) {
+        next(new ClientError('Cannot find a product with that Id', 400));
+      }
+      const sql = `
+          SELECT "c"."cartItemId",
+                 "c"."price",
+                 "c"."quantity",
+                 "p"."productId",
+                 "p"."image",
+                 "p"."name",
+                 "p"."shortDescription"
+            FROM "cartItems" as "c"
+            JOIN "products" as "p" using ("productId")
+           WHERE "c"."cartItemId" = $1
+        `;
+      const value = [cartItemId];
+      return (
+        db.query(sql, value)
+          .then(result => {
+            res.status(200).json(result.rows[0]);
+          })
+      );
+    })
+    .catch(err => next(err));
 });
 
 // POST endpoint for email subscriptions

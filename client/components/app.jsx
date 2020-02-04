@@ -16,12 +16,15 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      cartLength: 0
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
+    this.getCartLength = this.getCartLength.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
+    this.updateCart = this.updateCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
     this.deleteProductEntirely = this.deleteProductEntirely.bind(this);
@@ -44,22 +47,29 @@ export default class App extends React.Component {
       .then(data => {
         this.setState({
           cart: data
-        });
+        }, this.getCartLength);
       })
       .catch(err => console.error(err));
   }
 
-  addToCart(products) {
-    const productsToAdd = {
-      productId: products.productId
-    };
+  getCartLength() {
+    const { cart } = this.state;
+    let cartArray = null;
+    for (let index = 0; index < cart.length; index++) {
+      cartArray += parseInt(cart[index].quantity);
+    }
+    this.setState({
+      cartLength: cartArray
+    });
+  }
 
+  addToCart(product) {
     fetch('api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(productsToAdd)
+      body: JSON.stringify(product)
     })
       .then(response => response.json())
       .then(data => {
@@ -79,9 +89,7 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
         const undeletedItems = this.state.cart.filter(item => item.cartItemId !== cartItemId);
         this.setState({
@@ -97,6 +105,18 @@ export default class App extends React.Component {
     for (let index = 0; index < productsToDelete.length; index++) {
       this.deleteFromCart(productsToDelete[index].cartItemId);
     }
+  }
+
+  updateCart(product) {
+    fetch('/api/cart', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    })
+      .then(response => response.json())
+      .catch(err => console.error(err));
   }
 
   setView(name, params) {
@@ -130,7 +150,7 @@ export default class App extends React.Component {
 
   calculateCartTotalCost() {
     const { cart } = this.state;
-    const arrayOfTotalAmount = cart.map(item => item.price);
+    const arrayOfTotalAmount = cart.map(item => (item.price * item.quantity));
     const totalSum = arrayOfTotalAmount.reduce((a, b) => { return a + b; }, 0);
     const itemTotal = (totalSum / 100).toFixed(2);
     return itemTotal;
@@ -148,7 +168,8 @@ export default class App extends React.Component {
         <ProductDetails
           setView={this.setView}
           viewParams={view.params}
-          addToCart={this.addToCart} />
+          addToCart={this.addToCart}
+          getCartItems={this.getCartItems} />
       );
     } else if (view.name === 'cart') {
       return (
@@ -158,14 +179,17 @@ export default class App extends React.Component {
           itemTotal={this.calculateCartTotalCost()}
           deleteItem={this.deleteFromCart}
           addToCart={this.addToCart}
-          deleteProductEntirely={this.deleteProductEntirely}/>
+          updateCart={this.updateCart}
+          deleteProductEntirely={this.deleteProductEntirely}
+          getCartItems={this.getCartItems}/>
       );
     } else if (view.name === 'checkout') {
       return (
         <CheckoutForm
           setView={this.setView}
           placeOrder={this.placeOrder}
-          itemTotal={this.calculateCartTotalCost()} />
+          itemTotal={this.calculateCartTotalCost()}
+          getCartItems={this.getCartItems} />
       );
     } else if (view.name === 'mailing') {
       return (
@@ -182,14 +206,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { cart } = this.state;
+    const { cartLength } = this.state;
     const displayContent = this.displayPage();
 
     return (
       <React.Fragment>
         <Header
           title='Wicked Sales'
-          cartItemCount={cart.length}
+          cartLength={cartLength}
           setView={this.setView} />
         <main id='mainContent'>
           <div className='mainContent'>
