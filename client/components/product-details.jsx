@@ -1,13 +1,21 @@
 import React from 'react';
+import ProductQuantity from './product-quantity';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: null
+      product: null,
+      quantity: 1,
+      modal: false,
+      fade: true
     };
     this.getProductsById = this.getProductsById.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.addToCart = this.addToCart.bind(this);
+    this.incrementQuantity = this.incrementQuantity.bind(this);
+    this.decrementQuantity = this.decrementQuantity.bind(this);
+    this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -27,15 +35,45 @@ class ProductDetails extends React.Component {
       .catch(err => console.error(err));
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  addToCart() {
+    const { product, quantity } = this.state;
     this.props.addToCart({
-      productId: this.props.viewParams.productId
+      productId: product.productId,
+      quantity: quantity
+    });
+    setTimeout(() => {
+      this.props.getCartItems();
+    }, 100);
+
+    this.toggleClickHandler();
+  }
+
+  incrementQuantity() {
+    let { quantity } = this.state;
+    const newQuantity = ++quantity;
+    this.setState({ quantity: newQuantity });
+  }
+
+  decrementQuantity() {
+    let { quantity } = this.state;
+    let newQuantity = --quantity;
+
+    if (newQuantity < 0) {
+      newQuantity = 0;
+    }
+
+    this.setState({ quantity: newQuantity });
+  }
+
+  toggleClickHandler() {
+    this.setState({
+      modal: !this.state.modal,
+      fade: !this.state.fade
     });
   }
 
   render() {
-    const { product } = this.state;
+    const { product, quantity, modal, fade } = this.state;
     return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
@@ -76,21 +114,44 @@ class ProductDetails extends React.Component {
                     style={{ fontSize: '1.7vh' }}> {product.longDescription}
                   </p>
                 </div>
+
+                <ProductQuantity increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity}/>
+
                 <div>
                   <button
                     type='button'
                     className='btn btn-outline-primary btn-md'
-                    onClick={this.handleSubmit}
-                    style={{ cursor: 'pointer' }}> PURCHASE
+                    onClick={this.addToCart}
+                    style={{ cursor: 'pointer' }}> Purchase
                   </button>
                 </div>
+
+                <Modal
+                  isOpen={modal}
+                  toggle={this.toggleClickHandler}
+                  fade={fade}
+                  centered>
+                  <ModalHeader toggle={this.toggleClickHandler}> Product has been added to cart. </ModalHeader>
+                  <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
+                    <img style={{ objectFit: 'cover', height: '200px', width: '300px' }} src={product.image}/>
+                    <div className='d-flex flex-column justify-content-center align-items-center'>
+                      <div> {product.name} </div>
+                      <div> {`$${(product.price / 100).toFixed(2)}`} </div>
+                      <div> Quantity: {quantity} </div>
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={this.toggleClickHandler}> Keep Shopping </Button>
+                    <Button onClick={() => this.props.setView('cart', {})}> Go To Cart</Button>
+                  </ModalFooter>
+                </Modal>
 
                 <div
                   className='backToCatalog d-flex flex-row mt-3'
                   onClick={() => this.props.setView('catalog', {})}
                   style={{ cursor: 'pointer' }}>
                   <i className="fas fa-arrow-left mt-1 mr-2"></i>
-                  <div>{'Back To Catalog'}</div>
+                  <div> Back To Catalog </div>
                 </div>
 
               </div>

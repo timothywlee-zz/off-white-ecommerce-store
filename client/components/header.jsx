@@ -1,8 +1,7 @@
 import React from 'react';
 
 function Header(props) {
-  const itemsInCartCount = props.cartItemCount <= 1 ? 'item' : 'items';
-
+  const itemsInCartCount = props.cartItemCount <= 1 || props.cartItemCount === undefined ? 'item' : 'items';
   return (
     <nav
       id='headerContainer'
@@ -30,7 +29,7 @@ function Header(props) {
             style={{ cursor: 'pointer', width: '150px', height: '50px' }} >
             <div
               className='mx-1 text-secondary'
-              style={{ fontSize: '15px' }}> Cart ({props.cartItemCount} {itemsInCartCount})
+              style={{ fontSize: '15px' }}> Cart ({props.cartLength} {itemsInCartCount} )
             </div>
           </div>
         </div>

@@ -3,53 +3,33 @@ import CartSummaryItem from './cart-summary-item';
 
 class CartSummary extends React.Component {
 
-  getSelectedProduct(cart) {
-    const { itemsInCart } = this.props;
-    const selectedProduct = [];
-    const selectedProductProductIds = [];
-
-    if (cart.length === 0) {
-      return [];
-    }
-
-    selectedProduct.push(itemsInCart[0]);
-    selectedProductProductIds.push(itemsInCart[0].productId);
-
-    for (let index = 1; index < itemsInCart.length; index++) {
-      const product = itemsInCart[index];
-      if (!selectedProductProductIds.includes(product.productId)) {
-        selectedProductProductIds.push(product.productId);
-        selectedProduct.push(product);
-      }
-    }
-    return selectedProduct;
-  }
-
-  getQuantity(productId) {
-    let counter = 0;
-    const cart = this.props.itemsInCart;
-    for (let index = 0; index < cart.length; index++) {
-      if (cart[index].productId === productId) {
-        counter++;
-      }
-    }
-    return counter;
+  getCartLength() {
+    let cartLength = null;
+    this.props.itemsInCart.forEach(product => {
+      cartLength += parseFloat(product.quantity);
+    });
+    return cartLength;
   }
 
   createListOfItemsInCart() {
-    const selectedProduct = this.getSelectedProduct(this.props.itemsInCart);
-    const cartItems = selectedProduct.map(item => {
-      return (
-        <CartSummaryItem
-          key={item.cartItemId}
-          product={item}
-          deleteItem={this.props.deleteItem}
-          addToCart={this.props.addToCart}
-          deleteProductEntirely={this.props.deleteProductEntirely}
-          quantity={this.getQuantity(item.productId)} />
-      );
-    });
-    return cartItems;
+    const cartItemArray = this.props.itemsInCart;
+    let cartItemArrayDisplay = null;
+    if (cartItemArray.length !== 0) {
+      cartItemArrayDisplay = cartItemArray.map(product => {
+        return (
+          <CartSummaryItem
+            key={product.cartItemId}
+            product={product}
+            deleteItem={this.props.deleteItem}
+            addToCart={this.props.addToCart}
+            updateCart={this.props.updateCart}
+            deleteProductEntirely={this.props.deleteProductEntirely}
+            quantity={product.quantity}
+            getCartItems={this.props.getCartItems} />
+        );
+      });
+    }
+    return cartItemArrayDisplay;
   }
 
   render() {
