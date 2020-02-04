@@ -24,6 +24,7 @@ export default class App extends React.Component {
     this.deleteFromCart = this.deleteFromCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
+    this.deleteProductEntirely = this.deleteProductEntirely.bind(this);
   }
 
   componentDidMount() {
@@ -48,13 +49,17 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  addToCart(product) {
+  addToCart(products) {
+    const productsToAdd = {
+      productId: products.productId
+    };
+
     fetch('api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(product)
+      body: JSON.stringify(productsToAdd)
     })
       .then(response => response.json())
       .then(data => {
@@ -84,6 +89,14 @@ export default class App extends React.Component {
         });
       })
       .catch(err => console.error(err));
+  }
+
+  deleteProductEntirely(productId) {
+    const { cart } = this.state;
+    const productsToDelete = cart.filter(item => item.productId === productId);
+    for (let index = 0; index < productsToDelete.length; index++) {
+      this.deleteFromCart(productsToDelete[index].cartItemId);
+    }
   }
 
   setView(name, params) {
@@ -143,7 +156,9 @@ export default class App extends React.Component {
           setView={this.setView}
           itemsInCart={cart}
           itemTotal={this.calculateCartTotalCost()}
-          deleteItem={this.deleteFromCart} />
+          deleteItem={this.deleteFromCart}
+          addToCart={this.addToCart}
+          deleteProductEntirely={this.deleteProductEntirely}/>
       );
     } else if (view.name === 'checkout') {
       return (
@@ -155,15 +170,13 @@ export default class App extends React.Component {
     } else if (view.name === 'mailing') {
       return (
         <MailingList
-          setView={this.setView}
-        />
+          setView={this.setView} />
       );
     } else if (view.name === 'images') {
       return (
         <ProductImages
           setView={this.setView}
-          viewParams={view.params}
-        />
+          viewParams={view.params} />
       );
     }
   }
