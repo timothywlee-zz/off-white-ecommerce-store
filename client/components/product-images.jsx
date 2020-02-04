@@ -69,7 +69,7 @@ class ProductImages extends React.Component {
   render() {
     return (
       <div className='row d-flex justify-content-center align-items-center'>
-        <div className='px-0' style={{ width: '84vh', marginBottom: '4.5vh' }}>
+        <div className='px-0' style={{ width: '100vh', marginBottom: '4.5vh' }}>
           <div id="myCarousel" className="carousel slide" data-ride="carousel">
             <ol className="carousel-indicators" style={{ marginBottom: '-20px' }}>
               <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
