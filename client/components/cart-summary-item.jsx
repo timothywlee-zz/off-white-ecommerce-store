@@ -21,6 +21,7 @@ function CartSummaryItem(props) {
             type='button'
             onClick={() => props.deleteItem(props.product.cartItemId)}> DELETE ITEM
           </button>
+          <div className='border'> {props.quantity} </div>
         </div>
       </div>
     </div>

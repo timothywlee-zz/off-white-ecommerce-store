@@ -2,19 +2,57 @@ import React from 'react';
 import CartSummaryItem from './cart-summary-item';
 
 class CartSummary extends React.Component {
+
+  getSelectedProduct(cart) {
+    const { itemsInCart } = this.props;
+    const selectedProduct = [];
+    const selectedProductProductIds = [];
+
+    if (cart.length === 0) {
+      return [];
+    }
+
+    selectedProduct.push(itemsInCart[0]);
+    selectedProductProductIds.push(itemsInCart[0].productId);
+
+    for (let index = 1; index < itemsInCart.length; index++) {
+      const product = itemsInCart[index];
+      if (!selectedProductProductIds.includes(product.productId)) {
+        selectedProductProductIds.push(product.productId);
+        selectedProduct.push(product);
+      }
+    }
+    return selectedProduct;
+  }
+
+  getQuantity(productId) {
+    let counter = 0;
+    const cart = this.props.itemsInCart;
+    for (let index = 0; index < cart.length; index++) {
+      if (cart[index].productId === productId) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
   createListOfItemsInCart() {
-    return (
-      this.props.itemsInCart.map(item =>
+    const selectedProduct = this.getSelectedProduct(this.props.itemsInCart);
+    const cartItems = selectedProduct.map(item => {
+      return (
         <CartSummaryItem
           key={item.cartItemId}
           product={item}
-          deleteItem={this.props.deleteItem} />
-      )
-    );
+          deleteItem={this.props.deleteItem}
+          addToCart={this.props.addToCart}
+          deleteProductEntirely={this.props.deleteProductEntirely}
+          quantity={this.getQuantity(item.productId)} />
+      );
+    });
+    return cartItems;
   }
 
   render() {
-    const displayItemsInCart = this.createListOfItemsInCart();
     return (
       <div>
         <div
@@ -26,7 +64,7 @@ class CartSummary extends React.Component {
         </div>
         <h2 className='ml-4'> My Cart </h2>
         <div className='mx-2'>
-          {displayItemsInCart}
+          {this.createListOfItemsInCart()}
         </div>
         <div className='d-flex flex-row justify-content-between align-items-center my-5'>
           <h4 className='ml-4'>Item Total ${this.props.itemTotal} </h4>
