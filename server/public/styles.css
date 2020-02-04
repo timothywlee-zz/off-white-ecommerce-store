@@ -56,9 +56,14 @@
 
 
 .prevIcon {
-  padding-right: 12%;
+  padding-right: 10%;
 }
 
 .nextIcon {
-  padding-left: 12%;
+  padding-left: 10%;
+}
+
+
+.carousel-indicators li{
+  width: 3vh;
 }

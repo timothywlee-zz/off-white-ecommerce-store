@@ -140,6 +140,7 @@ export default class App extends React.Component {
       .then(data => {
         this.setState({
           cart: [],
+          cartLength: 0,
           view: {
             name: 'catalog',
             params: {}

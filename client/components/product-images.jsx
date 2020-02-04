@@ -27,7 +27,9 @@ class ProductImages extends React.Component {
         this.setState({
           product: data.productId
         });
-        this.renderProductById();
+        setTimeout(() => {
+          this.renderProductById();
+        }, 100);
       })
       .catch(err => console.error(err));
   }
@@ -69,7 +71,7 @@ class ProductImages extends React.Component {
       <div className='row d-flex justify-content-center align-items-center'>
         <div className='px-0' style={{ width: '84vh', marginBottom: '4.5vh' }}>
           <div id="myCarousel" className="carousel slide" data-ride="carousel">
-            <ol className="carousel-indicators">
+            <ol className="carousel-indicators" style={{ marginBottom: '-20px' }}>
               <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
               <li data-target="#myCarousel" data-slide-to="1" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
               <li data-target="#myCarousel" data-slide-to="2" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
