@@ -10,7 +10,8 @@
 }
 
 .backToCatalog:hover,
-.mailingListText:hover{
+.mailingListText:hover,
+.carouselCancelButton:hover{
     color: #DCDCDC
 }
 
@@ -45,9 +46,9 @@
   margin: 0 0;
 }
 
-.productDetailImg {
+/* .productDetailImg {
   padding: 2vh 2vh 7vh 13vh;
-}
+} */
 
 .productDetailImg:hover{
   transform: scale(1.10);
@@ -68,4 +69,25 @@
 
 .subscribe:hover{
  color:#ff8c00
+}
+
+.productDetailsContainer{
+  max-width: 1500px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.productDetailsShort{
+  margin-bottom: 10px;
+}
+
+.productDetailsLong{
+  margin-bottom: 20px;
+}
+
+.carouselCancelButton{
+  width: 100%;
+  text-align: right;
+  color: black;
+  font-size: 30px;
 }

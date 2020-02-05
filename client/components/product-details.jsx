@@ -16,6 +16,7 @@ class ProductDetails extends React.Component {
     this.incrementQuantity = this.incrementQuantity.bind(this);
     this.decrementQuantity = this.decrementQuantity.bind(this);
     this.toggleClickHandler = this.toggleClickHandler.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   componentDidMount() {
@@ -72,92 +73,69 @@ class ProductDetails extends React.Component {
     });
   }
 
+  changeView() {
+    this.props.setView('catalog', {});
+    this.toggleClickHandler();
+  }
+
   render() {
     const { product, quantity, modal, fade } = this.state;
     return !this.state.product
       ? <h1> Testing connections... </h1>
       : (
-        <div
-          className='row'
-          style={{ height: '66vh' }}>
-          <div>
-            <div
-              className='d-flex flex-row col-12'
-              style={{ height: '66vh' }}>
+        <div className='container productDetailsContainer d-flex justify-content-center align-items-center'>
 
-              <img
-                src={product.image}
-                className='productDetailImg col-6'
-                style={{ height: '66vh' }}
-                onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
+          <div className='row'>
 
-              <div
-                className='d-flex flex-column justify-content-center col-6'
-                style={{ height: '66vh', padding: '4vh 13vh 6vh 5vh' }}>
-                <h1
-                  className='font-weight-bold'
-                  style={{ fontSize: '3vh' }}> {product.name}
-                </h1>
+            <img src={product.image} className='productDetailImg col-sm-6' onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
 
-                <div
-                  style={{ fontSize: '3vh' }}> ${(product.price / 100).toFixed(2)}
-                </div>
+            <div className='d-flex flex-column justify-content-center col-sm-6'>
+              <h1 className='font-weight-bold' style={{ textAlign: 'center', fontSize: '3vh' }}> {product.name} </h1>
+              <div className='font-weight-light' style={{ textAlign: 'center', fontSize: '2.7vh' }}> ${(product.price / 100).toFixed(2)} </div>
 
-                <p
-                  className='text-muted mt-2'
-                  style={{ fontSize: '1.5vh' }}> {product.shortDescription}
-                </p>
+              <p className='productDetailsShort text-muted mt-2' style={{ textAlign: 'center', fontSize: '1.5vh' }}> {product.shortDescription} </p>
 
-                <div>
-                  <p
-                    className='text-muted'
-                    style={{ fontSize: '1.7vh' }}> {product.longDescription}
-                  </p>
-                </div>
+              <div className='productDetailsLong mx-3'>
+                <p className='text-muted' style={{ textAlign: 'center', fontSize: '1.5vh' }}> {product.longDescription} </p>
+              </div>
 
-                <ProductQuantity increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity}/>
+              <ProductQuantity increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity}/>
 
-                <div>
-                  <button
-                    type='button'
-                    className='btn btn-outline-primary btn-md'
-                    onClick={this.addToCart}
-                    style={{ cursor: 'pointer' }}> Purchase
-                  </button>
-                </div>
+              <div className='d-flex flex-column justify-content-center align-items-center'>
 
-                <Modal
-                  isOpen={modal}
-                  toggle={this.toggleClickHandler}
-                  fade={fade}
-                  centered>
-                  <ModalHeader toggle={this.toggleClickHandler}> Product has been added to cart. </ModalHeader>
-                  <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
-                    <img style={{ objectFit: 'cover', height: '200px', width: '300px' }} src={product.image}/>
-                    <div className='d-flex flex-column justify-content-center align-items-center'>
-                      <div> {product.name} </div>
-                      <div> {`$${(product.price / 100).toFixed(2)}`} </div>
-                      <div> Quantity: {quantity} </div>
-                    </div>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={this.toggleClickHandler}> Keep Shopping </Button>
-                    <Button onClick={() => this.props.setView('cart', {})}> Go To Cart</Button>
-                  </ModalFooter>
-                </Modal>
-
-                <div
-                  className='backToCatalog d-flex flex-row mt-3'
+                <button type='button' className='d-flex btn btn-primary btn-md mt-5 justify-content-center' onClick={this.addToCart} style={{ cursor: 'pointer', width: '225px' }}> Purchase </button>
+                <button
+                  type='button'
+                  className='backToCatalog d-flex btn btn-outline-primary mt-1 justify-content-center'
                   onClick={() => this.props.setView('catalog', {})}
-                  style={{ cursor: 'pointer' }}>
+                  style={{ cursor: 'pointer', width: '225px' }}>
                   <i className="fas fa-arrow-left mt-1 mr-2"></i>
                   <div> Back To Catalog </div>
-                </div>
-
+                </button>
               </div>
-            </div>
 
+              <Modal
+                isOpen={modal}
+                toggle={this.toggleClickHandler}
+                fade={fade}
+                centered>
+                <ModalHeader toggle={this.toggleClickHandler}> Product has been added to cart. </ModalHeader>
+                <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
+                  <img style={{ objectFit: 'cover', height: '16vh' }} src={product.image} />
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex font-weight-bold' style={{ textAlign: 'center', fontSize: '17px' }}> {product.name} </div>
+                    <div className='d-flex justify-content-center mt-3'> Quantity: {quantity} </div>
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button className='btn btn-outline-dark' onClick={this.changeView}> Keep Shopping </Button>
+                  <Button className='btn btn-outline-dark' onClick={() => this.props.setView('cart', {})}> Go To Cart</Button>
+                </ModalFooter>
+              </Modal>
+
+            </div>
           </div>
+
         </div>
       );
   }
