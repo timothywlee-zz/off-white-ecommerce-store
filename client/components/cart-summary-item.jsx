@@ -85,8 +85,8 @@ class CartSummaryItem extends React.Component {
             </div>
 
             <QuantityUpdate increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity} />
-            <button className='d-flex btn btn-outline-primary justify-content-center mt-2 mb-1' style={{ width: '18vh' }} onClick={this.handleUpdate}> UPDATE </button>
-            <button className='d-flex btn btn-outline-danger justify-content-center' style={{ width: '18vh' }} onClick={this.toggleClickHandler}> DELETE </button>
+            <button className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1' style={{ width: '18vh' }} onClick={this.handleUpdate}> UPDATE </button>
+            <button className='d-flex btn btn-outline-dark justify-content-center' style={{ width: '18vh' }} onClick={this.toggleClickHandler}> DELETE </button>
           </div>
         </div>
 

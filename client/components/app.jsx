@@ -3,10 +3,11 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
-import CheckoutForm from './checkout-form';
+import Checkout from './checkout';
 import Footer from './footer';
 import MailingList from './mailing-list';
 import ProductImages from './product-images';
+import OrderConfirmation from './order-confirmation';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -142,7 +143,7 @@ export default class App extends React.Component {
           cart: [],
           cartLength: 0,
           view: {
-            name: 'catalog',
+            name: 'orderConfirmation',
             params: {}
           }
         });
@@ -186,7 +187,7 @@ export default class App extends React.Component {
       );
     } else if (view.name === 'checkout') {
       return (
-        <CheckoutForm
+        <Checkout
           setView={this.setView}
           placeOrder={this.placeOrder}
           itemTotal={this.calculateCartTotalCost()}
@@ -202,6 +203,12 @@ export default class App extends React.Component {
         <ProductImages
           setView={this.setView}
           viewParams={view.params} />
+      );
+    } else if (view.name === 'orderConfirmation') {
+      return (
+        <OrderConfirmation
+          setView={this.setView}
+          itemsInCart={cart} />
       );
     }
   }

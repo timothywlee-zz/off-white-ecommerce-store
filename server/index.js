@@ -230,23 +230,23 @@ app.post('/api/cart/', (req, res, next) => {
 
 // POST endpoint to /api/orders
 app.post('/api/orders', (req, res, next) => {
-  const { name, creditCard, shippingAddress } = req.body;
+  const { fullName, email, phone, creditCard, expirationDate, cvv, shippingAddress } = req.body;
 
   if (!req.session.cartId) {
     throw (new ClientError('Cannot find cartId', 400));
   }
 
-  if (!(name && creditCard && shippingAddress)) {
-    throw (new ClientError(`Cannot find all name=${name}, creditCard=${creditCard}, and shippingAddress=${shippingAddress}`, 400));
+  if (!(fullName && email && phone && creditCard && expirationDate && cvv && shippingAddress)) {
+    throw (new ClientError('Cannot find all information', 400));
   }
 
   const addAnOrder = `
-        INSERT INTO "orders" ("cartId", "name", "creditCard", "shippingAddress")
-             VALUES ($1, $2, $3, $4)
+        INSERT INTO "orders" ("cartId", "fullName", "email", "phone", "creditCard", "expirationDate", "cvv", "shippingAddress")
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *
       `;
 
-  const values = [req.session.cartId, name, creditCard, shippingAddress];
+  const values = [req.session.cartId, fullName, email, phone, creditCard, expirationDate, cvv, shippingAddress];
 
   db.query(addAnOrder, values)
     .then(result => {
@@ -254,8 +254,12 @@ app.post('/api/orders', (req, res, next) => {
       res.status(201).json({
         orderId: result.rows[0].orderId,
         createdAt: result.rows[0].createdAt,
-        name: result.rows[0].name,
+        fullName: result.rows[0].fullName,
+        email: result.rows[0].email,
+        phone: result.rows[0].phone,
         creditCard: result.rows[0].creditCard,
+        expirationDate: result.rows[0].expirationDate,
+        cvv: result.rows[0].cvv,
         shippingAddress: result.rows[0].shippingAddress
       });
     });
