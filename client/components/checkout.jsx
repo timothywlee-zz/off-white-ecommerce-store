@@ -69,6 +69,8 @@ class Checkout extends React.Component {
           this.setState({ [event.target.name]: event.target.value });
         }
         break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     this.setState({ validation });
@@ -202,13 +204,13 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-6'>
-                  <label htmlFor='email'>Email</label>
-                  <input type='email'
-                    autoComplete='new-password'
+                  <label htmlFor="email">Email</label>
+                  <input type="email"
+                    autoComplete="new-password"
                     name='email'
                     className={`form-control ${validation.email ? '' : 'is-invalid'}`}
-                    minLength='6'
-                    maxLength='254' />
+                    minLength="6"
+                    maxLength="254" />
                   <div className='invalid-feedback'>
                     <small>Missing or invalid email address</small>
                   </div>
