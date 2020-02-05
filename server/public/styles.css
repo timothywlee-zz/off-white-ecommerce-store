@@ -11,8 +11,8 @@
 
 .backToCatalog:hover,
 .mailingListText:hover,
-.subscribe:hover{
-    color: #DCDCDC
+.carouselCancelButton:hover{
+  color: #DCDCDC
 }
 
 .eachCard:hover{
@@ -20,7 +20,7 @@
 }
 
 .cartSummaryImg {
-  width: 320px;
+  width: 35vh;
 }
 
 .fa-check {
@@ -35,7 +35,7 @@
 }
 
 .mainContent {
-  margin-top: 6vh;
+  height: 100%;
 }
 
 .col-12 {
@@ -46,19 +46,52 @@
   margin: 0 0;
 }
 
-.productDetailImg {
-  padding: 2vh 2vh 7vh 13vh;
-}
 .productDetailImg:hover{
   transform: scale(1.10);
   cursor:zoom-in;
 }
 
-
 .prevIcon {
-  padding-right: 12%;
+  padding-right: 10%;
 }
 
 .nextIcon {
-  padding-left: 12%;
+  padding-left: 10%;
+}
+
+.carousel-indicators li{
+  width: 3vh;
+}
+
+.subscribe:hover{
+ color:#ff8c00
+}
+
+.productDetailsContainer{
+  max-width: 1500px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.productDetailsShort{
+  margin-bottom: 10px;
+}
+
+.productDetailsLong{
+  margin-bottom: 20px;
+}
+
+.carouselCancelButton{
+  width: 100%;
+  text-align: right;
+  color: black;
+  font-size: 30px;
+}
+
+.cartSummaryContainer{
+  max-width: 1500px;
+}
+
+.checkoutContainer{
+  max-width: 1500px;
 }

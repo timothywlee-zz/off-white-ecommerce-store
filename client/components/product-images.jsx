@@ -27,7 +27,9 @@ class ProductImages extends React.Component {
         this.setState({
           product: data.productId
         });
-        this.renderProductById();
+        setTimeout(() => {
+          this.renderProductById();
+        }, 100);
       })
       .catch(err => console.error(err));
   }
@@ -66,40 +68,43 @@ class ProductImages extends React.Component {
 
   render() {
     return (
-      <div className='row d-flex justify-content-center align-items-center'>
-        <div className='px-0' style={{ width: '84vh', marginBottom: '4.5vh' }}>
-          <div id="myCarousel" className="carousel slide" data-ride="carousel">
-            <ol className="carousel-indicators">
-              <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
-              <li data-target="#myCarousel" data-slide-to="1" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
-              <li data-target="#myCarousel" data-slide-to="2" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
-              <li data-target="#myCarousel" data-slide-to="3" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
-            </ol>
-            <div className="carousel-inner" role="listbox">
-              <div className="carousel-item active">
-                <img src={this.state.productImagesArray[0]} className='d-block w-100' />
+      <React.Fragment>
+        <div className='fas fa-times carouselCancelButton pr-3' onClick={() => this.props.setView('details', { productId: this.props.viewParams })} />
+        <div className='row d-flex justify-content-center align-items-center' style={{ height: '73vh' }}>
+          <div className='px-0' style={{ width: '100vh', marginBottom: '4.5vh' }}>
+            <div id="myCarousel" className="carousel slide" data-ride="carousel">
+              <ol className="carousel-indicators" style={{ marginBottom: '-20px' }}>
+                <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+                <li data-target="#myCarousel" data-slide-to="1" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+                <li data-target="#myCarousel" data-slide-to="2" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+                <li data-target="#myCarousel" data-slide-to="3" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
+              </ol>
+              <div className="carousel-inner" role="listbox">
+                <div className="carousel-item active">
+                  <img src={this.state.productImagesArray[0]} className='d-block w-100' />
+                </div>
+                <div className="carousel-item">
+                  <img src={this.state.productImagesArray[1]} className='d-block w-100' />
+                </div>
+                <div className="carousel-item">
+                  <img src={this.state.productImagesArray[2]} className='d-block w-100' />
+                </div>
+                <div className="carousel-item">
+                  <img src={this.state.productImagesArray[3]} className='d-block w-100' />
+                </div>
               </div>
-              <div className="carousel-item">
-                <img src={this.state.productImagesArray[1]} className='d-block w-100' />
-              </div>
-              <div className="carousel-item">
-                <img src={this.state.productImagesArray[2]} className='d-block w-100' />
-              </div>
-              <div className="carousel-item">
-                <img src={this.state.productImagesArray[3]} className='d-block w-100' />
-              </div>
+              <a className="prevIcon carousel-control-prev " href="#myCarousel" role="button" data-slide="prev">
+                <span className="carousel-control-prev-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
+                <span className="sr-only">Previous</span>
+              </a>
+              <a className="nextIcon carousel-control-next " href="#myCarousel" role="button" data-slide="next">
+                <span className="carousel-control-next-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
+                <span className="sr-only">Next</span>
+              </a>
             </div>
-            <a className="prevIcon carousel-control-prev " href="#myCarousel" role="button" data-slide="prev">
-              <span className="carousel-control-prev-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="nextIcon carousel-control-next " href="#myCarousel" role="button" data-slide="next">
-              <span className="carousel-control-next-icon" style={{ filter: 'invert(100%)' }} aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </a>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 

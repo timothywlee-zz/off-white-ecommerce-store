@@ -79,7 +79,8 @@ CREATE TABLE public."cartItems" (
     "cartItemId" integer NOT NULL,
     "cartId" integer NOT NULL,
     "productId" integer NOT NULL,
-    price integer NOT NULL
+    price integer NOT NULL,
+    quantity integer NOT NULL
 );
 
 
@@ -182,8 +183,12 @@ ALTER SEQUENCE public."images_productId_seq" OWNED BY public.images."productId";
 CREATE TABLE public.orders (
     "orderId" integer NOT NULL,
     "cartId" integer NOT NULL,
-    name text NOT NULL,
+    "fullName" text NOT NULL,
+    email text NOT NULL,
+    phone text NOT NULL,
     "creditCard" text NOT NULL,
+    "expirationDate" integer NOT NULL,
+    cvv integer NOT NULL,
     "shippingAddress" text NOT NULL,
     "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
 );
@@ -282,7 +287,15 @@ ALTER TABLE ONLY public.products ALTER COLUMN "productId" SET DEFAULT nextval('p
 -- Data for Name: cartItems; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
+COPY public."cartItems" ("cartItemId", "cartId", "productId", price, quantity) FROM stdin;
+19	44	3	15000	1
+22	45	1	19000	2
+21	45	3	15000	2
+54	47	3	15000	1
+56	47	5	17000	1
+25	46	3	15000	2
+55	47	4	13000	2
+53	47	2	19000	4
 \.
 
 
@@ -291,6 +304,10 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
+44	2020-02-04 21:15:02.444716+00
+45	2020-02-04 21:15:07.753478+00
+46	2020-02-04 21:17:45.987392+00
+47	2020-02-04 21:22:23.568123+00
 \.
 
 
@@ -299,6 +316,10 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 --
 
 COPY public."emailSubs" (email) FROM stdin;
+dfdfd
+timothylee3508@gmail.com
+timothylee3508@gmail.com
+dfadf@gmail.com
 \.
 
 
@@ -323,7 +344,7 @@ COPY public.images ("productId", image1, image2, image3, image4) FROM stdin;
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", "createdAt") FROM stdin;
+COPY public.orders ("orderId", "cartId", "fullName", email, phone, "creditCard", "expirationDate", cvv, "shippingAddress", "createdAt") FROM stdin;
 \.
 
 
@@ -348,14 +369,14 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 192, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 58, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 43, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 47, true);
 
 
 --
@@ -369,7 +390,7 @@ SELECT pg_catalog.setval('public."images_productId_seq"', 9, true);
 -- Name: orders_orderId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."orders_orderId_seq"', 17, true);
+SELECT pg_catalog.setval('public."orders_orderId_seq"', 1, false);
 
 
 --

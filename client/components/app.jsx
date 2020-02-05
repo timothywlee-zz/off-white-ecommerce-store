@@ -3,10 +3,11 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
-import CheckoutForm from './checkout-form';
+import Checkout from './checkout';
 import Footer from './footer';
 import MailingList from './mailing-list';
 import ProductImages from './product-images';
+import OrderConfirmation from './order-confirmation';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,14 +17,18 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      cartLength: 0
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
+    this.getCartLength = this.getCartLength.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
+    this.updateCart = this.updateCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
+    this.resetCart = this.resetCart.bind(this);
   }
 
   componentDidMount() {
@@ -43,9 +48,20 @@ export default class App extends React.Component {
       .then(data => {
         this.setState({
           cart: data
-        });
+        }, this.getCartLength);
       })
       .catch(err => console.error(err));
+  }
+
+  getCartLength() {
+    const { cart } = this.state;
+    let cartArray = null;
+    for (let index = 0; index < cart.length; index++) {
+      cartArray += parseInt(cart[index].quantity);
+    }
+    this.setState({
+      cartLength: cartArray
+    });
   }
 
   addToCart(product) {
@@ -74,15 +90,25 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
         const undeletedItems = this.state.cart.filter(item => item.cartItemId !== cartItemId);
         this.setState({
           cart: undeletedItems
         });
       })
+      .catch(err => console.error(err));
+  }
+
+  updateCart(product) {
+    fetch('/api/cart', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    })
+      .then(response => response.json())
       .catch(err => console.error(err));
   }
 
@@ -106,18 +132,24 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          cart: [],
           view: {
-            name: 'catalog',
+            name: 'orderConfirmation',
             params: {}
           }
         });
       });
   }
 
+  resetCart() {
+    this.setState({
+      cart: [],
+      cartLength: 0
+    });
+  }
+
   calculateCartTotalCost() {
     const { cart } = this.state;
-    const arrayOfTotalAmount = cart.map(item => item.price);
+    const arrayOfTotalAmount = cart.map(item => (item.price * item.quantity));
     const totalSum = arrayOfTotalAmount.reduce((a, b) => { return a + b; }, 0);
     const itemTotal = (totalSum / 100).toFixed(2);
     return itemTotal;
@@ -135,7 +167,8 @@ export default class App extends React.Component {
         <ProductDetails
           setView={this.setView}
           viewParams={view.params}
-          addToCart={this.addToCart} />
+          addToCart={this.addToCart}
+          getCartItems={this.getCartItems} />
       );
     } else if (view.name === 'cart') {
       return (
@@ -143,45 +176,55 @@ export default class App extends React.Component {
           setView={this.setView}
           itemsInCart={cart}
           itemTotal={this.calculateCartTotalCost()}
-          deleteItem={this.deleteFromCart} />
+          deleteItem={this.deleteFromCart}
+          addToCart={this.addToCart}
+          updateCart={this.updateCart}
+          deleteProductEntirely={this.deleteProductEntirely}
+          getCartItems={this.getCartItems}/>
       );
     } else if (view.name === 'checkout') {
       return (
-        <CheckoutForm
+        <Checkout
           setView={this.setView}
           placeOrder={this.placeOrder}
-          itemTotal={this.calculateCartTotalCost()} />
+          itemTotal={this.calculateCartTotalCost()}
+          getCartItems={this.getCartItems} />
       );
     } else if (view.name === 'mailing') {
       return (
         <MailingList
-          setView={this.setView}
-        />
+          setView={this.setView} />
       );
     } else if (view.name === 'images') {
       return (
         <ProductImages
           setView={this.setView}
-          viewParams={view.params}
-        />
+          viewParams={view.params} />
+      );
+    } else if (view.name === 'orderConfirmation') {
+      return (
+        <OrderConfirmation
+          setView={this.setView}
+          itemsInCart={cart}
+          getCartItems={this.getCartItems}
+          resetCart={this.resetCart} />
       );
     }
   }
 
   render() {
-    const { cart } = this.state;
-    const displayContent = this.displayPage();
+    const { cartLength } = this.state;
 
     return (
       <React.Fragment>
         <Header
           title='Wicked Sales'
-          cartItemCount={cart.length}
+          cartLength={cartLength}
           setView={this.setView} />
         <main id='mainContent'>
           <div className='mainContent'>
             <div className='row'>
-              <div className='col-12'> {displayContent} </div>
+              <div className='col-12'> {this.displayPage()} </div>
             </div>
           </div>
         </main>
