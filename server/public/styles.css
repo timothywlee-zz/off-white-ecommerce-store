@@ -10,8 +10,7 @@
 }
 
 .backToCatalog:hover,
-.mailingListText:hover,
-.subscribe:hover{
+.mailingListText:hover{
     color: #DCDCDC
 }
 
@@ -34,9 +33,9 @@
   transform: scale(1.15);
 }
 
-/* .mainContent {
-  margin-top: 6vh;
-} */
+.mainContent {
+  height: 100%;
+}
 
 .col-12 {
   padding: 0 0;
@@ -49,11 +48,11 @@
 .productDetailImg {
   padding: 2vh 2vh 7vh 13vh;
 }
+
 .productDetailImg:hover{
   transform: scale(1.10);
   cursor:zoom-in;
 }
-
 
 .prevIcon {
   padding-right: 10%;
@@ -63,7 +62,10 @@
   padding-left: 10%;
 }
 
-
 .carousel-indicators li{
   width: 3vh;
+}
+
+.subscribe:hover{
+ color:#ff8c00
 }
