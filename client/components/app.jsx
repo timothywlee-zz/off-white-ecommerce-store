@@ -208,7 +208,6 @@ export default class App extends React.Component {
 
   render() {
     const { cartLength } = this.state;
-    const displayContent = this.displayPage();
 
     return (
       <React.Fragment>
@@ -219,7 +218,7 @@ export default class App extends React.Component {
         <main id='mainContent'>
           <div className='mainContent'>
             <div className='row'>
-              <div className='col-12'> {displayContent} </div>
+              <div className='col-12'> {this.displayPage()} </div>
             </div>
           </div>
         </main>

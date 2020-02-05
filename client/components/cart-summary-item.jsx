@@ -28,7 +28,9 @@ class CartSummaryItem extends React.Component {
   handleDelete() {
     const { product } = this.props;
     this.props.deleteItem(product.cartItemId);
-    this.props.getCartItems();
+    setTimeout(() => {
+      this.props.getCartItems();
+    }, 100);
   }
 
   handleUpdate() {
@@ -38,7 +40,9 @@ class CartSummaryItem extends React.Component {
       quantity: newQuantity,
       cartItemId: product.cartItemId
     });
-    this.props.getCartItems();
+    setTimeout(() => {
+      this.props.getCartItems();
+    }, 100);
   }
 
   incrementQuantity() {

@@ -93,7 +93,7 @@ class MailingList extends React.Component {
                         type='submit'
                         style={{ fontSize: '15px', backgroundColor: 'white' }}> subscribe </button>}
                   </div>
-                  {!validEmail && email !== '' ? <div style={{ fontSize: '13px', textAlign: 'center', color: '#ff8c00' }}> `Email must be a valid address (e.g. me@mydomain.com` </div> : null }
+                  {!validEmail && email !== '' ? <div style={{ fontSize: '13px', textAlign: 'center', color: '#ff8c00' }}> Email must be a valid address (e.g. me@mydomain.com) </div> : null }
                 </div>
               </label>
             </form>
