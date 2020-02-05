@@ -3,7 +3,7 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
-import CheckoutForm from './checkout-form';
+import Checkout from './checkout';
 import Footer from './footer';
 import MailingList from './mailing-list';
 import ProductImages from './product-images';
@@ -186,7 +186,7 @@ export default class App extends React.Component {
       );
     } else if (view.name === 'checkout') {
       return (
-        <CheckoutForm
+        <Checkout
           setView={this.setView}
           placeOrder={this.placeOrder}
           itemTotal={this.calculateCartTotalCost()}
