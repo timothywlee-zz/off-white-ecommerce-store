@@ -71,37 +71,40 @@ class CartSummaryItem extends React.Component {
   render() {
     const { quantity, modal, fade } = this.state;
     return (
-      <div className='container border border-dark rounded m-3 shadow-sm'>
-        <div className='row d-flex flex-row'>
+      <div className='container border border-dark rounded shadow-sm my-2' style={{ padding: '0' }}>
+        <div className='row d-flex flex-row my-2'>
           <img
             src={this.props.product.image}
             className='cartSummaryImg'
-            style={{ objectFit: 'contain', height: '30vh' }} />
-          <div className='d-flex flex-column py-5 mx-4'>
-            <h4> {this.props.product.name} </h4>
-            <div className='text-muted'> ${(this.props.product.price / 100).toFixed(2)}  </div>
+            style={{ objectFit: 'contain', width: '50%' }}/>
+
+          <div className='d-flex flex-column justify-content-center align-items-center' style={{ width: '50%' }}>
+            <div className='d-flex flex-column mb-1 justify-content-center align-items-center'>
+              <div className='d-flex font-weight-bold' style={{ fontSize: '1.7vh' }}> {this.props.product.name} </div>
+              <div className='text-muted'> ${(this.props.product.price / 100).toFixed(2)}  </div>
+            </div>
+
+            <QuantityUpdate increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity} />
+            <button className='d-flex btn btn-outline-primary justify-content-center mt-2 mb-1' style={{ width: '18vh' }} onClick={this.handleUpdate}> UPDATE </button>
+            <button className='d-flex btn btn-outline-danger justify-content-center' style={{ width: '18vh' }} onClick={this.toggleClickHandler}> DELETE </button>
           </div>
-
-          <QuantityUpdate increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity}/>
-          <button onClick={this.handleUpdate}> UPDATE </button>
-          <button onClick={this.toggleClickHandler}> DELETE </button>
-
-          <Modal
-            isOpen={modal}
-            toggle={this.toggleClickHandler}
-            fade={fade}
-            centered>
-            <ModalHeader toggle={this.toggleClickHandler}> Caution! </ModalHeader>
-            <ModalBody>
-                  Are you sure you want to delete {this.props.product.name}
-            </ModalBody>
-            <ModalFooter>
-              <Button className='btn btn-outline-danger btn-md' style={{ cursor: 'pointer' }} onClick={this.toggleClickHandler}> No </Button>
-              <Button className='btn btn-outline-primary btn-md' style={{ cursor: 'pointer' }} onClick={this.handleDelete}> Yes </Button>
-            </ModalFooter>
-          </Modal>
-
         </div>
+
+        <Modal
+          isOpen={modal}
+          toggle={this.toggleClickHandler}
+          fade={fade}
+          centered>
+          <ModalHeader toggle={this.toggleClickHandler}> Wait! </ModalHeader>
+          <ModalBody className='d-flex justify-content-center align-items-center flex-column'>
+            Are you sure you want to delete your selection of {this.props.product.name}?
+            <div className='font-weight-bold'>Quantity: {this.props.quantity} </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className='btn btn-outline-primary btn-md' style={{ cursor: 'pointer' }} onClick={this.toggleClickHandler}> No </Button>
+            <Button className='btn btn-outline-danger btn-md' style={{ cursor: 'pointer' }} onClick={this.handleDelete}> Yes </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
