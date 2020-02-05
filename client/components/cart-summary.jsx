@@ -29,7 +29,6 @@ class CartSummary extends React.Component {
             deleteItem={this.props.deleteItem}
             addToCart={this.props.addToCart}
             updateCart={this.props.updateCart}
-            deleteProductEntirely={this.props.deleteProductEntirely}
             quantity={product.quantity}
             getCartItems={this.props.getCartItems} />
         );
@@ -51,53 +50,81 @@ class CartSummary extends React.Component {
   render() {
     const left = { width: '50%', textAlign: 'left' };
     const right = { width: '50%', textAlign: 'right' };
-    return (
-      <div>
+
+    if (this.props.itemsInCart === undefined || this.props.itemsInCart.length === 0) {
+      return (
         <div className='container cartSummaryContainer'>
-          <div className='row'>
-            <div className='col-sm-6'>
-              <h2 className='ml-4' style={{ borderBottom: '1px solid #D3D3D3' }}> My Cart </h2>
-              {this.createListOfItemsInCart()}
-            </div>
-            <div className='col-sm-6' style={{ paddingRight: '10%', paddingLeft: '10%' }}>
-              <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary </h2>
-              <div className='d-flex flex-column py-3' style={{ borderBottom: '1px solid #D3D3D3' }}>
-                <div className='d-flex flex-row ' >
-                  <div className='' style={left}> Subtotal </div>
-                  <div className='' style={right}> ${this.props.itemTotal} </div>
-                </div>
-                <div className='d-flex flex-row'>
-                  <div className='' style={left}> Shipping </div>
-                  <div className='' style={right}> FREE </div>
-                </div>
-                <div className='d-flex flex-row'>
-                  <div className='' style={left}> Tax </div>
-                  <div className='' style={right}> ${this.taxCalculation()} </div>
-                </div>
-              </div>
-              <div className='d-flex flex-row mt-3'>
-                <h4 className='' style={left}> TOTAL </h4>
-                <h4 className='' style={right}> ${this.calculateTotal()} </h4>
-              </div>
-              <div className='d-flex flex-column justify-content-center align-items-center mt-3'>
+          <div className='row d-flex flex-column justify-content-center align-items-center'>
+            <div className='col-sm-8 mb-5 d-flex flex-column justify-content-center' style={{ padding: '0 15%' }}>
+              <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'center' }}> My Cart </h2>
+              <h4 style={{ textAlign: 'center' }}> Cart is empty </h4>
+              <div style={{ margin: 'auto' }}>
                 <button
-                  className='btn btn-outline-dark justify-content-center'
+                  className='d-flex btn btn-outline-dark justify-content-center mt-5'
                   onClick={() => this.props.setView('catalog', {})}
-                  style={{ cursor: 'pointer', width: '100%' }}>
-                  <div> Back To Shopping </div>
+                  style={{ cursor: 'pointer', width: '20vh' }}>
+                        Back To Shopping
                 </button>
                 <button
-                  className='btn btn-outline-dark justify-content-center mt-1'
+                  className='d-flex btn btn-outline-dark justify-content-center mt-1'
                   onClick={() => this.props.setView('checkout', {})}
-                  style={{ cursor: 'pointer', width: '100%' }}>
-                  <div> Checkout </div>
+                  style={{ cursor: 'pointer', width: '20vh' }}>
+                        Checkout
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <div className='container cartSummaryContainer'>
+            <div className='row'>
+              <div className='col-sm-6'>
+                <h2 className='ml-4' style={{ borderBottom: '1px solid #D3D3D3' }}> My Cart </h2>
+                {this.createListOfItemsInCart()}
+              </div>
+              <div className='col-sm-6' style={{ paddingRight: '10%', paddingLeft: '10%' }}>
+                <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary </h2>
+                <div className='d-flex flex-column py-3' style={{ borderBottom: '1px solid #D3D3D3' }}>
+                  <div className='d-flex flex-row ' >
+                    <div className='' style={left}> Subtotal </div>
+                    <div className='' style={right}> ${this.props.itemTotal} </div>
+                  </div>
+                  <div className='d-flex flex-row'>
+                    <div className='' style={left}> Shipping </div>
+                    <div className='' style={right}> FREE </div>
+                  </div>
+                  <div className='d-flex flex-row'>
+                    <div className='' style={left}> Tax </div>
+                    <div className='' style={right}> ${this.taxCalculation()} </div>
+                  </div>
+                </div>
+                <div className='d-flex flex-row mt-3'>
+                  <h4 className='' style={left}> TOTAL </h4>
+                  <h4 className='' style={right}> ${this.calculateTotal()} </h4>
+                </div>
+                <div className='d-flex flex-column justify-content-center align-items-center mt-3'>
+                  <button
+                    className='btn btn-outline-dark justify-content-center'
+                    onClick={() => this.props.setView('catalog', {})}
+                    style={{ cursor: 'pointer', width: '100%' }}>
+                    <div> Back To Shopping </div>
+                  </button>
+                  <button
+                    className='btn btn-outline-dark justify-content-center mt-1'
+                    onClick={() => this.props.setView('checkout', {})}
+                    style={{ cursor: 'pointer', width: '100%' }}>
+                    <div> Checkout </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

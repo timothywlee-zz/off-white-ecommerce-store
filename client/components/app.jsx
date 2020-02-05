@@ -28,7 +28,7 @@ export default class App extends React.Component {
     this.updateCart = this.updateCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
-    this.deleteProductEntirely = this.deleteProductEntirely.bind(this);
+    this.resetCart = this.resetCart.bind(this);
   }
 
   componentDidMount() {
@@ -100,14 +100,6 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  deleteProductEntirely(productId) {
-    const { cart } = this.state;
-    const productsToDelete = cart.filter(item => item.productId === productId);
-    for (let index = 0; index < productsToDelete.length; index++) {
-      this.deleteFromCart(productsToDelete[index].cartItemId);
-    }
-  }
-
   updateCart(product) {
     fetch('/api/cart', {
       method: 'PUT',
@@ -140,14 +132,19 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          cart: [],
-          cartLength: 0,
           view: {
             name: 'orderConfirmation',
             params: {}
           }
         });
       });
+  }
+
+  resetCart() {
+    this.setState({
+      cart: [],
+      cartLength: 0
+    });
   }
 
   calculateCartTotalCost() {
@@ -208,7 +205,9 @@ export default class App extends React.Component {
       return (
         <OrderConfirmation
           setView={this.setView}
-          itemsInCart={cart} />
+          itemsInCart={cart}
+          getCartItems={this.getCartItems}
+          resetCart={this.resetCart} />
       );
     }
   }

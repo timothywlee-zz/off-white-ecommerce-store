@@ -35,7 +35,6 @@ class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
-    this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
 
   inputHandler(event) {
@@ -147,7 +146,11 @@ class Checkout extends React.Component {
         cvv: cvv,
         shippingAddress: `${address.trim()} \n${city.trim()}, ${state} ${zipCode}`
       };
-      this.props.placeOrder(addOrder);
+
+      setTimeout(() => {
+        this.props.placeOrder(addOrder);
+      }, 300);
+
     } else {
       this.setState({
         fullName: fullName.trim(),
@@ -166,13 +169,6 @@ class Checkout extends React.Component {
   calculateTotal() {
     const total = (this.props.itemTotal * 1.0725).toFixed(2);
     return total;
-  }
-
-  toggleClickHandler() {
-    this.setState({
-      modal: !this.state.modal,
-      fade: !this.state.fade
-    });
   }
 
   render() {
@@ -436,7 +432,7 @@ class Checkout extends React.Component {
               <div className='d-flex justify-content-center align-items-center flex-column' style={{ padding: '0 20%' }}>
                 <button
                   className='d-flex btn btn-outline-primary justify-content-center mb-1'
-                  onClick={this.toggleClickHandler}
+                  onClick={this.handleSubmit}
                   style={{ cursor: 'pointer', width: '100%' }}>
                   Process Order
                 </button>
