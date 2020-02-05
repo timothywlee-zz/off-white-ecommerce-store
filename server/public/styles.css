@@ -12,7 +12,7 @@
 .backToCatalog:hover,
 .mailingListText:hover,
 .carouselCancelButton:hover{
-    color: #DCDCDC
+  color: #DCDCDC
 }
 
 .eachCard:hover{
@@ -20,7 +20,7 @@
 }
 
 .cartSummaryImg {
-  width: 320px;
+  width: 35vh;
 }
 
 .fa-check {
@@ -45,10 +45,6 @@
 .row {
   margin: 0 0;
 }
-
-/* .productDetailImg {
-  padding: 2vh 2vh 7vh 13vh;
-} */
 
 .productDetailImg:hover{
   transform: scale(1.10);
@@ -90,4 +86,8 @@
   text-align: right;
   color: black;
   font-size: 30px;
+}
+
+.cartSummaryContainer{
+  max-width: 1500px;
 }
