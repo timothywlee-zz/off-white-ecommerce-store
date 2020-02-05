@@ -109,7 +109,6 @@ class ProductDetails extends React.Component {
                   className='backToCatalog d-flex btn btn-outline-primary mt-1 justify-content-center'
                   onClick={() => this.props.setView('catalog', {})}
                   style={{ cursor: 'pointer', width: '225px' }}>
-                  <i className="fas fa-arrow-left mt-1 mr-2"></i>
                   <div> Back To Catalog </div>
                 </button>
               </div>
