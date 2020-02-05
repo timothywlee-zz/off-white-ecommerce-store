@@ -27,13 +27,15 @@ class Checkout extends React.Component {
         creditCard: true,
         month: true,
         year: true,
-        cvv: true
+        cvv: true,
+        agreementTerms: true
       }
     };
     this.inputHandler = this.inputHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
 
   inputHandler(event) {
@@ -48,7 +50,8 @@ class Checkout extends React.Component {
       creditCard: true,
       month: true,
       year: true,
-      cvv: true
+      cvv: true,
+      agreementTerms: true
     };
 
     const validateNumbers = RegExp(/^[0-9]*$/);
@@ -69,6 +72,9 @@ class Checkout extends React.Component {
           this.setState({ [event.target.name]: event.target.value });
         }
         break;
+      case 'agreementTerms':
+        this.setState({ agreementTerms: !this.state.agreementTerms });
+        break;
       default:
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -78,7 +84,7 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv } = this.state;
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
     const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
     const validateEmail = RegExp(/^([a-zA-Z\d\-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
     const validation = JSON.parse(JSON.stringify(this.state.validation));
@@ -127,6 +133,10 @@ class Checkout extends React.Component {
       validation.cvv = false;
     }
 
+    if (!agreementTerms) {
+      validation.agreementTerms = false;
+    }
+
     if (Object.values(validation).indexOf(false) === -1) {
       const addOrder = {
         fullName: fullName.trim(),
@@ -156,6 +166,13 @@ class Checkout extends React.Component {
   calculateTotal() {
     const total = (this.props.itemTotal * 1.0725).toFixed(2);
     return total;
+  }
+
+  toggleClickHandler() {
+    this.setState({
+      modal: !this.state.modal,
+      fade: !this.state.fade
+    });
   }
 
   render() {
@@ -399,20 +416,38 @@ class Checkout extends React.Component {
                   </div>
                 </div>
               </div>
+
+              <div className="form-group">
+                <div className="form-check">
+                  <input className={`form-check-input ${validation.agreementTerms ? '' : 'is-invalid'}`}
+                    name="agreementTerms"
+                    type="checkbox"
+                    id="gridCheck" />
+                  <label className="form-check-label"
+                    htmlFor="gridCheck">
+                    I accept that this website is simply a demo site and not a real e-commerce store. <br/> I accept that no payment processing will be done, and that real personal information should not be used on submission of this form.
+                  </label>
+                  <div className="invalid-feedback">
+                    <small>Terms are required.</small>
+                  </div>
+                </div>
+              </div>
+
               <div className='d-flex justify-content-center align-items-center flex-column' style={{ padding: '0 20%' }}>
                 <button
-                  type='submit'
                   className='d-flex btn btn-outline-primary justify-content-center mb-1'
+                  onClick={this.toggleClickHandler}
                   style={{ cursor: 'pointer', width: '100%' }}>
-                      Process Order
+                  Process Order
                 </button>
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
                   onClick={() => this.props.setView('cart', {})}
                   style={{ cursor: 'pointer', width: '100%' }}>
-                      Back To Cart
+                  Back To Cart
                 </button>
               </div>
+
             </form>
           </div>
           <div className='col-sm-4'>
