@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Header(props) {
-  const itemsInCartCount = props.cartLength <= 1 || props.cartLength === undefined ? 'item' : 'items';
+  const itemsInCartCount = props.cartLength <= 1 ? 'item' : 'items';
   return (
     <nav
       id='headerContainer'
@@ -18,18 +18,22 @@ function Header(props) {
             className='headerImg'
             onClick={() => props.setView('catalog', {})}
             src='/images/logo.png'
-            style={{ objectFit: 'contain', width: '17vh', height: '10vh', cursor: 'pointer' }}
-          />
+            style={{ objectFit: 'contain', width: '17vh', height: '10vh', cursor: 'pointer' }}/>
         </div>
         <div className='headerCartContainer d-flex flex-row justify-content-center align-items-center col-3' style={{ padding: '0' }}>
           <div
             className='headerCartText d-flex flex-row justify-content-center align-items-center'
             onClick={() => props.setView('cart', {})}
             style={{ cursor: 'pointer', height: '4vh' }} >
-            <div
-              className='text-secondary'
-              style={{ fontSize: '15px', textAlign: 'center' }}> Cart <br/>  ({props.cartLength} {itemsInCartCount})
-            </div>
+
+            {props.cartLength === undefined || props.cartLength === 0 || props.cartLength === null
+              ? <div
+                className='text-secondary'
+                style={{ fontSize: '15px', textAlign: 'center' }}> Cart </div>
+              : <div
+                className='text-secondary'
+                style={{ fontSize: '15px', textAlign: 'center' }}> Cart <br /> ({props.cartLength} {itemsInCartCount})
+              </div>}
           </div>
         </div>
       </div>

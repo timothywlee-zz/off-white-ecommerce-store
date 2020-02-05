@@ -6,7 +6,7 @@ class CartSummary extends React.Component {
   getCartLength() {
     let cartLength = null;
     this.props.itemsInCart.forEach(product => {
-      cartLength += parseFloat(product.quantity);
+      cartLength += product.quantity;
     });
     return cartLength;
   }
