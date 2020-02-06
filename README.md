@@ -1,5 +1,8 @@
 # Off-White Shoes Shop
-Off-White Shoes Shop is a full stack Node.js and React shopping cart app. The app provides the use rwith the ability to add shoes to their cart from a catalog, update the quantity of each item in the cart, and delete selected items from the cart. 
+Off-White Shoes Shop is a full stack Node.js and React e-commerce application that showcases personally selected off-white shoes.
+
+# Live Demo
+Link: https://off-white-shoes-shop.timothywlee.com
 
 # Technologies Used
 * Node.js
@@ -14,12 +17,22 @@ Off-White Shoes Shop is a full stack Node.js and React shopping cart app. The ap
 # Features
 * User can view a list of all shoes
 * User can view details of all shoes
+* User can view multiple angles of all shoes
 * User can add shoes to their cart
 * User can delete shoes from their cart
-* User can add multiple quantities of shoes from cart
+* User can asee and change quantity of shoes from cart
 * User can get to the checkout page
-* User can enter their purchase information
+* User can enter information to purchase shoes
 * User can subscribe via email for future information updates
+* User can see a order confirmation after placing an order
 
-# Getting Started
+# Preview
 * in progress
+
+# Development
+## H2 System Requirements
+* Node.js 10 or higher
+* NPM 6 or higher
+* PostgreSQL 10 or higher
+
+## H2 Getting Started
