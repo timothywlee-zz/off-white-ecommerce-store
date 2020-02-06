@@ -126,7 +126,7 @@ export default class App extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        'Accept': 'application/json'
       },
       body: JSON.stringify(userInformation)
     })
