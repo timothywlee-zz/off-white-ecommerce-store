@@ -1,5 +1,5 @@
 # Off-White Shoes Shop
-Off-White Shoes Shop is a full stack Node.js and React e-commerce application that showcases personally selected off-white shoes.
+Off-White Shoes Shop is a full stack Node.js and React e-commerce application that showcases personally selected off-white shoes. Both desktop and mobile responsive. 
 
 # Live Demo
 Link: https://off-white-shoes-shop.timothywlee.com
