@@ -125,7 +125,8 @@ export default class App extends React.Component {
     fetch('api/orders', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
       },
       body: JSON.stringify(userInformation)
     })
