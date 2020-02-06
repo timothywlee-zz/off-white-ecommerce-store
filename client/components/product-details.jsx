@@ -44,7 +44,7 @@ class ProductDetails extends React.Component {
     });
     setTimeout(() => {
       this.props.getCartItems();
-    }, 100);
+    }, 300);
 
     this.toggleClickHandler();
   }
@@ -81,13 +81,14 @@ class ProductDetails extends React.Component {
   render() {
     const { product, quantity, modal, fade } = this.state;
     return !this.state.product
-      ? <h1> Testing connections... </h1>
+      ? <div style={{ height: '100vh' }}></div>
       : (
         <div className='container productDetailsContainer d-flex justify-content-center align-items-center'>
 
           <div className='row'>
-
-            <img src={product.image} className='productDetailImg col-sm-6' onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
+            <div className='imageContainer col-sm-6 d-flex justify-content-center align-items-center'>
+              <img src={product.image} className='productDetailImg' onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
+            </div>
 
             <div className='d-flex flex-column justify-content-center col-sm-6'>
               <h1 className='font-weight-bold' style={{ textAlign: 'center', fontSize: '3vh' }}> {product.name} </h1>
