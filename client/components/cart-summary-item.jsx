@@ -72,7 +72,7 @@ class CartSummaryItem extends React.Component {
     const { quantity, modal, fade } = this.state;
     return (
       <div className='container border border-dark rounded shadow-sm my-2' style={{ padding: '0' }}>
-        <div className='row d-flex flex-row my-2'>
+        <div className='row d-flex flex-row my-2' style={{ height: '275px' }}>
           <img
             src={this.props.product.image}
             className='cartSummaryImg'
@@ -97,7 +97,11 @@ class CartSummaryItem extends React.Component {
           centered>
           <ModalHeader toggle={this.toggleClickHandler}> Wait! </ModalHeader>
           <ModalBody className='d-flex justify-content-center align-items-center flex-column'>
-            Are you sure you want to delete your selection of {this.props.product.name}?
+            Are you sure you want to delete your selection of
+            <div className='d-flex flex-row'>
+              <div className='font-weight-bold'>{this.props.product.name} </div>
+              <div>?</div>
+            </div>
             <div className='font-weight-bold'>Quantity: {this.props.quantity} </div>
           </ModalBody>
           <ModalFooter>
