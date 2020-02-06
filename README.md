@@ -37,19 +37,19 @@ Link: https://off-white-shoes-shop.timothywlee.com
 
 ## Getting Started
 1. Clone the repository.
-```
+``` javascript
 git clone https://github.com/timothywlee/off-white-shoes-shop
-<cd> off-white-shoes-shop
+cd off-white-shoes-shop
 ```
 2. Install all dependencies with NPM.
-```
+``` javascript
 npm install
 ```
 3. Import the example database to PostgreSQL.
-```
+``` javascript
 npm run db:import
 ```
 4. Start the project. Once started, you can view the application by opening <https://localhost:3000> in your browswer.
-```
+``` javascript
 npm run dev
 ```
