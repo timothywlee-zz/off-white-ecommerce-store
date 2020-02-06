@@ -30,9 +30,26 @@ Link: https://off-white-shoes-shop.timothywlee.com
 * in progress
 
 # Development
-## H2 System Requirements
+## System Requirements
 * Node.js 10 or higher
 * NPM 6 or higher
 * PostgreSQL 10 or higher
 
-## H2 Getting Started
+## Getting Started
+1. Clone the repository.
+```
+git clone https://github.com/timothywlee/off-white-shoes-shop
+<cd> off-white-shoes-shop
+```
+2. Install all dependencies with NPM.
+```
+npm install
+```
+3. Import the example database to PostgreSQL.
+```
+npm run db:import
+```
+4. Start the project. Once started, you can view the application by opening <https://localhost:3000> in your browswer.
+```
+npm run dev
+```
