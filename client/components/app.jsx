@@ -8,6 +8,7 @@ import Footer from './footer';
 import MailingList from './mailing-list';
 import ProductImages from './product-images';
 import OrderConfirmation from './order-confirmation';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
-      cartLength: 0
+      cartLength: 0,
+      modal: true,
+      fade: false
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
@@ -29,6 +32,7 @@ export default class App extends React.Component {
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
     this.resetCart = this.resetCart.bind(this);
+    this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -213,9 +217,15 @@ export default class App extends React.Component {
     }
   }
 
-  render() {
-    const { cartLength } = this.state;
+  toggleClickHandler() {
+    this.setState({
+      modal: !this.state.modal,
+      fade: !this.state.fade
+    });
+  }
 
+  render() {
+    const { modal, fade, cartLength } = this.state;
     return (
       <React.Fragment>
         <Header
@@ -230,6 +240,25 @@ export default class App extends React.Component {
           </div>
         </main>
         <Footer setView={this.setView}/>
+        <Modal
+          isOpen={modal}
+          toggle={this.toggleClickHandler}
+          fade={fade}
+          centered>
+          <ModalHeader toggle={this.toggleClickHandler}> Welcome </ModalHeader>
+          <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <h6 style={{ textAlign: 'center' }}>
+                Off White Shoes Shop is a full stack Node.js and React application that was created for demonstration purposes only. <br /><br />
+                This is not a real e-commerce site. <br /><br />
+                By clicking the button below, you accept that no purchases will be made and that actual personal information should not be used at checkout.
+              </h6>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className='btn btn-danger' onClick={this.toggleClickHandler}> Agree </Button>
+          </ModalFooter>
+        </Modal>
       </React.Fragment>
     );
   }
