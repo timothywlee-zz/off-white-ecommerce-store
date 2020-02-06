@@ -187,8 +187,8 @@ CREATE TABLE public.orders (
     email text NOT NULL,
     phone text NOT NULL,
     "creditCard" text NOT NULL,
-    "expirationDate" integer NOT NULL,
-    cvv integer NOT NULL,
+    "expirationDate" text NOT NULL,
+    cvv text NOT NULL,
     "shippingAddress" text NOT NULL,
     "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
 );
@@ -296,6 +296,7 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price, quantity) F
 25	46	3	15000	2
 55	47	4	13000	2
 53	47	2	19000	4
+59	49	3	15000	1
 \.
 
 
@@ -369,7 +370,7 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 58, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 59, true);
 
 
 --
