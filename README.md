@@ -20,7 +20,7 @@ Link: https://off-white-shoes-shop.timothywlee.com
 * User can view multiple angles of all shoes
 * User can add shoes to their cart
 * User can delete shoes from their cart
-* User can asee and change quantity of shoes from cart
+* User can see and change quantity of shoes from cart
 * User can get to the checkout page
 * User can enter information to purchase shoes
 * User can subscribe via email for future information updates
