@@ -70,8 +70,8 @@ class ProductImages extends React.Component {
     return (
       <React.Fragment>
         <div className='fas fa-times carouselCancelButton pr-3' onClick={() => this.props.setView('details', { productId: this.props.viewParams })} />
-        <div className='row d-flex justify-content-center align-items-center' style={{ height: '73vh' }}>
-          <div className='px-0' style={{ width: '100vh', marginBottom: '4.5vh' }}>
+        <div className='row d-flex justify-content-center align-items-center'>
+          <div className='px-0' style={{ width: '100vh', marginBottom: '23vh' }}>
             <div id="myCarousel" className="carousel slide" data-ride="carousel">
               <ol className="carousel-indicators" style={{ marginBottom: '-20px' }}>
                 <li data-target="#myCarousel" data-slide-to="0" className="active" style={{ height: '0.7vh', filter: 'invert(100%)' }}></li>
