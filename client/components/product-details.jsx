@@ -9,7 +9,8 @@ class ProductDetails extends React.Component {
       product: null,
       quantity: 1,
       modal: false,
-      fade: true
+      fade: true,
+      backdrop: 'static'
     };
     this.getProductsById = this.getProductsById.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -79,7 +80,7 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const { product, quantity, modal, fade } = this.state;
+    const { product, quantity, modal, fade, backdrop } = this.state;
     return !this.state.product
       ? <div style={{ height: '100vh' }}></div>
       : (
@@ -118,6 +119,7 @@ class ProductDetails extends React.Component {
                 isOpen={modal}
                 toggle={this.toggleClickHandler}
                 fade={fade}
+                backdrop={backdrop}
                 centered>
                 <ModalHeader toggle={this.toggleClickHandler}> Product has been added to cart. </ModalHeader>
                 <ModalBody className='d-flex flex-row justify-content-center align-items-center'>

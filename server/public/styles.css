@@ -1,6 +1,30 @@
-/* .selector-for-some-widget {
-  box-sizing: content-box;
-} */
+* {
+  box-sizing: border-box;
+}
+
+*:before,
+*:after{
+  box-sizing: border-box;
+}
+
+html,
+body{
+  height: 100%;
+  position: relative;
+}
+
+.mainContainer{
+  min-height: 100vh;
+  display: block;
+  position: relative;
+  padding-bottom: 10vh;
+}
+
+#footerContainer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 
 .eachCard,
 .headerCartText,
@@ -105,9 +129,14 @@ button.close {
   display: none;
 }
 
-.introModal .modal-header{
+.modal-header{
   display: flex;
   justify-content: center;
+}
+
+.introModal .modal-title{
+  font-weight: bold;
+  font-size: 25px;
 }
 
 

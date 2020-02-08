@@ -81,11 +81,11 @@ class CartSummary extends React.Component {
         <div>
           <div className='container cartSummaryContainer'>
             <div className='row'>
-              <div className='col-sm-6'>
-                <h2 className='ml-4' style={{ borderBottom: '1px solid #D3D3D3' }}> My Cart </h2>
+              <div className='col-sm-8'>
+                <h2 style={{ borderBottom: '1px solid #D3D3D3' }}> My Cart </h2>
                 {this.createListOfItemsInCart()}
               </div>
-              <div className='col-sm-6' style={{ paddingRight: '10%', paddingLeft: '10%' }}>
+              <div className='col-sm-4'>
                 <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary </h2>
                 <div className='d-flex flex-column py-3' style={{ borderBottom: '1px solid #D3D3D3' }}>
                   <div className='d-flex flex-row ' >

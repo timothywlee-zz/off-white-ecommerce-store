@@ -8,7 +8,8 @@ class CartSummaryItem extends React.Component {
     this.state = {
       quantity: 1,
       modal: false,
-      fade: true
+      fade: true,
+      backdrop: 'static'
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -55,10 +56,15 @@ class CartSummaryItem extends React.Component {
     let { quantity } = this.state;
     let newQuantity = --quantity;
 
+    if (newQuantity < 1) {
+      this.toggleClickHandler();
+    }
     if (newQuantity < 0) {
       newQuantity = 0;
     }
+
     this.setState({ quantity: newQuantity });
+
   }
 
   toggleClickHandler() {
@@ -69,24 +75,24 @@ class CartSummaryItem extends React.Component {
   }
 
   render() {
-    const { quantity, modal, fade } = this.state;
+    const { quantity, modal, fade, backdrop } = this.state;
     return (
       <div className='container border border-dark rounded shadow-sm my-2' style={{ padding: '0' }}>
-        <div className='row d-flex flex-row my-2' style={{ height: '275px' }}>
+        <div className='row d-flex justify-content-center align-items-center flex-row my-2' style={{ height: '260px' }}>
           <img
             src={this.props.product.image}
             className='cartSummaryImg'
-            style={{ objectFit: 'contain', width: '50%' }}/>
+            style={{ objectFit: 'contain', width: '42%' }}/>
 
           <div className='d-flex flex-column justify-content-center align-items-center' style={{ width: '50%' }}>
             <div className='d-flex flex-column mb-1 justify-content-center align-items-center'>
-              <div className='d-flex font-weight-bold' style={{ fontSize: '1.7vh' }}> {this.props.product.name} </div>
+              <div className='d-flex font-weight-bold' style={{ fontSize: '1.7vh', textAlign: 'center' }}> {this.props.product.name} </div>
               <div className='text-muted'> ${(this.props.product.price / 100).toFixed(2)}  </div>
             </div>
 
             <QuantityUpdate increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity} />
-            <button className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1' style={{ width: '18vh' }} onClick={this.handleUpdate}> UPDATE </button>
-            <button className='d-flex btn btn-outline-dark justify-content-center' style={{ width: '18vh' }} onClick={this.toggleClickHandler}> DELETE </button>
+            <button className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1' style={{ width: '130px' }} onClick={this.handleUpdate}> UPDATE </button>
+            <button className='d-flex btn btn-outline-dark justify-content-center' style={{ width: '130px' }} onClick={this.toggleClickHandler}> DELETE </button>
           </div>
         </div>
 
@@ -94,6 +100,7 @@ class CartSummaryItem extends React.Component {
           isOpen={modal}
           toggle={this.toggleClickHandler}
           fade={fade}
+          backdrop={backdrop}
           centered>
           <ModalHeader toggle={this.toggleClickHandler}> Wait! </ModalHeader>
           <ModalBody className='d-flex justify-content-center align-items-center flex-column'>
