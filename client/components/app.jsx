@@ -259,7 +259,9 @@ export default class App extends React.Component {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button className='btn btn-danger' onClick={this.toggleClickHandler}> Agree </Button>
+            <Button className='btn btn-danger' onClick={this.toggleClickHandler}>
+              Agree
+            </Button>
           </ModalFooter>
         </Modal>
       </div>
