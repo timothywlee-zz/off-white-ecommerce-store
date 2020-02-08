@@ -77,7 +77,7 @@ class CartSummaryItem extends React.Component {
   render() {
     const { quantity, modal, fade, backdrop } = this.state;
     return (
-      <div className='container border border-dark rounded shadow-sm my-2' style={{ padding: '0' }}>
+      <div className='container border rounded bg-white shadow-sm my-2' style={{ padding: '0' }}>
         <div className='row d-flex justify-content-center align-items-center flex-row my-2' style={{ height: '260px' }}>
           <img
             src={this.props.product.image}
