@@ -10,7 +10,6 @@ const app = express();
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
-
 app.use(express.json());
 
 app.get('/api/health-check', (req, res, next) => {
@@ -38,10 +37,10 @@ app.get('/api/products/:productId', (req, res, next) => {
     });
   } else {
     const getAllProductsSql = `
-    SELECT *
-      FROM "products"
-     WHERE "productId" = $1
-  `;
+      SELECT *
+        FROM "products"
+      WHERE "productId" = $1
+    `;
     const value = [productId];
     db.query(getAllProductsSql, value)
       .then(result => {
@@ -54,7 +53,7 @@ app.get('/api/products/:productId', (req, res, next) => {
       .catch(err => next(err));
   }
 });
-// GET endpoint for /api/cart
+
 app.get('/api/cart', (req, res, next) => {
   if (!req.session.cartId) {
     return res.status(200).json([]);
@@ -81,18 +80,16 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// GET endpoint for /api/images
 app.get('/api/images', (req, res, next) => {
   const getImagesSql = `
       SELECT "image1", "image2", "image3", "image4"
         FROM "images"
-    `;
+  `;
   db.query(getImagesSql)
     .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
 
-// DELETE endpoint for /api/cart
 app.delete('/api/cart/:cartItemId', (req, res, next) => {
   const deleteId = parseInt(req.params.cartItemId);
 
@@ -120,7 +117,6 @@ app.delete('/api/cart/:cartItemId', (req, res, next) => {
   }
 });
 
-// POST endpoint for /api/cart
 app.post('/api/cart/', (req, res, next) => {
   const { productId, quantity } = req.body;
   const idIsValid = productId > 0 && typeof parseInt(productId) === 'number';
@@ -137,7 +133,6 @@ app.post('/api/cart/', (req, res, next) => {
     const value = [productId];
 
     db.query(getProductPriceSql, value)
-      // 1. .then()
       .then(result => {
         if (result.rows.length < 0) {
           throw (new ClientError(`Cannot find a product with the productId=${productId}`, 400));
@@ -151,23 +146,22 @@ app.post('/api/cart/', (req, res, next) => {
           return cart;
         } else {
           const addACart = `
-        INSERT INTO "carts" ("cartId", "createdAt")
-             VALUES (default, default)
-          RETURNING "cartId"
-      `;
+            INSERT INTO "carts" ("cartId", "createdAt")
+                VALUES (default, default)
+              RETURNING "cartId"
+          `;
           return (
             db.query(addACart)
               .then(cartResult => {
                 const createdCart = {
-                  cartId: cartResult.rows[0].cartId, // from cartResult
-                  price: result.rows[0].price // from result from above
+                  cartId: cartResult.rows[0].cartId,
+                  price: result.rows[0].price
                 };
                 return createdCart;
               })
           );
         }
       })
-      // 2. .then()
       .then(data => {
         const { price, cartId } = data;
         req.session.cartId = cartId;
@@ -183,7 +177,7 @@ app.post('/api/cart/', (req, res, next) => {
               if (result.rowCount === 0) {
                 const sql = `
                   INSERT INTO "cartItems" ("cartId", "productId", "price", "quantity")
-                      VALUES ($1, $2, $3, $4)
+                       VALUES ($1, $2, $3, $4)
                     RETURNING "cartItemId";
               `;
                 const values = [cartId, productId, price, quantity];
@@ -201,7 +195,6 @@ app.post('/api/cart/', (req, res, next) => {
             })
         );
       })
-      // 3. .then()
       .then(finalData => {
         const finalSql = `
         SELECT "c"."cartItemId",
@@ -223,12 +216,10 @@ app.post('/api/cart/', (req, res, next) => {
             })
         );
       })
-
       .catch(err => next(err));
   }
 });
 
-// POST endpoint to /api/orders
 app.post('/api/orders', (req, res, next) => {
   const { fullName, email, phone, creditCard, expirationDate, cvv, shippingAddress } = req.body;
 
@@ -244,7 +235,7 @@ app.post('/api/orders', (req, res, next) => {
         INSERT INTO "orders" ("cartId", "fullName", "email", "phone", "creditCard", "expirationDate", "cvv", "shippingAddress")
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *
-      `;
+  `;
 
   const values = [req.session.cartId, fullName, email, phone, creditCard, expirationDate, cvv, shippingAddress];
 
@@ -265,7 +256,6 @@ app.post('/api/orders', (req, res, next) => {
     });
 });
 
-// PUT endpoint for updating quantity amounts in cart-summary page
 app.put('/api/cart', (req, res, next) => {
   const { quantity, cartItemId } = req.body;
   if (!quantity || !cartItemId) {
@@ -295,7 +285,7 @@ app.put('/api/cart', (req, res, next) => {
             FROM "cartItems" as "c"
             JOIN "products" as "p" using ("productId")
            WHERE "c"."cartItemId" = $1
-        `;
+      `;
       const value = [cartItemId];
       return (
         db.query(sql, value)
@@ -307,7 +297,6 @@ app.put('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// POST endpoint for email subscriptions
 app.post('/api/emailSub', (req, res, next) => {
   const { email } = req.body;
 

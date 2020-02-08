@@ -183,7 +183,8 @@ class Checkout extends React.Component {
       <div className='container checkoutContainer'>
         <div className='row'>
           <div className='col-sm-8'>
-            <form className='p-3'
+            <form
+              className='p-3'
               onChange={this.inputHandler}
               onSubmit={this.handleSubmit}
               noValidate>
@@ -191,8 +192,12 @@ class Checkout extends React.Component {
                 <h4> Shipping Address</h4>
               </div>
               <div className='form-group'>
-                <label htmlFor='name' className='text-secondary'>Full Name</label>
-                <input type='text'
+                <label
+                  htmlFor='name'
+                  className='text-secondary'> Full Name
+                </label>
+                <input
+                  type='text'
                   autoComplete='new-password'
                   name='fullName'
                   className={`form-control ${validation.fullName ? '' : 'is-invalid'}`}
@@ -206,8 +211,12 @@ class Checkout extends React.Component {
               </div>
               <div className='form-row'>
                 <div className='form-group col-md-6'>
-                  <label htmlFor="email" className='text-secondary'>Email</label>
-                  <input type="email"
+                  <label
+                    htmlFor="email"
+                    className='text-secondary'> Email
+                  </label>
+                  <input
+                    type="email"
                     autoComplete="new-password"
                     name='email'
                     className={`form-control ${validation.email ? '' : 'is-invalid'}`}
@@ -218,8 +227,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-6'>
-                  <label htmlFor='name' className='text-secondary'>Phone</label>
-                  <input type='tel'
+                  <label
+                    htmlFor='name'
+                    className='text-secondary'> Phone
+                  </label>
+                  <input
+                    type='tel'
                     autoComplete='new-password'
                     name='phone'
                     className={`form-control ${validation.phone ? '' : 'is-invalid'}`}
@@ -234,8 +247,12 @@ class Checkout extends React.Component {
               </div>
               <div className='form-row'>
                 <div className='form-group col-md-12'>
-                  <label htmlFor='inputAddress' className='text-secondary'>Address </label>
-                  <input type='text'
+                  <label
+                    htmlFor='inputAddress'
+                    className='text-secondary'> Address
+                  </label>
+                  <input
+                    type='text'
                     autoComplete='new-password'
                     name='address'
                     onChange={this.inputHandler}
@@ -250,8 +267,12 @@ class Checkout extends React.Component {
               </div>
               <div className='form-row'>
                 <div className='form-group col-md-6'>
-                  <label htmlFor='inputCity' className='text-secondary'>City</label>
-                  <input type='text'
+                  <label
+                    htmlFor='inputCity'
+                    className='text-secondary'> City
+                  </label>
+                  <input
+                    type='text'
                     autoComplete='new-password'
                     name='city'
                     className={`form-control ${validation.city ? '' : 'is-invalid'}`}
@@ -264,8 +285,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
-                  <label htmlFor='inputState' className='text-secondary'>State</label>
-                  <select className={`form-control ${validation.state ? '' : 'is-invalid'}`}
+                  <label
+                    htmlFor='inputState'
+                    className='text-secondary'> State
+                  </label>
+                  <select
+                    className={`form-control ${validation.state ? '' : 'is-invalid'}`}
                     name='state'>
                     <option defaultValue hidden></option>
                     <option value='AL'>Alabama</option>
@@ -325,8 +350,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
-                  <label htmlFor='inputZip' className='text-secondary'>Zip</label>
-                  <input type='tel'
+                  <label
+                    htmlFor='inputZip'
+                    className='text-secondary'> Zip
+                  </label>
+                  <input
+                    type='tel'
                     autoComplete='new-password'
                     name='zipCode'
                     className={`form-control ${validation.zipCode ? '' : 'is-invalid'}`}
@@ -344,8 +373,12 @@ class Checkout extends React.Component {
               </div>
               <div className='form-row mb-3'>
                 <div className='form-group col-md-6'>
-                  <label htmlFor='creditCard' className='text-secondary'>Credit Card Number</label>
-                  <input type='tel'
+                  <label
+                    htmlFor='creditCard'
+                    className='text-secondary'> Credit Card Number
+                  </label>
+                  <input
+                    type='tel'
                     autoComplete='new-password'
                     name='creditCard'
                     className={`form-control ${validation.creditCard ? '' : 'is-invalid'}`}
@@ -358,8 +391,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
-                  <label htmlFor='inputState' className='text-secondary'>Month</label>
-                  <select className={`form-control ${validation.month ? '' : 'is-invalid'}`}
+                  <label
+                    htmlFor='inputState'
+                    className='text-secondary'> Month
+                  </label>
+                  <select
+                    className={`form-control ${validation.month ? '' : 'is-invalid'}`}
                     name='month'>
                     <option defaultValue hidden></option>
                     <option value='01'>01</option>
@@ -380,8 +417,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
-                  <label htmlFor='inputState' className='text-secondary'>Year</label>
-                  <select className={`form-control ${validation.year ? '' : 'is-invalid'}`}
+                  <label
+                    htmlFor='inputState'
+                    className='text-secondary'> Year
+                  </label>
+                  <select
+                    className={`form-control ${validation.year ? '' : 'is-invalid'}`}
                     name='year'>
                     <option defaultValue hidden></option>
                     <option value='2020'>2020</option>
@@ -401,8 +442,12 @@ class Checkout extends React.Component {
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
-                  <label htmlFor='inputZip' className='text-secondary'>CVV</label>
-                  <input type='tel'
+                  <label
+                    htmlFor='inputZip'
+                    className='text-secondary'> CVV
+                  </label>
+                  <input
+                    type='tel'
                     autoComplete='new-password'
                     name='cvv'
                     className={`form-control ${validation.cvv ? '' : 'is-invalid'}`}
@@ -421,7 +466,8 @@ class Checkout extends React.Component {
                     name="agreementTerms"
                     type="checkbox"
                     id="gridCheck" />
-                  <label className="form-check-label"
+                  <label
+                    className="form-check-label"
                     htmlFor="gridCheck">
                     I accept that this website is simply a demo site and not a real e-commerce store. <br/> I accept that no payment processing will be done, and that real personal information should not be used on submission of this form.
                   </label>
@@ -430,41 +476,42 @@ class Checkout extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='d-flex justify-content-center align-items-center flex-column' style={{ padding: '0 30%' }}>
+              <div
+                className='d-flex justify-content-center align-items-center flex-column'
+                style={{ padding: '0 30%' }}>
                 <button
                   className='d-flex btn btn-outline-primary justify-content-center mb-1'
                   onClick={this.handleSubmit}
-                  style={{ cursor: 'pointer', width: '100%' }}>
-                  Process Order
+                  style={{ cursor: 'pointer', width: '100%' }}> Process Order
                 </button>
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
                   onClick={() => this.props.setView('cart', {})}
-                  style={{ cursor: 'pointer', width: '100%' }}>
-                  Back To Cart
+                  style={{ cursor: 'pointer', width: '100%' }}> Back To Cart
                 </button>
               </div>
             </form>
           </div>
           <div className='col-sm-4'>
-            <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary </h2>
+            <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary
+            </h2>
             <div className='d-flex flex-column py-3' style={{ borderBottom: '1px solid #D3D3D3' }}>
               <div className='d-flex flex-row ' >
-                <div className='' style={left}> Subtotal </div>
-                <div className='' style={right}> ${this.props.itemTotal} </div>
+                <div style={left}> Subtotal </div>
+                <div style={right}> ${this.props.itemTotal} </div>
               </div>
               <div className='d-flex flex-row'>
-                <div className='' style={left}> Shipping </div>
-                <div className='' style={right}> FREE </div>
+                <div style={left}> Shipping </div>
+                <div style={right}> FREE </div>
               </div>
               <div className='d-flex flex-row'>
-                <div className='' style={left}> Tax </div>
-                <div className='' style={right}> ${this.taxCalculation()} </div>
+                <div style={left}> Tax </div>
+                <div style={right}> ${this.taxCalculation()} </div>
               </div>
             </div>
             <div className='d-flex flex-row mt-3'>
-              <h4 className='' style={left}> TOTAL </h4>
-              <h4 className='' style={right}> ${this.calculateTotal()} </h4>
+              <h4 style={left}> TOTAL </h4>
+              <h4 style={right}> ${this.calculateTotal()} </h4>
             </div>
             {this.createListOfItemsInCart()}
           </div>

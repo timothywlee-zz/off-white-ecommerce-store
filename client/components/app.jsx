@@ -184,17 +184,16 @@ export default class App extends React.Component {
           deleteItem={this.deleteFromCart}
           addToCart={this.addToCart}
           updateCart={this.updateCart}
-          deleteProductEntirely={this.deleteProductEntirely}
           getCartItems={this.getCartItems}/>
       );
     } else if (view.name === 'checkout') {
       return (
         <Checkout
           setView={this.setView}
+          itemsInCart={cart}
           placeOrder={this.placeOrder}
           itemTotal={this.calculateCartTotalCost()}
-          getCartItems={this.getCartItems}
-          itemsInCart={cart} />
+          getCartItems={this.getCartItems}/>
       );
     } else if (view.name === 'mailing') {
       return (
@@ -230,7 +229,6 @@ export default class App extends React.Component {
     return (
       <div className='mainContainer'>
         <Header
-          title='Wicked Sales'
           cartLength={cartLength}
           setView={this.setView} />
         <main id='mainContent'>
@@ -244,12 +242,12 @@ export default class App extends React.Component {
         </main>
         <Footer setView={this.setView} />
         <Modal
+          className='introModal'
           isOpen={modal}
           toggle={this.toggleClickHandler}
           fade={fade}
           backdrop={backdrop}
-          centered
-          className='introModal'>
+          centered>
           <ModalHeader toggle={this.toggleClickHandler}> Welcome </ModalHeader>
           <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
             <div className='d-flex justify-content-center align-items-center'>

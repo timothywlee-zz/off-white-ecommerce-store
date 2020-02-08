@@ -64,7 +64,6 @@ class CartSummaryItem extends React.Component {
     }
 
     this.setState({ quantity: newQuantity });
-
   }
 
   toggleClickHandler() {
@@ -77,43 +76,84 @@ class CartSummaryItem extends React.Component {
   render() {
     const { quantity, modal, fade, backdrop } = this.state;
     return (
-      <div className='container border rounded bg-white shadow-sm my-2' style={{ padding: '0' }}>
-        <div className='row d-flex justify-content-center align-items-center flex-row my-2' style={{ height: '260px' }}>
+      <div
+        className='container border rounded bg-white shadow-sm my-2'
+        style={{ padding: '0' }}>
+        <div
+          className='row d-flex justify-content-center align-items-center flex-row my-2'
+          style={{ height: '260px' }}>
           <img
             src={this.props.product.image}
             className='cartSummaryImg'
             style={{ objectFit: 'contain', width: '42%' }}/>
-
-          <div className='d-flex flex-column justify-content-center align-items-center' style={{ width: '50%' }}>
+          <div
+            className='d-flex flex-column justify-content-center align-items-center'
+            style={{ width: '50%' }}>
             <div className='d-flex flex-column mb-1 justify-content-center align-items-center'>
-              <div className='d-flex font-weight-bold' style={{ fontSize: '1.7vh', textAlign: 'center' }}> {this.props.product.name} </div>
-              <div className='text-muted'> ${(this.props.product.price / 100).toFixed(2)}  </div>
+              <div
+                className='d-flex font-weight-bold'
+                style={{ fontSize: '1.7vh', textAlign: 'center' }}>
+                {this.props.product.name}
+              </div>
+              <div className='text-muted'>
+                ${(this.props.product.price / 100).toFixed(2)}
+              </div>
             </div>
-
-            <QuantityUpdate increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity} />
-            <button className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1' style={{ width: '130px' }} onClick={this.handleUpdate}> UPDATE </button>
-            <button className='d-flex btn btn-outline-dark justify-content-center' style={{ width: '130px' }} onClick={this.toggleClickHandler}> DELETE </button>
+            <QuantityUpdate
+              increment={this.incrementQuantity}
+              decrement={this.decrementQuantity}
+              quantity={quantity} />
+            <button
+              className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1'
+              style={{ width: '130px' }}
+              onClick={this.handleUpdate}>
+              UPDATE
+            </button>
+            <button
+              className='d-flex btn btn-outline-dark justify-content-center'
+              style={{ width: '130px' }}
+              onClick={this.toggleClickHandler}>
+              DELETE
+            </button>
           </div>
         </div>
-
         <Modal
           isOpen={modal}
           toggle={this.toggleClickHandler}
           fade={fade}
           backdrop={backdrop}
           centered>
-          <ModalHeader toggle={this.toggleClickHandler}> Wait! </ModalHeader>
-          <ModalBody className='d-flex justify-content-center align-items-center flex-column'>
+          <ModalHeader
+            toggle={this.toggleClickHandler}>
+            Wait!
+          </ModalHeader>
+          <ModalBody
+            className='d-flex justify-content-center align-items-center flex-column'>
             Are you sure you want to delete your selection of
             <div className='d-flex flex-row'>
-              <div className='font-weight-bold'>{this.props.product.name} </div>
+              <div className='font-weight-bold'>
+                {this.props.product.name}
+              </div>
               <div>?</div>
             </div>
-            <div className='font-weight-bold'>Quantity: {this.props.quantity} </div>
+            <div
+              className='font-weight-bold'>
+                Quantity: {this.props.quantity}
+            </div>
           </ModalBody>
           <ModalFooter>
-            <Button className='btn btn-outline-primary btn-md' style={{ cursor: 'pointer' }} onClick={this.toggleClickHandler}> No </Button>
-            <Button className='btn btn-outline-danger btn-md' style={{ cursor: 'pointer' }} onClick={this.handleDelete}> Yes </Button>
+            <Button
+              className='btn btn-outline-primary btn-md'
+              style={{ cursor: 'pointer' }}
+              onClick={this.toggleClickHandler}>
+              No
+            </Button>
+            <Button
+              className='btn btn-outline-danger btn-md'
+              style={{ cursor: 'pointer' }}
+              onClick={this.handleDelete}>
+              Yes
+            </Button>
           </ModalFooter>
         </Modal>
       </div>

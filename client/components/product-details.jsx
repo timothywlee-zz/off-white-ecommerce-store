@@ -46,7 +46,7 @@ class ProductDetails extends React.Component {
     });
     setTimeout(() => {
       this.props.getCartItems();
-    }, 300);
+    }, 200);
 
     this.toggleClickHandler();
   }
@@ -86,27 +86,47 @@ class ProductDetails extends React.Component {
       ? <div style={{ height: '100vh' }}></div>
       : (
         <div className='container productDetailsContainer d-flex justify-content-center align-items-center'>
-
           <div className='row'>
             <div className='imageContainer col-sm-6 d-flex justify-content-center align-items-center'>
-              <img src={product.image} className='productDetailImg' onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
+              <img
+                src={product.image}
+                className='productDetailImg'
+                onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
             </div>
-
             <div className='d-flex flex-column justify-content-center col-sm-6'>
-              <h1 className='font-weight-bold' style={{ textAlign: 'center', fontSize: '3vh' }}> {product.name} </h1>
-              <div className='font-weight-light' style={{ textAlign: 'center', fontSize: '2.7vh' }}> ${(product.price / 100).toFixed(2)} </div>
-
-              <p className='productDetailsShort text-muted mt-2' style={{ textAlign: 'center', fontSize: '1.5vh' }}> {product.shortDescription} </p>
-
-              <div className='productDetailsLong mx-3'>
-                <p className='text-muted' style={{ textAlign: 'center', fontSize: '1.5vh' }}> {product.longDescription} </p>
+              <h1
+                className='font-weight-bold'
+                style={{ textAlign: 'center', fontSize: '3vh' }}>
+                {product.name}
+              </h1>
+              <div
+                className='font-weight-light'
+                style={{ textAlign: 'center', fontSize: '2.7vh' }}>
+                ${(product.price / 100).toFixed(2)}
               </div>
-
-              <ProductQuantity increment={this.incrementQuantity} decrement={this.decrementQuantity} quantity={quantity}/>
-
+              <p
+                className='productDetailsShort text-muted mt-2'
+                style={{ textAlign: 'center', fontSize: '1.5vh' }}>
+                {product.shortDescription}
+              </p>
+              <div className='productDetailsLong mx-3'>
+                <p
+                  className='text-muted'
+                  style={{ textAlign: 'center', fontSize: '1.5vh' }}>
+                  {product.longDescription}
+                </p>
+              </div>
+              <ProductQuantity
+                increment={this.incrementQuantity}
+                decrement={this.decrementQuantity}
+                quantity={quantity}/>
               <div className='d-flex flex-column justify-content-center align-items-center'>
-
-                <button type='button' className='d-flex btn btn-primary btn-md mt-5 justify-content-center' onClick={this.addToCart} style={{ cursor: 'pointer', width: '225px' }}> Purchase </button>
+                <button
+                  type='button'
+                  className='d-flex btn btn-primary btn-md mt-5 justify-content-center'
+                  onClick={this.addToCart} style={{ cursor: 'pointer', width: '225px' }}>
+                  Purchase
+                </button>
                 <button
                   type='button'
                   className='backToCatalog d-flex btn btn-outline-primary mt-1 justify-content-center'
@@ -115,30 +135,46 @@ class ProductDetails extends React.Component {
                   <div> Back To Catalog </div>
                 </button>
               </div>
-
               <Modal
                 isOpen={modal}
                 toggle={this.toggleClickHandler}
                 fade={fade}
                 backdrop={backdrop}
                 centered>
-                <ModalHeader toggle={this.toggleClickHandler}> Product has been added to cart. </ModalHeader>
+                <ModalHeader toggle={this.toggleClickHandler}>
+                   Product has been added to cart.
+                </ModalHeader>
                 <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
-                  <img style={{ objectFit: 'cover', height: '16vh' }} src={product.image} />
+                  <img
+                    style={{ objectFit: 'cover', height: '16vh' }}
+                    src={product.image} />
                   <div className='d-flex flex-column'>
-                    <div className='d-flex font-weight-bold' style={{ textAlign: 'center', fontSize: '17px' }}> {product.name} </div>
-                    <div className='d-flex justify-content-center mt-3'> Quantity: {quantity} </div>
+                    <div
+                      className='d-flex font-weight-bold'
+                      style={{ textAlign: 'center', fontSize: '17px' }}>
+                      {product.name}
+                    </div>
+                    <div
+                      className='d-flex justify-content-center mt-3'>
+                      Quantity: {quantity}
+                    </div>
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <Button className='btn btn-outline-dark' onClick={this.changeView}> Keep Shopping </Button>
-                  <Button className='btn btn-outline-dark' onClick={() => this.props.setView('cart', {})}> Go To Cart</Button>
+                  <Button
+                    className='btn btn-outline-dark'
+                    onClick={this.changeView}>
+                    Keep Shopping
+                  </Button>
+                  <Button
+                    className='btn btn-outline-dark'
+                    onClick={() => this.props.setView('cart', {})}>
+                    Go To Cart
+                  </Button>
                 </ModalFooter>
               </Modal>
-
             </div>
           </div>
-
         </div>
       );
   }

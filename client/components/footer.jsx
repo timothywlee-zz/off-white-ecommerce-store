@@ -16,7 +16,8 @@ function Footer(props) {
           <div
             className='mailingListText'
             onClick={() => props.setView('mailing', {})}
-            style={{ cursor: 'pointer', fontSize: '15px' }}> MAILING LIST
+            style={{ cursor: 'pointer', fontSize: '15px' }}>
+            MAILING LIST
           </div>
           <img
             className='footerImg mt-1'

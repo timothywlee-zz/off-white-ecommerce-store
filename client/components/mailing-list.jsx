@@ -27,7 +27,7 @@ class MailingList extends React.Component {
 
   validateEmail() {
     const { email } = this.state;
-    const validateEmail = RegExp(/^([a-zA-Z\d\-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
+    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
 
     if (!validateEmail.test(email)) {
       this.setState({ validEmail: false });
@@ -61,7 +61,8 @@ class MailingList extends React.Component {
           className='d-flex flex-column col-12'>
           <div
             className='d-flex justify-content-center font-weight-bold'
-            style={{ fontSize: '5vh', marginBottom: '15vh' }}> MAILING LIST
+            style={{ fontSize: '5vh', marginBottom: '15vh' }}>
+            MAILING LIST
           </div>
           <div
             className='d-flex flex-column align-items-center'
@@ -72,13 +73,13 @@ class MailingList extends React.Component {
               style={{ width: '60%' }}>
               <div
                 className='d-flex justify-content-center mb-3'
-                style={{ fontSize: '20px', textAlign: 'center' }}>Sign up for monthly updates
+                style={{ fontSize: '20px', textAlign: 'center' }}>
+                Sign up for monthly updates
               </div>
               <label
                 style={{ borderBottom: '2px solid black' }}>
                 <div
                   className='d-flex flex-column justify-content-center mb-2'>
-
                   <div className='d-flex flex-row justify-content-center'>
                     <input
                       type='text'
@@ -87,17 +88,28 @@ class MailingList extends React.Component {
                       value={this.state.email}
                       onChange={this.handleChange}
                       style={{ width: '80%', fontSize: '15px' }} />
-
-                    {!validEmail
-                      ? <div
-                        className='border-0'
-                        style={{ fontSize: '15px' }} > subscribe </div>
-                      : <button
-                        className='subscribe border-0'
-                        type='submit'
-                        style={{ fontSize: '15px', backgroundColor: 'white' }}> subscribe </button>}
+                    {
+                      !validEmail
+                        ? <div
+                          className='border-0'
+                          style={{ fontSize: '15px' }} >
+                          subscribe
+                        </div>
+                        : <button
+                          className='subscribe border-0'
+                          type='submit'
+                          style={{ fontSize: '15px', backgroundColor: 'white' }}>
+                          subscribe
+                        </button>
+                    }
                   </div>
-                  {!validEmail && email !== '' ? <div style={{ fontSize: '13px', textAlign: 'center', color: '#ff8c00' }}> Email must be a valid address (e.g. me@mydomain.com) </div> : null }
+                  {
+                    !validEmail && email !== ''
+                      ? <div style={{ fontSize: '13px', textAlign: 'center', color: '#ff8c00' }}>
+                        Email must be a valid address (e.g. me@mydomain.com)
+                      </div>
+                      : null
+                  }
                 </div>
               </label>
             </form>

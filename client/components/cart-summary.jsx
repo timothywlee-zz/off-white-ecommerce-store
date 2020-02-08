@@ -54,9 +54,7 @@ class CartSummary extends React.Component {
         </button>
       );
     } else {
-      return (
-        null
-      );
+      return null;
     }
   }
 
@@ -68,15 +66,17 @@ class CartSummary extends React.Component {
       return (
         <div className='container cartSummaryContainer'>
           <div className='row d-flex flex-column justify-content-center align-items-center'>
-            <div className='col-sm-8 mb-5 d-flex flex-column justify-content-center' style={{ padding: '0 15%' }}>
-              <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'center' }}> My Cart </h2>
-              <h4 style={{ textAlign: 'center' }}> Cart is empty </h4>
+            <div
+              className='col-sm-8 mb-5 d-flex flex-column justify-content-center'
+              style={{ padding: '0 15%' }}>
+              <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'center' }}>My Cart</h2>
+              <h4 style={{ textAlign: 'center' }}>Cart is empty</h4>
               <div style={{ margin: 'auto' }}>
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center mt-5'
                   onClick={() => this.props.setView('catalog', {})}
                   style={{ cursor: 'pointer', width: '20vh' }}>
-                        Back To Shopping
+                  Back To Shopping
                 </button>
                 {this.cartLengthCheck()}
               </div>
@@ -90,28 +90,30 @@ class CartSummary extends React.Component {
           <div className='container cartSummaryContainer'>
             <div className='row'>
               <div className='col-sm-8'>
-                <h2 style={{ borderBottom: '1px solid #D3D3D3' }}> My Cart </h2>
+                <h2 style={{ borderBottom: '1px solid #D3D3D3' }}>My Cart</h2>
                 {this.createListOfItemsInCart()}
               </div>
               <div className='col-sm-4'>
-                <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}> Summary </h2>
-                <div className='d-flex flex-column py-3' style={{ borderBottom: '1px solid #D3D3D3' }}>
+                <h2 style={{ borderBottom: '1px solid #D3D3D3', textAlign: 'left', marginBottom: '0' }}>Summary</h2>
+                <div
+                  className='d-flex flex-column py-3'
+                  style={{ borderBottom: '1px solid #D3D3D3' }}>
                   <div className='d-flex flex-row ' >
-                    <div className='' style={left}> Subtotal </div>
-                    <div className='' style={right}> ${this.props.itemTotal} </div>
+                    <div style={left}> Subtotal </div>
+                    <div style={right}> ${this.props.itemTotal} </div>
                   </div>
                   <div className='d-flex flex-row'>
-                    <div className='' style={left}> Shipping </div>
-                    <div className='' style={right}> FREE </div>
+                    <div style={left}> Shipping </div>
+                    <div style={right}> FREE </div>
                   </div>
                   <div className='d-flex flex-row'>
-                    <div className='' style={left}> Tax </div>
-                    <div className='' style={right}> ${this.taxCalculation()} </div>
+                    <div style={left}> Tax </div>
+                    <div style={right}> ${this.taxCalculation()} </div>
                   </div>
                 </div>
                 <div className='d-flex flex-row mt-3'>
-                  <h4 className='' style={left}> TOTAL </h4>
-                  <h4 className='' style={right}> ${this.calculateTotal()} </h4>
+                  <h4 style={left}> TOTAL </h4>
+                  <h4 style={right}> ${this.calculateTotal()} </h4>
                 </div>
                 <div className='d-flex flex-column justify-content-center align-items-center mt-3'>
                   <button
