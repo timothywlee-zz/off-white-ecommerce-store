@@ -16,6 +16,7 @@ class ProductImages extends React.Component {
   componentDidMount() {
     this.getImages();
     this.getProductsById();
+    window.scrollTo(0, 0);
   }
 
   getProductsById() {

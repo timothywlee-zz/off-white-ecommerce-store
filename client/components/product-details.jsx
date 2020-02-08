@@ -22,6 +22,7 @@ class ProductDetails extends React.Component {
 
   componentDidMount() {
     this.getProductsById();
+    window.scrollTo(0, 0);
   }
 
   getProductsById() {

@@ -9,6 +9,10 @@ class CartSummary extends React.Component {
     this.calculateTotal = this.calculateTotal.bind(this);
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   getCartLength() {
     let cartLength = null;
     this.props.itemsInCart.forEach(product => {

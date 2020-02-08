@@ -11,6 +11,10 @@ class MailingList extends React.Component {
     this.addEmail = this.addEmail.bind(this);
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   handleChange(event) {
     this.setState({ email: event.target.value });
   }

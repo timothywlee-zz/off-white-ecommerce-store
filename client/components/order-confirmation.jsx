@@ -7,6 +7,10 @@ class OrderConfirmation extends React.Component {
     this.resetCartChangeView = this.resetCartChangeView.bind(this);
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   resetCartChangeView() {
     this.props.setView('catalog', {});
     setTimeout(() => {
