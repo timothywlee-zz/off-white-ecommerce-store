@@ -1,4 +1,5 @@
 import React from 'react';
+import CheckoutSummaryItem from './checkout-summary-item';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -154,6 +155,23 @@ class Checkout extends React.Component {
   calculateTotal() {
     const total = (this.props.itemTotal * 1.0725).toFixed(2);
     return total;
+  }
+
+  createListOfItemsInCart() {
+    const cartItemArray = this.props.itemsInCart;
+    let cartItemArrayDisplay = null;
+    if (cartItemArray.length !== 0) {
+      cartItemArrayDisplay = cartItemArray.map(product => {
+        return (
+          <CheckoutSummaryItem
+            key={product.cartItemId}
+            product={product}
+            quantity={product.quantity}
+            getCartItems={this.props.getCartItems} />
+        );
+      });
+    }
+    return cartItemArrayDisplay;
   }
 
   render() {
@@ -448,8 +466,7 @@ class Checkout extends React.Component {
               <h4 className='' style={left}> TOTAL </h4>
               <h4 className='' style={right}> ${this.calculateTotal()} </h4>
             </div>
-            <div className='d-flex flex-column justify-content-center align-items-center mt-3'>
-            </div>
+            {this.createListOfItemsInCart()}
           </div>
         </div>
       </div>
