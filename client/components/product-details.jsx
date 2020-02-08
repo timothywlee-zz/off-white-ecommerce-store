@@ -96,23 +96,23 @@ class ProductDetails extends React.Component {
             <div className='d-flex flex-column justify-content-center col-sm-6'>
               <h1
                 className='font-weight-bold'
-                style={{ textAlign: 'center', fontSize: '3vh' }}>
+                style={{ textAlign: 'center', fontSize: '24px' }}>
                 {product.name}
               </h1>
               <div
                 className='font-weight-light'
-                style={{ textAlign: 'center', fontSize: '2.7vh' }}>
+                style={{ textAlign: 'center', fontSize: '25px' }}>
                 ${(product.price / 100).toFixed(2)}
               </div>
               <p
                 className='productDetailsShort text-muted mt-2'
-                style={{ textAlign: 'center', fontSize: '1.5vh' }}>
+                style={{ textAlign: 'center', fontSize: '12px' }}>
                 {product.shortDescription}
               </p>
               <div className='productDetailsLong mx-3'>
                 <p
                   className='text-muted'
-                  style={{ textAlign: 'center', fontSize: '1.5vh' }}>
+                  style={{ textAlign: 'center', fontSize: '15px' }}>
                   {product.longDescription}
                 </p>
               </div>
