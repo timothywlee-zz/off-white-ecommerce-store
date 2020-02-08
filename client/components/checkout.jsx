@@ -412,7 +412,7 @@ class Checkout extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='d-flex justify-content-center align-items-center flex-column' style={{ padding: '0 20%' }}>
+              <div className='d-flex justify-content-center align-items-center flex-column' style={{ padding: '0 30%' }}>
                 <button
                   className='d-flex btn btn-outline-primary justify-content-center mb-1'
                   onClick={this.handleSubmit}

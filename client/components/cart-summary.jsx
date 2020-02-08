@@ -4,21 +4,13 @@ import CartSummaryItem from './cart-summary-item';
 class CartSummary extends React.Component {
   constructor(props) {
     super(props);
-
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.cartLengthCheck = this.cartLengthCheck.bind(this);
   }
 
   componentDidMount() {
     window.scrollTo(0, 0);
-  }
-
-  getCartLength() {
-    let cartLength = null;
-    this.props.itemsInCart.forEach(product => {
-      cartLength += product.quantity;
-    });
-    return cartLength;
   }
 
   createListOfItemsInCart() {
@@ -51,6 +43,23 @@ class CartSummary extends React.Component {
     return total;
   }
 
+  cartLengthCheck() {
+    if (this.props.itemsInCart.length !== 0) {
+      return (
+        <button
+          className='d-flex btn btn-outline-dark justify-content-center mt-1'
+          onClick={() => this.props.setView('checkout', {})}
+          style={{ cursor: 'pointer', width: '20vh' }}>
+          Checkout
+        </button>
+      );
+    } else {
+      return (
+        null
+      );
+    }
+  }
+
   render() {
     const left = { width: '50%', textAlign: 'left' };
     const right = { width: '50%', textAlign: 'right' };
@@ -69,12 +78,7 @@ class CartSummary extends React.Component {
                   style={{ cursor: 'pointer', width: '20vh' }}>
                         Back To Shopping
                 </button>
-                <button
-                  className='d-flex btn btn-outline-dark justify-content-center mt-1'
-                  onClick={() => this.props.setView('checkout', {})}
-                  style={{ cursor: 'pointer', width: '20vh' }}>
-                        Checkout
-                </button>
+                {this.cartLengthCheck()}
               </div>
             </div>
           </div>
