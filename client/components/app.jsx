@@ -227,7 +227,7 @@ export default class App extends React.Component {
   render() {
     const { modal, fade, cartLength, backdrop } = this.state;
     return (
-      <React.Fragment>
+      <div className='mainContainer'>
         <Header
           title='Wicked Sales'
           cartLength={cartLength}
@@ -235,11 +235,13 @@ export default class App extends React.Component {
         <main id='mainContent'>
           <div className='mainContent'>
             <div className='row'>
-              <div className='col-12'> {this.displayPage()} </div>
+              <div className='col-12'>
+                {this.displayPage()}
+              </div>
             </div>
           </div>
         </main>
-        <Footer setView={this.setView}/>
+        <Footer setView={this.setView} />
         <Modal
           isOpen={modal}
           toggle={this.toggleClickHandler}
@@ -261,7 +263,7 @@ export default class App extends React.Component {
             <Button className='btn btn-danger' onClick={this.toggleClickHandler}> Agree </Button>
           </ModalFooter>
         </Modal>
-      </React.Fragment>
+      </div>
     );
   }
 }
