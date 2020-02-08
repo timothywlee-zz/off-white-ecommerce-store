@@ -6,7 +6,7 @@ function Footer(props) {
     <nav
       id='footerContainer'
       className='navbar bg-white p-0'
-      style={{ height: '10vh' }}>
+      style={{ height: '15vh' }}>
       <div
         id='footerInnerContainer'
         className='d-flex flex-row justify-content col-12'>
