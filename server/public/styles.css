@@ -98,45 +98,45 @@
 }
 
 button.close {
-  display: none;
+  display: none !important;
 }
 
 .modal-header{
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .introModal .modal-title{
-  font-weight: bold;
-  font-size: 25px;
+  font-weight: bold !important;
+  font-size: 25px !important;
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 *:before,
 *:after{
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 html,
 body{
   height: 100%;
-  position: relative;
+  position: relative !important;
 }
 
 .mainContainer{
-  min-height: 100vh;
-  display: block;
-  position: relative;
-  padding-bottom: 10vh;
+  min-height: 100vh !important;
+  display: block !important;
+  position: relative !important;
+  padding-bottom: 10vh !important;
 }
 
 #footerContainer{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  position: absolute !important;
+  bottom: 0 !important;
+  width: 100% !important;
 }
 
 
