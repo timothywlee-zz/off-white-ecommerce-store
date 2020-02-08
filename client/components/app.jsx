@@ -21,7 +21,8 @@ export default class App extends React.Component {
       cart: [],
       cartLength: 0,
       modal: true,
-      fade: false
+      fade: false,
+      backdrop: 'static'
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
@@ -224,7 +225,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { modal, fade, cartLength } = this.state;
+    const { modal, fade, cartLength, backdrop } = this.state;
     return (
       <React.Fragment>
         <Header
@@ -243,7 +244,9 @@ export default class App extends React.Component {
           isOpen={modal}
           toggle={this.toggleClickHandler}
           fade={fade}
-          centered>
+          backdrop={backdrop}
+          centered
+          className='introModal'>
           <ModalHeader toggle={this.toggleClickHandler}> Welcome </ModalHeader>
           <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
             <div className='d-flex justify-content-center align-items-center'>
