@@ -98,39 +98,39 @@
 }
 
 button.close {
-  display: none !important;
+  display: none;
 }
 
 .modal-header{
-  display: flex !important;
-  justify-content: center !important;
+  display: flex;
+  justify-content: center;
 }
 
 .introModal .modal-title{
-  font-weight: bold !important;
-  font-size: 25px !important;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 * {
-  box-sizing: border-box !important;
+  box-sizing: border-box;
 }
 
 *:before,
 *:after{
-  box-sizing: border-box !important;
+  box-sizing: border-box;
 }
 
 html,
 body{
-  height: 100% !important;
-  position: relative !important;
+  height: 100%;
+  position: relative;
 }
 
 .mainContainer{
-  min-height: 100vh !important;
-  display: block !important;
-  position: relative !important;
-  padding-bottom: 15vh !important;
+  min-height: 100vh;
+  display: block;
+  position: relative;
+  padding-bottom: 15vh;
 }
 
 #footerContainer{
