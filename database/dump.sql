@@ -288,6 +288,10 @@ ALTER TABLE ONLY public.products ALTER COLUMN "productId" SET DEFAULT nextval('p
 --
 
 COPY public."cartItems" ("cartItemId", "cartId", "productId", price, quantity) FROM stdin;
+142	81	2	19000	1
+141	81	5	13000	3
+144	82	2	19000	2
+139	82	1	19000	7
 \.
 
 
@@ -296,6 +300,7 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price, quantity) F
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
+81	2020-02-09 01:07:47.871147+00
 \.
 
 
@@ -318,7 +323,6 @@ dfadf@gmail.com
 COPY public.images ("productId", image1, image2, image3, image4) FROM stdin;
 1	/images/Jordan1RetroRed_1.jpg	/images/Jordan1RetroRed_2.jpg	/images/Jordan1RetroRed_3.jpg	/images/Jordan1RetroRed_4.jpg
 2	/images/Jordan1RetroBlue_1.jpg	/images/Jordan1RetroBlue_2.jpg	/images/Jordan1RetroBlue_3.jpg	/images/Jordan1RetroBlue_4.jpg
-3	/images/Jordan1RetroWhite_1.jpg	/images/Jordan1RetroWhite_2.jpg	/images/Jordan1RetroWhite_3.jpg	/images/Jordan1RetroWhite_4.jpg
 4	/images/AirForce1_1.jpg	/images/AirForce1_2.jpg	/images/AirForce1_3.jpg	/images/AirForce1_4.jpg
 5	/images/NikeBlazer_1.jpg	/images/NikeBlazer_2.jpg	/images/NikeBlazer_3.jpg	/images/NikeBlazer_4.jpg
 6	/images/NikeDunkGreen_1.jpg	/images/NikeDunkGreen_2.jpg	/images/NikeDunkGreen_3.jpg	/images/NikeDunkGreen_4.jpg
@@ -326,8 +330,6 @@ COPY public.images ("productId", image1, image2, image3, image4) FROM stdin;
 8	/images/AirForceXMoma_1.jpg	/images/AirForceXMoma_2.jpg	/images/AirForceXMoma_3.jpg	/images/AirForceXMoma_4.jpg
 9	/images/NikeBlazerGrimReaper_1.jpg	/images/NikeBlazerGrimReaper_2.jpg	/images/NikeBlazerGrimReaper_3.jpg	/images/NikeBlazerGrimReaper_4.jpg
 10	/images/AirMax90_1.jpg	/images/AirMax90_2.jpg	/images/AirMax90_3.jpg	/images/AirMax90_4.jpg
-11	/images/AirPresto_1.jpg	/images/AirPresto_2.jpg	/images/AirPresto_3.jpg	/images/AirPresto_4.jpg
-12	/images/AirVaporMax_1.jpg	/images/AirVaporMax_2.jpg	/images/AirVaporMax_3.jpg	/images/AirVaporMax_4.jpg
 \.
 
 
@@ -347,15 +349,12 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 1	Jordan 1 Retro High Off-White Chicago	19000	/images/Jordan1RetroRed_1.jpg	STYLE AA3834-101 COLORWAY White/Black-Varsity Red RELEASE DATE 09/09/2017	The Off-White x Air Jordan 1 Retro High OG was one of the most highly anticipated footwear collaborations of 2017. It marked the first time Virgil Abloh, founder of the Milan-based fashion label and Jordan Brand had teamed up. Nicknamed "The 10" edition, this pair comes in the original Chicago-themed white, black and varsity red colorway. Featuring a white, red and black-based deconstructed leather upper with a Swooshless medial side branded with "Off-White for Nike Air Jordan 1, Beaverton, Oregon, USA © 1985."
 2	Jordan 1 Retro High Off-White University Blue	19000	/images/Jordan1RetroBlue_1.jpg	STYLE AQ0818-148 COLORWAY White/Dark Powder Blue-Cone RELEASE DATE 06/23/2018	Time for some Tobacco Road vibes with these Jordan 1 Retro Off-Whites. Also known as the “UNC” editions, these Jordan 1s are the third colorway designed by Virgil Abloh and made in collaboration with his Off-White label. The sneakers come in a white, dark powder blue and cone colorway, with a white and blue deconstructed leather upper and Off-White detailing throughout.
 5	Nike Blazer Mid Off-White All Hallow’s Eve	13000	/images/NikeBlazer_1.jpg	STYLE AA3832-700 COLORWAY Canvas/Total Orange-Pale Vanilla RELEASE DATE 10/03/2018	Don’t sleep because Virgil Abloh continues to give the shoe game a nightmare with the Nike Blazer Mid Off-White All Hallow’s Eve. This pumpkin inspired half of the “Spooky Pack” comes with a pale vanilla upper, total orange “Swoosh”, and pale vanilla sole.
-3	Jordan 1 Retro High Off-White White	19000	/images/Jordan1RetroWhite_1.jpg	STYLE AQ0818-100 COLORWAY White/White RELEASE DATE 03/03/2018	Inspired by Air Jordan 1 colorways, the OFF-WHITE x Air Jordan 1 Retro High OG "White" 2018 is a reimagination of its "Chicago"-themed predecessor. The model features an all-white premium leather and mesh upper with deconstructed Swoosh branding and blue detailing, and Wings logos on the ankles. It is accented by black “AIR” lettering on the midsole, black Off-White for NIKE text on the side panels, and orange tabs.
 4	Air Force 1 Low Off-White MCA University Blue	15000	/images/AirForce1_1.jpg	STYLE Cl1173-400 COLORWAY University Blue/Metallic Silver RELEASE DATE 07/20/2019	Virgil Abloh added yet another colorway to his coveted selection of Off-White Air Force 1 iterations that will forever preserve his Figures of Speech exhibit in sneaker history. Having the first pair exclusively gifted to Serena Williams in May of 2019, these Air Force 1 Low Off-White MCA University Blues were one of Virgils many highly anticipated releases of 2019.
 6	Nike Dunk Low Off-White Pine Green	17000	/images/NikeDunkGreen_1.jpg	STYLE CT0856-1 COLORWAY White/Pine Green-Pine Green RELEASE DATE 12/20/2019	Virgil Abloh pays homage to skate culture’s adoption of 1980’s Nike Basketball silhouettes with the Nike Dunk Low Off-White Pine Green. This colorway was not a part of the original Be True To Your School collection in 1985; instead, it derives from the Gorge Green colorway that debuted in 2003 as part of a general release.
 7	Air Force 1 Low Off-White Volt	17000	/images/AirForce1Volt_1.jpg	STYLE A04606-700 COLORWAY Volt/Hyper Jade-Cone-Black RELEASE DATE 12/19/2018	Be more lit than a lightning bolt while wearing Nike and Virgil’s Air Force 1 Low Off-White Volt. This AF1 comes with a volt upper, black Nike “Swoosh”, volt midsole, and volt sole.
 8	Air Force 1 ‘07 Virgil x MoMA	17500	/images/AirForceXMoma_1.jpg	STYLE AV5210-001 COLORWAY Black/Metallic Silver-Black RELEASE DATE 01/27/2018	The OFF-WHITE x Air Force 1 Low 07 “MoMA” was unveiled at Art Basel Miami Beach 2016. In January 2018, MoMA exclusively sold the sneaker to celebrate its “Items: Is Fashion Modern?” exhibition. The design features a metallic Swoosh on the black leather upper, an orange tag, translucent zip tie and white lettering on the side-panel. A chunky foam tongue, white laces with black “SHOELACES” branding, and a black midsole with white “AIR” branding complete the look.
 9	Off-White x Nike Blazer ‘Grim Reaper’	13000	/images/NikeBlazerGrimReaper_1.jpg	STYLE AA3832-001 COLORWAY Black/White-Cone-Black RELEASE DATE 10/03/2018	Releasing alongside an accompanying ‘All Hallow’s Eve’ colorway in orange, the OFF-WHITE x Blazer Mid ‘Grim Reapers’ completes Virgil Abloh’s Halloween-themed sneaker pack. The black and grey upper sports contrast orange stitching in celebration of the October holiday, along with an oversized white Swoosh, blue zip tie and OFF-WHITE lettering on the quarter panel of the shoe’s medial side.
 10	Air Max 90 Off-White Desert Ore	16000	/images/AirMax90_1.jpg	STYLE AA7293-200 COLORWAY Desert Ore/Desert Ore-Hyper RELEASE DATE 02/07/2019	Virgil is doing his best attempt in trying to dry out the sneaker competition with the release of the Air Max 90 Off-White “Desert Ore”. This AM 90 comes with a beige upper, mango orange Nike “Swoosh”, beige midsole, and beige sole.
-11	Air Presto Off-White	16000	/images/AirPresto_1.jpg	STYLE AA3830-001 COLORWAY Black/Black-Muslin RELEASE DATE 09/09/2017	The Virgil Abloh’s Nike Air Presto Off White caused an absolute frenzy. It features a black Nike Swoosh sewn onto the lateral side. Finally, "AIR" is written in classic Virgil fashion on the side heel, completing this deconstructed, utilitarian #vibe.
-12	Air VaporMax Off-White	25000	/images/AirVaporMax_1.jpg	STYLE AA3831-001 COLORWAY Black/White-Clear RELEASE DATE 09/09/2017	Following up from “The Ten” collection in 2017, the Nike VaporMax Off-White are certainly “popular.” Designed by Virgil Abloh, these shoes are an extension of the original VaporMaxs featured in “The Ten” drop, the main difference being a white tongue and a Swoosh atop the clear outsole.
 \.
 
 
@@ -363,14 +362,14 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 136, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 144, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 80, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 81, true);
 
 
 --
