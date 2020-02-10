@@ -32,6 +32,7 @@ export default class App extends React.Component {
     this.updateCart = this.updateCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.calculateCartTotalCost = this.calculateCartTotalCost.bind(this);
+    this.resetCartLength = this.resetCartLength.bind(this);
     this.resetCart = this.resetCart.bind(this);
     this.toggleClickHandler = this.toggleClickHandler.bind(this);
   }
@@ -147,10 +148,15 @@ export default class App extends React.Component {
       });
   }
 
+  resetCartLength() {
+    this.setState({
+      cartLength: 0
+    });
+  }
+
   resetCart() {
     this.setState({
-      cart: [],
-      cartLength: 0
+      cart: []
     });
   }
 
@@ -195,7 +201,8 @@ export default class App extends React.Component {
           itemsInCart={cart}
           placeOrder={this.placeOrder}
           itemTotal={this.calculateCartTotalCost()}
-          getCartItems={this.getCartItems}/>
+          getCartItems={this.getCartItems}
+          resetCartLength={this.resetCartLength} />
       );
     } else if (view.name === 'mailing') {
       return (
