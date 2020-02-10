@@ -55,7 +55,7 @@ class OrderConfirmation extends React.Component {
           <button
             className='btn btn-outline-dark justify-content-center mt-5'
             onClick={this.resetCartChangeView}
-            style={{ width: '150px', zIndex: '30' }}>
+            style={{ width: '200px', zIndex: '30' }}>
             Back To Shopping
           </button>
         </div>

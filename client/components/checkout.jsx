@@ -137,6 +137,10 @@ class Checkout extends React.Component {
         this.props.placeOrder(addOrder);
       }, 200);
 
+      setTimeout(() => {
+        this.props.resetCartLength();
+      }, 200);
+
     } else {
       this.setState({
         fullName: fullName.trim(),

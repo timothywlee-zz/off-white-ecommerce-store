@@ -125,7 +125,7 @@ class ProductDetails extends React.Component {
                   type='button'
                   className='d-flex btn btn-primary btn-md mt-5 justify-content-center'
                   onClick={this.addToCart} style={{ cursor: 'pointer', width: '225px' }}>
-                  Purchase
+                  Add To Cart
                 </button>
                 <button
                   type='button'
