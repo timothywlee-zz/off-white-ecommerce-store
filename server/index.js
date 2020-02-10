@@ -208,11 +208,15 @@ app.post('/api/cart/', (req, res, next) => {
           JOIN "products" as "p" using ("productId")
          WHERE "c"."cartItemId" = $1
       `;
-        const value = [finalData.cartItemId];
+        const value = [finalData.rows[0].cartItemId];
         return (
           db.query(finalSql, value)
             .then(data => {
-              return res.status(201).json(data.rows[0]);
+              return res.status(201).json(data.rows);
+            })
+            .catch(err => {
+              console.error(err);
+              return next(err);
             })
         );
       })

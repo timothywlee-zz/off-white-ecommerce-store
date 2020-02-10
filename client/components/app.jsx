@@ -77,7 +77,9 @@ export default class App extends React.Component {
       },
       body: JSON.stringify(product)
     })
-      .then(response => response.json())
+      .then(response => {
+        return response.json();
+      })
       .then(data => {
         const arrayDeepCopy = this.state.cart.map(item => Object.assign({}, item));
         arrayDeepCopy.push(data);
