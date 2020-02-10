@@ -12,7 +12,6 @@ class CartSummaryItem extends React.Component {
       backdrop: 'static'
     };
     this.handleDelete = this.handleDelete.bind(this);
-    // this.handleUpdate = this.handleUpdate.bind(this);
     this.incrementQuantity = this.incrementQuantity.bind(this);
     this.decrementQuantity = this.decrementQuantity.bind(this);
     this.toggleClickHandler = this.toggleClickHandler.bind(this);
