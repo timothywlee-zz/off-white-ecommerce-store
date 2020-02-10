@@ -12,7 +12,7 @@ class CartSummaryItem extends React.Component {
       backdrop: 'static'
     };
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+    // this.handleUpdate = this.handleUpdate.bind(this);
     this.incrementQuantity = this.incrementQuantity.bind(this);
     this.decrementQuantity = this.decrementQuantity.bind(this);
     this.toggleClickHandler = this.toggleClickHandler.bind(this);
@@ -20,6 +20,12 @@ class CartSummaryItem extends React.Component {
 
   componentDidMount() {
     this.getQuantity();
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.quantity !== prevState.quantity) {
+      this.props.getCartItems();
+    }
   }
 
   getQuantity() {
@@ -34,25 +40,20 @@ class CartSummaryItem extends React.Component {
     }, 100);
   }
 
-  handleUpdate() {
+  incrementQuantity() {
     const { product } = this.props;
-    const newQuantity = this.state.quantity;
+    let { quantity } = this.state;
+    const newQuantity = ++quantity;
+    this.setState({ quantity: newQuantity });
+
     this.props.updateCart({
       quantity: newQuantity,
       cartItemId: product.cartItemId
     });
-    setTimeout(() => {
-      this.props.getCartItems();
-    }, 100);
-  }
-
-  incrementQuantity() {
-    let { quantity } = this.state;
-    const newQuantity = ++quantity;
-    this.setState({ quantity: newQuantity });
   }
 
   decrementQuantity() {
+    const { product } = this.props;
     let { quantity } = this.state;
     let newQuantity = --quantity;
 
@@ -62,8 +63,11 @@ class CartSummaryItem extends React.Component {
     if (newQuantity < 0) {
       newQuantity = 0;
     }
-
     this.setState({ quantity: newQuantity });
+    this.props.updateCart({
+      quantity: newQuantity,
+      cartItemId: product.cartItemId
+    });
   }
 
   toggleClickHandler() {
@@ -104,13 +108,7 @@ class CartSummaryItem extends React.Component {
               decrement={this.decrementQuantity}
               quantity={quantity} />
             <button
-              className='d-flex btn btn-outline-dark justify-content-center mt-2 mb-1'
-              style={{ width: '130px' }}
-              onClick={this.handleUpdate}>
-              UPDATE
-            </button>
-            <button
-              className='d-flex btn btn-outline-dark justify-content-center'
+              className='d-flex btn btn-outline-dark justify-content-center mt-2'
               style={{ width: '130px' }}
               onClick={this.toggleClickHandler}>
               DELETE

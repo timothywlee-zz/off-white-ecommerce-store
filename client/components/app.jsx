@@ -38,6 +38,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.getCartItems();
     fetch('/api/health-check')
       .then(response => response.json())
@@ -243,7 +244,7 @@ export default class App extends React.Component {
         <main id='mainContent'>
           <div className='mainContent'>
             <div className='row'>
-              <div className='col-12'>
+              <div className='col-sm-12'>
                 {this.displayPage()}
               </div>
             </div>
