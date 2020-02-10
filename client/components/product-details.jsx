@@ -87,13 +87,13 @@ class ProductDetails extends React.Component {
       : (
         <div className='container productDetailsContainer d-flex justify-content-center align-items-center'>
           <div className='row'>
-            <div className='imageContainer col-sm-6 d-flex justify-content-center align-items-center'>
+            <div className='imageContainer col-lg-6 d-flex justify-content-center align-items-center'>
               <img
                 src={product.image}
                 className='productDetailImg'
                 onClick={() => this.props.setView('images', this.props.viewParams.productId)} />
             </div>
-            <div className='d-flex flex-column justify-content-center col-sm-6'>
+            <div className='d-flex flex-column justify-content-center col-lg-6'>
               <h1
                 className='font-weight-bold'
                 style={{ textAlign: 'center', fontSize: '24px' }}>

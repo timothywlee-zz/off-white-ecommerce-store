@@ -17,7 +17,7 @@ class OrderSummaryItem extends React.Component {
             <div className='d-flex flex-column mb-1 justify-content-center align-items-center'>
               <div
                 className='d-flex font-weight-bold'
-                style={{ fontSize: '1.7vh', textAlign: 'center' }}>
+                style={{ fontSize: '17px', textAlign: 'center' }}>
                 {this.props.product.name}
               </div>
               <div className='text-muted'>

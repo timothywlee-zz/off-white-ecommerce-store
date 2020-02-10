@@ -143,11 +143,20 @@ body{
   .productDetailImg{
     height: 35vh;
   }
+  .checkoutName{
+    font-size:  12px;
+  }
+  .checkoutQuantity{
+    font-size: 15px;
+  }
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
   .productDetailImg{
     height: 55vh;
+  }
+  .checkoutName{
+    font-size:  10px;
   }
 }
 
@@ -155,11 +164,20 @@ body{
   .productDetailImg{
     height: 31vh;
   }
+  .checkoutName{
+    font-size:  15px;
+  }
+  .checkoutQuantity{
+    font-size: 15px;
+  }
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation : landscape)  {
   .productDetailImg{
     height: 53vh;
+  }
+  .checkoutName{
+    font-size:  10px;
   }
 }
 
@@ -167,10 +185,19 @@ body{
   .productDetailImg{
       height: 33vh;
   }
+  .checkoutName{
+    font-size:  16px;
+  }
+  .checkoutQuantity{
+    font-size: 16px;
+  }
 }
 
 @media only screen and (device-width : 414px) and (device-height : 896px) and (-webkit-device-pixel-ratio : 2) and (orientation : landscape) {
-    .productDetailImg{
+  .productDetailImg{
       height: 55vh;
+  }
+  .checkoutName{
+    font-size: 11px;
   }
 }
