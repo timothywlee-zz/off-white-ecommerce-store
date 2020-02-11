@@ -27,7 +27,7 @@ Link: https://off-white-shoes-shop.timothywlee.com
 * User can see a order confirmation after placing an order
 
 # Preview
-![](off-white-shoes-shop-preview-final.gif)
+![](off-white-shoes-shop-preview-finale.gif)
 
 # Development
 ## System Requirements
