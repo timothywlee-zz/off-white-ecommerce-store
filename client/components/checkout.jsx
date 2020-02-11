@@ -62,8 +62,8 @@ class Checkout extends React.Component {
         }
         break;
       case 'agreementTerms':
-          this.setState({ agreementTerms: !this.state.agreementTerms });
-          break;
+        this.setState({ agreementTerms: !this.state.agreementTerms });
+        break;
       default:
         this.setState({ [target]: event.target.value });
     }
@@ -98,24 +98,24 @@ class Checkout extends React.Component {
     }
   }
 
-  validateUserInformation (){
+  validateUserInformation() {
     const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
     const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
     const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
-    console.log('fullName: ', this.state.validFullName)
-    console.log('phone: ', this.state.validPhone)
-    console.log('email: ', this.state.validEmail)
-    console.log('address: ', this.state.validAddress)
-    console.log('city: ', this.state.validCity)
-    console.log('state: ', this.state.validState)
-    console.log('zipCode: ', this.state.validZipCode)
-    console.log('creditCard: ', this.state.validCreditCard)
-    console.log('month: ', this.state.validMonth)
-    console.log('year: ', this.state.validYear)
-    console.log('cvv: ', this.state.validCvv)
-    console.log('agreementTerms: ', this.state.agreementTerms)
+    console.log('fullName: ', this.state.validFullName);
+    console.log('phone: ', this.state.validPhone);
+    console.log('email: ', this.state.validEmail);
+    console.log('address: ', this.state.validAddress);
+    console.log('city: ', this.state.validCity);
+    console.log('state: ', this.state.validState);
+    console.log('zipCode: ', this.state.validZipCode);
+    console.log('creditCard: ', this.state.validCreditCard);
+    console.log('month: ', this.state.validMonth);
+    console.log('year: ', this.state.validYear);
+    console.log('cvv: ', this.state.validCvv);
+    console.log('agreementTerms: ', this.state.agreementTerms);
 
-    switch(event.target.name) {
+    switch (event.target.name) {
       case 'fullName':
         if (fullName.length < 5 || !validateName.test(fullName)) {
           this.setState({ validFullName: false });
@@ -195,7 +195,7 @@ class Checkout extends React.Component {
         break;
       case 'agreementTerms':
         if (!agreementTerms) {
-          this.setState({ validAgreementTerms: false});
+          this.setState({ validAgreementTerms: false });
         } else {
           this.setState({ validAgreementTerms: true });
         }
@@ -205,12 +205,14 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms,
-            validFullName, validPhone, validEmail, validAddress, validCity,
-            validState, validZipCode, validCreditCard, validMonth, validYear,
-            validCvv, validAgreementTerms } = this.state;
+    const {
+      fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms,
+      validFullName, validPhone, validEmail, validAddress, validCity,
+      validState, validZipCode, validCreditCard, validMonth, validYear,
+      validCvv, validAgreementTerms
+    } = this.state;
 
-    if (fullName && phone && email && address && city && state && zipCode && creditCard && month && year && cvv && agreementTerms) { //change this, no longer an object
+    if (fullName && phone && email && address && city && state && zipCode && creditCard && month && year && cvv && agreementTerms) { // change this, no longer an object
       const addOrder = {
         fullName: fullName.trim(),
         email: email,
@@ -230,7 +232,7 @@ class Checkout extends React.Component {
       }, 200);
 
     } else {
-      console.log(this.state.fullName)
+      console.log(this.state.fullName);
       this.setState({
         fullName: fullName.trim(),
         address: address.trim(),
@@ -279,23 +281,25 @@ class Checkout extends React.Component {
     return cartItemArrayDisplay;
   }
 
-  showButtonIfInfoValid (){
-    const { validFullName, validEmail, validPhone, validAddress, validCity,
-            validState, validZipCode, validCreditCard, validMonth, validYear,
-            validCvv, validAgreementTerms } = this.state;
+  showButtonIfInfoValid() {
+    const {
+      validFullName, validEmail, validPhone, validAddress, validCity,
+      validState, validZipCode, validCreditCard, validMonth, validYear,
+      validCvv, validAgreementTerms
+    } = this.state;
 
-    if (validFullName && validPhone && validEmail && validAddress && validCity
-         && validState && validZipCode && validCreditCard && validMonth && validYear
-        && validCvv && validAgreementTerms) {
+    if (validFullName && validPhone && validEmail && validAddress && validCity &&
+         validState && validZipCode && validCreditCard && validMonth && validYear &&
+        validCvv && validAgreementTerms) {
       return (
         <button
           className='d-flex btn btn-outline-primary justify-content-center mb-1'
           onClick={this.handleSubmit}
           style={{ cursor: 'pointer', width: '100%' }}> Process Order
         </button>
-      )
+      );
     } else {
-      console.log('this happened')
+      console.log('this happened');
 
       return (
         <button
@@ -304,14 +308,16 @@ class Checkout extends React.Component {
           style={{ cursor: 'pointer', width: '100%' }}>
           Process Order
         </button>
-      )
+      );
     }
   }
 
   render() {
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv,
-            agreementTerms, validFullName, validPhone, validEmail, validAddress, validCity, validState,
-            validZipCode, validCreditCard, validMonth, validYear, validCvv, validAgreementTerms } = this.state;
+    const {
+      fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv,
+      agreementTerms, validFullName, validPhone, validEmail, validAddress, validCity, validState,
+      validZipCode, validCreditCard, validMonth, validYear, validCvv, validAgreementTerms
+    } = this.state;
     const left = { width: '50%', textAlign: 'left' };
     const right = { width: '50%', textAlign: 'right' };
 
@@ -483,7 +489,7 @@ class Checkout extends React.Component {
                     <option value='WY'>Wyoming</option>
                   </select>
                   <div className='invalid-feedback'>
-                      {!validState && state !== '' ? <small>Select a state</small> : null}
+                    {!validState && state !== '' ? <small>Select a state</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -501,7 +507,7 @@ class Checkout extends React.Component {
                     minLength='5'
                     maxLength='5' />
                   <div className='invalid-feedback'>
-                      {!validZipCode && zipCode !== '' ? <small>Invalid zipcode - Must be 5 numbers</small> : null }
+                    {!validZipCode && zipCode !== '' ? <small>Invalid zipcode - Must be 5 numbers</small> : null }
                   </div>
                 </div>
               </div>
@@ -617,7 +623,7 @@ class Checkout extends React.Component {
                 className='d-flex justify-content-center align-items-center flex-column'
                 style={{ padding: '0 25%' }}>
 
-              {this.showButtonIfInfoValid()}
+                {this.showButtonIfInfoValid()}
 
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
