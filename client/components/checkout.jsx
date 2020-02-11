@@ -200,7 +200,6 @@ class Checkout extends React.Component {
           this.setState({ validAgreementTerms: true });
         }
     }
-
   }
 
   handleSubmit(event) {
@@ -212,7 +211,7 @@ class Checkout extends React.Component {
       validCvv, validAgreementTerms
     } = this.state;
 
-    if (fullName && phone && email && address && city && state && zipCode && creditCard && month && year && cvv && agreementTerms) { // change this, no longer an object
+    if (fullName && phone && email && address && city && state && zipCode && creditCard && month && year && cvv && agreementTerms) {
       const addOrder = {
         fullName: fullName.trim(),
         email: email,
@@ -343,11 +342,12 @@ class Checkout extends React.Component {
                   name='fullName'
                   className={`form-control ${validFullName ? '' : 'is-invalid'} border`}
                   onChange={this.inputHandler}
+                  onBlur={this.validateUserInformation}
                   value={fullName}
                   minLength='5'
                   maxLength='65' />
                 <div className='invalid-feedback'>
-                  {fullName.length < 5 && fullName !== '' ? <small> Full Name is Required </small> : null}
+                  {fullName.length < 5 && fullName !== '' ? <small> Full Name is Required </small> : null }
                 </div>
               </div>
               <div className='form-row'>
@@ -361,6 +361,7 @@ class Checkout extends React.Component {
                     autoComplete="new-password"
                     name='email'
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     className={`form-control ${validEmail ? '' : 'is-invalid'} border`}
                     minLength="6"
                     maxLength="254" />
@@ -379,6 +380,7 @@ class Checkout extends React.Component {
                     name='phone'
                     className={`form-control ${validPhone ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={phone}
                     minLength='10'
                     maxLength='11' />
@@ -398,6 +400,7 @@ class Checkout extends React.Component {
                     autoComplete='new-password'
                     name='address'
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={address}
                     minLength='6'
                     maxLength='42'
@@ -419,6 +422,7 @@ class Checkout extends React.Component {
                     name='city'
                     className={`form-control ${validCity ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={city}
                     minLength='3'
                     maxLength='50' />
@@ -434,7 +438,8 @@ class Checkout extends React.Component {
                   <select
                     className={`form-control ${validState ? '' : 'is-invalid'} border`}
                     name='state'
-                    onChange={this.inputHandler}>
+                    onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}>
                     <option defaultValue hidden></option>
                     <option value='AL'>Alabama</option>
                     <option value='AK'>Alaska</option>
@@ -503,6 +508,7 @@ class Checkout extends React.Component {
                     name='zipCode'
                     className={`form-control ${validZipCode ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={zipCode}
                     minLength='5'
                     maxLength='5' />
@@ -528,6 +534,7 @@ class Checkout extends React.Component {
                     minLength='16'
                     maxLength='16'
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={creditCard} />
                   <div className='invalid-feedback'>
                     {!validCreditCard && creditCard !== '' ? <small>Invalid credit card number</small> : null}
@@ -541,7 +548,8 @@ class Checkout extends React.Component {
                   <select
                     className={`form-control ${validMonth ? '' : 'is-invalid'} border`}
                     name='month'
-                    onChange={this.inputHandler}>
+                    onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}>
                     <option defaultValue hidden></option>
                     <option value='01'>01</option>
                     <option value='02'>02</option>
@@ -568,7 +576,8 @@ class Checkout extends React.Component {
                   <select
                     className={`form-control ${validYear ? '' : 'is-invalid'} border`}
                     name='year'
-                    onChange={this.inputHandler}>
+                    onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}>
                     <option defaultValue hidden></option>
                     <option value='2020'>2020</option>
                     <option value='2021'>2021</option>
@@ -597,6 +606,7 @@ class Checkout extends React.Component {
                     name='cvv'
                     className={`form-control ${validCvv ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
+                    onBlur={this.validateUserInformation}
                     value={cvv}
                     minLength='3'
                     maxLength='4' />
