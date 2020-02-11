@@ -35,6 +35,18 @@ class Checkout extends React.Component {
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.showButtonIfInfoValid = this.showButtonIfInfoValid.bind(this);
+    this.validateFullName = this.validateFullName.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
+    this.validatePhone = this.validatePhone.bind(this);
+    this.validateAddress = this.validateAddress.bind(this);
+    this.validateCity = this.validateCity.bind(this);
+    this.validateState = this.validateState.bind(this);
+    this.validateZipCode = this.validateZipCode.bind(this);
+    this.validateCreditCard = this.validateCreditCard.bind(this);
+    this.validateMonth = this.validateMonth.bind(this);
+    this.validateYear = this.validateYear.bind(this);
+    this.validateCvv = this.validateCvv.bind(this);
+    this.validateAgreementTerms = this.validateAgreementTerms.bind(this);
   }
 
   componentDidMount() {
@@ -69,136 +81,114 @@ class Checkout extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
-    if (fullName !== prevState.fullName) {
-      this.validateUserInformation();
-    } else if (phone !== prevState.phone) {
-      this.validateUserInformation();
-    } else if (email !== prevState.email) {
-      this.validateUserInformation();
-    } else if (address !== prevState.address) {
-      this.validateUserInformation();
-    } else if (city !== prevState.city) {
-      this.validateUserInformation();
-    } else if (state !== prevState.state) {
-      this.validateUserInformation();
-    } else if (zipCode !== prevState.zipCode) {
-      this.validateUserInformation();
-    } else if (creditCard !== prevState.creditCard) {
-      this.validateUserInformation();
-    } else if (month !== prevState.month) {
-      this.validateUserInformation();
-    } else if (year !== prevState.year) {
-      this.validateUserInformation();
-    } else if (cvv !== prevState.cvv) {
-      this.validateUserInformation();
-    } else if (agreementTerms !== prevState.agreementTerms) {
-      this.validateUserInformation();
+  validateFullName() {
+    // const fullName = event.target.value;
+    const {fullName} = this.state;
+    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+    if (!fullName || fullName.length < 5 || !validateName.test(fullName)) {
+      this.setState({ validFullName: false });
+    } else {
+      this.setState({ validFullName: true });
     }
   }
 
-  validateUserInformation() {
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
-    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+  validateEmail(event) {
+    const email = event.target.value;
     const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
-    console.log('fullName: ', this.state.validFullName);
-    console.log('phone: ', this.state.validPhone);
-    console.log('email: ', this.state.validEmail);
-    console.log('address: ', this.state.validAddress);
-    console.log('city: ', this.state.validCity);
-    console.log('state: ', this.state.validState);
-    console.log('zipCode: ', this.state.validZipCode);
-    console.log('creditCard: ', this.state.validCreditCard);
-    console.log('month: ', this.state.validMonth);
-    console.log('year: ', this.state.validYear);
-    console.log('cvv: ', this.state.validCvv);
-    console.log('agreementTerms: ', this.state.agreementTerms);
+    if (!email || !validateEmail.test(email)) {
+      this.setState({ validEmail: false });
+    } else {
+      this.setState({ validEmail: true });
+    }
+  }
 
-    switch (event.target.name) {
-      case 'fullName':
-        if (fullName.length < 5 || !validateName.test(fullName)) {
-          this.setState({ validFullName: false });
-        } else {
-          this.setState({ validFullName: true });
-        }
-        break;
-      case 'phone':
-        if (phone.length < 10) {
-          this.setState({ validPhone: false });
-        } else {
-          this.setState({ validPhone: true });
-        }
-        break;
-      case 'email':
-        if (!validateEmail.test(email)) {
-          this.setState({ validEmail: false });
-        } else {
-          this.setState({ validEmail: true });
-        }
-        break;
-      case 'address':
-        if (address.length < 6) {
-          this.setState({ validAddress: false });
-        } else {
-          this.setState({ validAddress: true });
-        }
-        break;
-      case 'city':
-        if (city.length < 3) {
-          this.setState({ validCity: false });
-        } else {
-          this.setState({ validCity: true });
-        }
-        break;
-      case 'state':
-        if (state.length < 2) {
-          this.setState({ validState: false });
-        } else {
-          this.setState({ validState: true });
-        }
-        break;
-      case 'zipCode':
-        if (zipCode.length < 5) {
-          this.setState({ validZipCode: false });
-        } else {
-          this.setState({ validZipCode: true });
-        }
-        break;
-      case 'creditCard':
-        if (creditCard.length < 16) {
-          this.setState({ validCreditCard: false });
-        } else {
-          this.setState({ validCreditCard: true });
-        }
-        break;
-      case 'month':
-        if (month.length < 2) {
-          this.setState({ validMonth: false });
-        } else {
-          this.setState({ validMonth: true });
-        }
-        break;
-      case 'year':
-        if (year.length < 2) {
-          this.setState({ validYear: false });
-        } else {
-          this.setState({ validYear: true });
-        }
-        break;
-      case 'cvv':
-        if (cvv.length < 3) {
-          this.setState({ validCvv: false });
-        } else {
-          this.setState({ validCvv: true });
-        }
-        break;
-      case 'agreementTerms':
-        if (!agreementTerms) {
-          this.setState({ validAgreementTerms: false });
-        } else {
-          this.setState({ validAgreementTerms: true });
-        }
+  validatePhone(event) {
+    const phone = event.target.value;
+    if (!phone || phone.length < 10) {
+      this.setState({ validPhone: false });
+    } else {
+      this.setState({ validPhone: true });
+    }
+  }
+
+  validateAddress(event) {
+    const address = event.target.value;
+    if (address.length < 6) {
+      this.setState({ validAddress: false });
+    } else {
+      this.setState({ validAddress: true });
+    }
+  }
+
+  validateCity(event) {
+    const city = event.target.value;
+    if (!city || city.length < 3) {
+      this.setState({ validCity: false });
+    } else {
+      this.setState({ validCity: true });
+    }
+  }
+
+  validateState(event) {
+    const state = event.target.value;
+    if (!state || state.length < 2) {
+      this.setState({ validState: false });
+    } else {
+      this.setState({ validState: true });
+    }
+  }
+
+  validateZipCode(event) {
+    const zipCode = event.target.value;
+    if (zipCode.length < 5) {
+      this.setState({ validZipCode: false });
+    } else {
+      this.setState({ validZipCode: true });
+    }
+  }
+
+  validateCreditCard(event) {
+    const creditCard = event.target.value;
+    if (!creditCard || creditCard.length < 16) {
+      this.setState({ validCreditCard: false });
+    } else {
+      this.setState({ validCreditCard: true });
+    }
+  }
+
+  validateMonth(event) {
+    const month = event.target.value;
+    if (!month || month.length < 2) {
+      this.setState({ validMonth: false });
+    } else {
+      this.setState({ validMonth: true });
+    }
+  }
+
+  validateYear(event) {
+    const year = event.target.value;
+    if (!year || year.length < 2) {
+      this.setState({ validYear: false });
+    } else {
+      this.setState({ validYear: true });
+    }
+  }
+
+  validateCvv(event) {
+    const cvv = event.target.value;
+    if (!cvv || cvv.length < 3) {
+      this.setState({ validCvv: false });
+    } else {
+      this.setState({ validCvv: true });
+    }
+  }
+
+  validateAgreementTerms(event) {
+    const agreeementTerms = event.target.value;
+    if (!agreementTerms) {
+      this.setState({ validAgreementTerms: false });
+    } else {
+      this.setState({ validAgreementTerms: true });
     }
   }
 
@@ -281,6 +271,7 @@ class Checkout extends React.Component {
   }
 
   showButtonIfInfoValid() {
+    console.log('this.state.validFullName: ', this.state.validFullName);
     const {
       validFullName, validEmail, validPhone, validAddress, validCity,
       validState, validZipCode, validCreditCard, validMonth, validYear,
@@ -298,8 +289,6 @@ class Checkout extends React.Component {
         </button>
       );
     } else {
-      console.log('this happened');
-
       return (
         <button
           className='d-flex btn btn-outline-danger justify-content-center mb-1'
@@ -338,16 +327,15 @@ class Checkout extends React.Component {
                 </label>
                 <input
                   type='text'
-                  autoComplete='new-password'
                   name='fullName'
                   className={`form-control ${validFullName ? '' : 'is-invalid'} border`}
                   onChange={this.inputHandler}
-                  onBlur={this.validateUserInformation}
+                  onBlur={this.validateFullName}
                   value={fullName}
                   minLength='5'
                   maxLength='65' />
                 <div className='invalid-feedback'>
-                  {fullName.length < 5 && fullName !== '' ? <small> Full Name is Required </small> : null }
+                  {!validFullName && fullName !== '' ? <small> Full Name is Required - Must be at least 5 letters</small> : null }
                 </div>
               </div>
               <div className='form-row'>
@@ -361,7 +349,7 @@ class Checkout extends React.Component {
                     autoComplete="new-password"
                     name='email'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateEmail}
                     className={`form-control ${validEmail ? '' : 'is-invalid'} border`}
                     minLength="6"
                     maxLength="254" />
@@ -376,16 +364,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='phone'
                     className={`form-control ${validPhone ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validatePhone}
                     value={phone}
                     minLength='10'
                     maxLength='11' />
                   <div className='invalid-feedback'>
-                    {!validPhone && phone !== '' ? <small>Invalid phone number</small> : null}
+                    {!validPhone && phone !== '' ? <small>Invalid phone number - Must be at least 10 numbers</small> : null}
                   </div>
                 </div>
               </div>
@@ -397,16 +384,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='text'
-                    autoComplete='new-password'
                     name='address'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateAddress}
                     value={address}
                     minLength='6'
                     maxLength='42'
                     className={`form-control ${validAddress ? '' : 'is-invalid'} border`} />
                   <div className='invalid-feedback'>
-                    {!validAddress && address !== '' ? <small>Invalid street address</small> : null}
+                    {!validAddress && address !== '' ? <small>Invalid street address - Must be at least 6 characters</small> : null}
                   </div>
                 </div>
               </div>
@@ -418,16 +404,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='text'
-                    autoComplete='new-password'
                     name='city'
                     className={`form-control ${validCity ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateCity}
                     value={city}
                     minLength='3'
                     maxLength='50' />
                   <div className='invalid-feedback'>
-                    {city.length < 3 && city !== '' ? <small>Invalid City - Must be at least 3 letters</small> : null}
+                    {!validCity && city !== '' ? <small>Invalid City - Must be at least 3 letters</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -439,7 +424,7 @@ class Checkout extends React.Component {
                     className={`form-control ${validState ? '' : 'is-invalid'} border`}
                     name='state'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}>
+                    onBlur={this.validateState}>
                     <option defaultValue hidden></option>
                     <option value='AL'>Alabama</option>
                     <option value='AK'>Alaska</option>
@@ -504,11 +489,10 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='zipCode'
                     className={`form-control ${validZipCode ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateZipCode}
                     value={zipCode}
                     minLength='5'
                     maxLength='5' />
@@ -528,16 +512,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='creditCard'
                     className={`form-control ${validCreditCard ? '' : 'is-invalid'} border`}
                     minLength='16'
                     maxLength='16'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateCreditCard}
                     value={creditCard} />
                   <div className='invalid-feedback'>
-                    {!validCreditCard && creditCard !== '' ? <small>Invalid credit card number</small> : null}
+                    {!validCreditCard && creditCard !== '' ? <small>Invalid credit card number - Must be exactly 16 numbers </small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -549,7 +532,7 @@ class Checkout extends React.Component {
                     className={`form-control ${validMonth ? '' : 'is-invalid'} border`}
                     name='month'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}>
+                    onBlur={this.validateMonth}>
                     <option defaultValue hidden></option>
                     <option value='01'>01</option>
                     <option value='02'>02</option>
@@ -577,7 +560,7 @@ class Checkout extends React.Component {
                     className={`form-control ${validYear ? '' : 'is-invalid'} border`}
                     name='year'
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}>
+                    onBlur={this.validateYear}>
                     <option defaultValue hidden></option>
                     <option value='2020'>2020</option>
                     <option value='2021'>2021</option>
@@ -602,11 +585,10 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='cvv'
                     className={`form-control ${validCvv ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
-                    onBlur={this.validateUserInformation}
+                    onBlur={this.validateCvv}
                     value={cvv}
                     minLength='3'
                     maxLength='4' />
@@ -632,9 +614,7 @@ class Checkout extends React.Component {
               <div
                 className='d-flex justify-content-center align-items-center flex-column'
                 style={{ padding: '0 25%' }}>
-
                 {this.showButtonIfInfoValid()}
-
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
                   onClick={() => this.props.setView('cart', {})}
