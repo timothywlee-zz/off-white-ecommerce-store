@@ -17,25 +17,24 @@ class Checkout extends React.Component {
       year: '',
       cvv: '',
       agreementTerms: false,
-      validation: {
-        fullName: true,
-        phone: true,
-        email: true,
-        address: true,
-        city: true,
-        state: true,
-        zipCode: true,
-        creditCard: true,
-        month: true,
-        year: true,
-        cvv: true,
-        agreementTerms: true
-      }
+      validFullName: false,
+      validPhone: false,
+      validEmail: false,
+      validAddress: false,
+      validCity: false,
+      validState: false,
+      validZipCode: false,
+      validCreditCard: false,
+      validMonth: false,
+      validYear: false,
+      validCvv: false,
+      validAgreementTerms: false
     };
     this.inputHandler = this.inputHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.showButtonIfInfoValid = this.showButtonIfInfoValid.bind(this);
   }
 
   componentDidMount() {
@@ -43,86 +42,175 @@ class Checkout extends React.Component {
   }
 
   inputHandler(event) {
-    const validation = {
-      fullName: true,
-      phone: true,
-      email: true,
-      address: true,
-      city: true,
-      state: true,
-      zipCode: true,
-      creditCard: true,
-      month: true,
-      year: true,
-      cvv: true,
-      agreementTerms: true
-    };
-
     const validateNumbers = RegExp(/^[0-9]*$/);
     const target = event.target.name;
 
-    if (target === 'phone' || target === 'creditCard' || target === 'zipCode' || target === 'cvv') {
-      if (validateNumbers.test(event.target.value)) {
+    switch (target) {
+      case 'fullName':
+      case 'address':
+      case 'city':
+        if (event.target.value.indexOf('  ') === -1) {
+          this.setState({ [target]: event.target.value });
+        }
+        break;
+      case 'phone':
+      case 'creditCard':
+      case 'zipCode':
+      case 'cvv':
+        if (validateNumbers.test(event.target.value)) {
+          this.setState({ [target]: event.target.value });
+        }
+        break;
+      case 'agreementTerms':
+          this.setState({ agreementTerms: !this.state.agreementTerms });
+          break;
+      default:
         this.setState({ [target]: event.target.value });
-      }
-    } else if (target === 'fullName' || target === 'address' || target === 'city') {
-      if (event.target.value.indexOf('  ') === -1) {
-        this.setState({ [target]: event.target.value });
-      }
-    } else if (target === 'agreementTerms') {
-      this.setState({ agreementTerms: !this.state.agreementTerms });
-    } else {
-      this.setState({ [target]: event.target.value });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
+    if (fullName !== prevState.fullName) {
+      this.validateUserInformation();
+    } else if (phone !== prevState.phone) {
+      this.validateUserInformation();
+    } else if (email !== prevState.email) {
+      this.validateUserInformation();
+    } else if (address !== prevState.address) {
+      this.validateUserInformation();
+    } else if (city !== prevState.city) {
+      this.validateUserInformation();
+    } else if (state !== prevState.state) {
+      this.validateUserInformation();
+    } else if (zipCode !== prevState.zipCode) {
+      this.validateUserInformation();
+    } else if (creditCard !== prevState.creditCard) {
+      this.validateUserInformation();
+    } else if (month !== prevState.month) {
+      this.validateUserInformation();
+    } else if (year !== prevState.year) {
+      this.validateUserInformation();
+    } else if (cvv !== prevState.cvv) {
+      this.validateUserInformation();
+    } else if (agreementTerms !== prevState.agreementTerms) {
+      this.validateUserInformation();
+    }
+  }
+
+  validateUserInformation (){
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
+    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
+    console.log('fullName: ', this.state.validFullName)
+    console.log('phone: ', this.state.validPhone)
+    console.log('email: ', this.state.validEmail)
+    console.log('address: ', this.state.validAddress)
+    console.log('city: ', this.state.validCity)
+    console.log('state: ', this.state.validState)
+    console.log('zipCode: ', this.state.validZipCode)
+    console.log('creditCard: ', this.state.validCreditCard)
+    console.log('month: ', this.state.validMonth)
+    console.log('year: ', this.state.validYear)
+    console.log('cvv: ', this.state.validCvv)
+    console.log('agreementTerms: ', this.state.agreementTerms)
+
+    switch(event.target.name) {
+      case 'fullName':
+        if (fullName.length < 5 || !validateName.test(fullName)) {
+          this.setState({ validFullName: false });
+        } else {
+          this.setState({ validFullName: true });
+        }
+        break;
+      case 'phone':
+        if (phone.length < 10) {
+          this.setState({ validPhone: false });
+        } else {
+          this.setState({ validPhone: true });
+        }
+        break;
+      case 'email':
+        if (!validateEmail.test(email)) {
+          this.setState({ validEmail: false });
+        } else {
+          this.setState({ validEmail: true });
+        }
+        break;
+      case 'address':
+        if (address.length < 6) {
+          this.setState({ validAddress: false });
+        } else {
+          this.setState({ validAddress: true });
+        }
+        break;
+      case 'city':
+        if (city.length < 3) {
+          this.setState({ validCity: false });
+        } else {
+          this.setState({ validCity: true });
+        }
+        break;
+      case 'state':
+        if (state.length < 2) {
+          this.setState({ validState: false });
+        } else {
+          this.setState({ validState: true });
+        }
+        break;
+      case 'zipCode':
+        if (zipCode.length < 5) {
+          this.setState({ validZipCode: false });
+        } else {
+          this.setState({ validZipCode: true });
+        }
+        break;
+      case 'creditCard':
+        if (creditCard.length < 16) {
+          this.setState({ validCreditCard: false });
+        } else {
+          this.setState({ validCreditCard: true });
+        }
+        break;
+      case 'month':
+        if (month.length < 2) {
+          this.setState({ validMonth: false });
+        } else {
+          this.setState({ validMonth: true });
+        }
+        break;
+      case 'year':
+        if (year.length < 2) {
+          this.setState({ validYear: false });
+        } else {
+          this.setState({ validYear: true });
+        }
+        break;
+      case 'cvv':
+        if (cvv.length < 3) {
+          this.setState({ validCvv: false });
+        } else {
+          this.setState({ validCvv: true });
+        }
+        break;
+      case 'agreementTerms':
+        if (!agreementTerms) {
+          this.setState({ validAgreementTerms: false});
+        } else {
+          this.setState({ validAgreementTerms: true });
+        }
     }
 
-    this.setState({ validation });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
-    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
-    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
-    const validation = JSON.parse(JSON.stringify(this.state.validation));
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms,
+            validFullName, validPhone, validEmail, validAddress, validCity,
+            validState, validZipCode, validCreditCard, validMonth, validYear,
+            validCvv, validAgreementTerms } = this.state;
 
-    if (fullName.length < 5 || !validateName.test(fullName)) {
-      validation.fullName = false;
-    }
-    if (phone.length < 10) {
-      validation.phone = false;
-    }
-    if (!validateEmail.test(email)) {
-      validation.email = false;
-    }
-    if (address.length < 6) {
-      validation.address = false;
-    }
-    if (city.length < 3) {
-      validation.city = false;
-    }
-    if (state.length < 2) {
-      validation.state = false;
-    }
-    if (zipCode.length < 5) {
-      validation.zipCode = false;
-    }
-    if (creditCard.length < 16) {
-      validation.creditCard = false;
-    }
-    if (month.length < 2) {
-      validation.month = false;
-    }
-    if (year.length < 2) {
-      validation.year = false;
-    }
-    if (cvv.length < 3) {
-      validation.cvv = false;
-    }
-    if (!agreementTerms) {
-      validation.agreementTerms = false;
-    }
-
-    if (Object.values(validation).indexOf(false) === -1) {
+    if (fullName && phone && email && address && city && state && zipCode && creditCard && month && year && cvv && agreementTerms) { //change this, no longer an object
       const addOrder = {
         fullName: fullName.trim(),
         email: email,
@@ -142,11 +230,24 @@ class Checkout extends React.Component {
       }, 200);
 
     } else {
+      console.log(this.state.fullName)
       this.setState({
         fullName: fullName.trim(),
         address: address.trim(),
         city: city.trim(),
-        validation: validation
+        agreementTerms: agreementTerms,
+        validFullName: validFullName,
+        validPhone: validPhone,
+        validEmail: validEmail,
+        validAddress: validAddress,
+        validCity: validCity,
+        validState: validState,
+        validZipCode: validZipCode,
+        validCreditCard: validCreditCard,
+        validMonth: validMonth,
+        validYear: validYear,
+        validCvv: validCvv,
+        validAgreementTerms: validAgreementTerms
       });
     }
   }
@@ -178,8 +279,39 @@ class Checkout extends React.Component {
     return cartItemArrayDisplay;
   }
 
+  showButtonIfInfoValid (){
+    const { validFullName, validEmail, validPhone, validAddress, validCity,
+            validState, validZipCode, validCreditCard, validMonth, validYear,
+            validCvv, validAgreementTerms } = this.state;
+
+    if (validFullName && validPhone && validEmail && validAddress && validCity
+         && validState && validZipCode && validCreditCard && validMonth && validYear
+        && validCvv && validAgreementTerms) {
+      return (
+        <button
+          className='d-flex btn btn-outline-primary justify-content-center mb-1'
+          onClick={this.handleSubmit}
+          style={{ cursor: 'pointer', width: '100%' }}> Process Order
+        </button>
+      )
+    } else {
+      console.log('this happened')
+
+      return (
+        <button
+          className='d-flex btn btn-outline-danger justify-content-center mb-1'
+          onClick={this.handleSubmit}
+          style={{ cursor: 'pointer', width: '100%' }}>
+          Process Order
+        </button>
+      )
+    }
+  }
+
   render() {
-    const { fullName, phone, address, city, zipCode, creditCard, cvv, validation } = this.state;
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv,
+            agreementTerms, validFullName, validPhone, validEmail, validAddress, validCity, validState,
+            validZipCode, validCreditCard, validMonth, validYear, validCvv, validAgreementTerms } = this.state;
     const left = { width: '50%', textAlign: 'left' };
     const right = { width: '50%', textAlign: 'right' };
 
@@ -189,7 +321,6 @@ class Checkout extends React.Component {
           <div className='col-sm-8'>
             <form
               className='p-3'
-              onChange={this.inputHandler}
               onSubmit={this.handleSubmit}
               noValidate>
               <div className='form-group'>
@@ -204,13 +335,13 @@ class Checkout extends React.Component {
                   type='text'
                   autoComplete='new-password'
                   name='fullName'
-                  className={`form-control ${validation.fullName ? '' : 'is-invalid'}`}
+                  className={`form-control ${validFullName ? '' : 'is-invalid'} border`}
                   onChange={this.inputHandler}
                   value={fullName}
                   minLength='5'
                   maxLength='65' />
                 <div className='invalid-feedback'>
-                  {fullName.length < 5 && fullName !== '' ? <div>Minimum of five characters</div> : <div>Invalid name input</div>}
+                  {fullName.length < 5 && fullName !== '' ? <small> Full Name is Required </small> : null}
                 </div>
               </div>
               <div className='form-row'>
@@ -223,11 +354,12 @@ class Checkout extends React.Component {
                     type="email"
                     autoComplete="new-password"
                     name='email'
-                    className={`form-control ${validation.email ? '' : 'is-invalid'}`}
+                    onChange={this.inputHandler}
+                    className={`form-control ${validEmail ? '' : 'is-invalid'} border`}
                     minLength="6"
                     maxLength="254" />
                   <div className='invalid-feedback'>
-                    <div>Invalid email address</div>
+                    {!validEmail && email !== '' ? <small>Invalid email address  (e.g. me@mydomain.com)</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-6'>
@@ -239,13 +371,13 @@ class Checkout extends React.Component {
                     type='tel'
                     autoComplete='new-password'
                     name='phone'
-                    className={`form-control ${validation.phone ? '' : 'is-invalid'}`}
+                    className={`form-control ${validPhone ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
                     value={phone}
                     minLength='10'
                     maxLength='11' />
                   <div className='invalid-feedback'>
-                    <div>Invalid phone number</div>
+                    {!validPhone && phone !== '' ? <small>Invalid phone number</small> : null}
                   </div>
                 </div>
               </div>
@@ -263,9 +395,9 @@ class Checkout extends React.Component {
                     value={address}
                     minLength='6'
                     maxLength='42'
-                    className={`form-control ${validation.address ? '' : 'is-invalid'}`} />
+                    className={`form-control ${validAddress ? '' : 'is-invalid'} border`} />
                   <div className='invalid-feedback'>
-                    {address.length < 6 && address !== '' ? <div>Minimum of six characters</div> : <div>Invalid street address</div>}
+                    {!validAddress && address !== '' ? <small>Invalid street address</small> : null}
                   </div>
                 </div>
               </div>
@@ -279,13 +411,13 @@ class Checkout extends React.Component {
                     type='text'
                     autoComplete='new-password'
                     name='city'
-                    className={`form-control ${validation.city ? '' : 'is-invalid'}`}
+                    className={`form-control ${validCity ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
                     value={city}
                     minLength='3'
                     maxLength='50' />
                   <div className='invalid-feedback'>
-                    {city.length < 3 && city !== '' ? <div>Minimum of three characters</div> : <div>Invalid city</div>}
+                    {city.length < 3 && city !== '' ? <small>Invalid City - Must be at least 3 letters</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -294,8 +426,9 @@ class Checkout extends React.Component {
                     className='text-secondary'> State
                   </label>
                   <select
-                    className={`form-control ${validation.state ? '' : 'is-invalid'}`}
-                    name='state'>
+                    className={`form-control ${validState ? '' : 'is-invalid'} border`}
+                    name='state'
+                    onChange={this.inputHandler}>
                     <option defaultValue hidden></option>
                     <option value='AL'>Alabama</option>
                     <option value='AK'>Alaska</option>
@@ -350,7 +483,7 @@ class Checkout extends React.Component {
                     <option value='WY'>Wyoming</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a state</div>
+                      {!validState && state !== '' ? <small>Select a state</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -362,13 +495,13 @@ class Checkout extends React.Component {
                     type='tel'
                     autoComplete='new-password'
                     name='zipCode'
-                    className={`form-control ${validation.zipCode ? '' : 'is-invalid'}`}
+                    className={`form-control ${validZipCode ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
                     value={zipCode}
                     minLength='5'
                     maxLength='5' />
                   <div className='invalid-feedback'>
-                    <div>Invalid zipcode</div>
+                      {!validZipCode && zipCode !== '' ? <small>Invalid zipcode - Must be 5 numbers</small> : null }
                   </div>
                 </div>
               </div>
@@ -385,13 +518,13 @@ class Checkout extends React.Component {
                     type='tel'
                     autoComplete='new-password'
                     name='creditCard'
-                    className={`form-control ${validation.creditCard ? '' : 'is-invalid'}`}
+                    className={`form-control ${validCreditCard ? '' : 'is-invalid'} border`}
                     minLength='16'
                     maxLength='16'
                     onChange={this.inputHandler}
                     value={creditCard} />
                   <div className='invalid-feedback'>
-                    <div>Invalid credit card number</div>
+                    {!validCreditCard && creditCard !== '' ? <small>Invalid credit card number</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -400,8 +533,9 @@ class Checkout extends React.Component {
                     className='text-secondary'> Month
                   </label>
                   <select
-                    className={`form-control ${validation.month ? '' : 'is-invalid'}`}
-                    name='month'>
+                    className={`form-control ${validMonth ? '' : 'is-invalid'} border`}
+                    name='month'
+                    onChange={this.inputHandler}>
                     <option defaultValue hidden></option>
                     <option value='01'>01</option>
                     <option value='02'>02</option>
@@ -417,7 +551,7 @@ class Checkout extends React.Component {
                     <option value='12'>12</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a month </div>
+                    {!validMonth && month !== '' ? <small>Select a month </small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -426,8 +560,9 @@ class Checkout extends React.Component {
                     className='text-secondary'> Year
                   </label>
                   <select
-                    className={`form-control ${validation.year ? '' : 'is-invalid'}`}
-                    name='year'>
+                    className={`form-control ${validYear ? '' : 'is-invalid'} border`}
+                    name='year'
+                    onChange={this.inputHandler}>
                     <option defaultValue hidden></option>
                     <option value='2020'>2020</option>
                     <option value='2021'>2021</option>
@@ -442,7 +577,7 @@ class Checkout extends React.Component {
                     <option value='2030'>2030</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a year</div>
+                    {!validYear && year !== '' ? <small>Select a year</small> : null}
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -454,40 +589,36 @@ class Checkout extends React.Component {
                     type='tel'
                     autoComplete='new-password'
                     name='cvv'
-                    className={`form-control ${validation.cvv ? '' : 'is-invalid'}`}
+                    className={`form-control ${validCvv ? '' : 'is-invalid'} border`}
                     onChange={this.inputHandler}
                     value={cvv}
                     minLength='3'
                     maxLength='4' />
                   <div className='invalid-feedback'>
-                    <div>Invalid CVV</div>
+                    {!validCvv && cvv !== '' ? <small>Invalid CVV - Must be at least 3 numbers</small> : null}
                   </div>
                 </div>
               </div>
               <div className="form-group">
                 <div className="form-check">
-                  <input className={`form-check-input ${validation.agreementTerms ? '' : 'is-invalid'}`}
+                  <input className={`form-check-input ${agreementTerms ? '' : 'is-invalid'} border`}
                     name="agreementTerms"
                     type="checkbox"
-                    id="gridCheck" />
+                    id="gridCheck"
+                    onChange={this.inputHandler} />
                   <label
                     className="form-check-label"
                     htmlFor="gridCheck">
                     I accept that this website is simply a demo site and not a real e-commerce store. <br/> I accept that no payment processing will be done, and that real personal information should not be used on submission of this form.
                   </label>
-                  <div className="invalid-feedback">
-                    <div>Terms are required</div>
-                  </div>
                 </div>
               </div>
               <div
                 className='d-flex justify-content-center align-items-center flex-column'
                 style={{ padding: '0 25%' }}>
-                <button
-                  className='d-flex btn btn-outline-primary justify-content-center mb-1'
-                  onClick={this.handleSubmit}
-                  style={{ cursor: 'pointer', width: '100%' }}> Process Order
-                </button>
+
+              {this.showButtonIfInfoValid()}
+
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
                   onClick={() => this.props.setView('cart', {})}
