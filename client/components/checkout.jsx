@@ -30,12 +30,15 @@ class Checkout extends React.Component {
         year: true,
         cvv: true,
         agreementTerms: true
-      }
+      },
+      validFormComplete: false
     };
     this.inputHandler = this.inputHandler.bind(this);
+    this.validation = this.validation.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.showButtonIfFormValid = this.showButtonIfFormValid.bind(this);
   }
 
   componentDidMount() {
@@ -43,86 +46,198 @@ class Checkout extends React.Component {
   }
 
   inputHandler(event) {
-    const validation = {
-      fullName: true,
-      phone: true,
-      email: true,
-      address: true,
-      city: true,
-      state: true,
-      zipCode: true,
-      creditCard: true,
-      month: true,
-      year: true,
-      cvv: true,
-      agreementTerms: true
-    };
-
+    const form = { ...this.state.validation };
+    const value = event.target.value;
     const validateNumbers = RegExp(/^[0-9]*$/);
-    const target = event.target.name;
 
-    if (target === 'phone' || target === 'creditCard' || target === 'zipCode' || target === 'cvv') {
-      if (validateNumbers.test(event.target.value)) {
-        this.setState({ [target]: event.target.value });
-      }
-    } else if (target === 'fullName' || target === 'address' || target === 'city') {
-      if (event.target.value.indexOf('  ') === -1) {
-        this.setState({ [target]: event.target.value });
-      }
-    } else if (target === 'agreementTerms') {
-      this.setState({ agreementTerms: !this.state.agreementTerms });
-    } else {
-      this.setState({ [target]: event.target.value });
+    switch (event.target.name) {
+      case 'fullName':
+        this.setState({ fullName: value });
+        form.fullName = true;
+        break;
+      case 'phone':
+        if (validateNumbers.test(value)) {
+          this.setState({ phone: value });
+        }
+        form.phone = true;
+        break;
+      case 'email':
+        this.setState({ email: value });
+        form.email = true;
+        break;
+      case 'address':
+        this.setState({ address: value });
+        form.address = true;
+        break;
+      case 'city':
+        this.setState({ city: value });
+        form.city = true;
+        break;
+      case 'state':
+        this.setState({ state: value });
+        form.state = true;
+        break;
+      case 'zipCode':
+        if (validateNumbers.test(value)) {
+          this.setState({ zipCode: value });
+        }
+        form.zipCode = true;
+        break;
+      case 'creditCard':
+        if (validateNumbers.test(value)) {
+          this.setState({ creditCard: value });
+        }
+        form.creditCard = true;
+        break;
+      case 'month':
+        this.setState({ month: value });
+        form.month = true;
+        break;
+      case 'year':
+        this.setState({ year: value });
+        form.year = true;
+        break;
+      case 'cvv':
+        if (validateNumbers.test(value)) {
+          this.setState({ cvv: value });
+        }
+        form.cvv = true;
+        break;
+      case 'agreementTerms':
+        this.setState({ agreementTerms: !this.state.agreementTerms });
+        form.agreementTerms = true;
+        break;
+    }
+    this.setState({ validation: form });
+  }
+
+  validation() {
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
+    const formValidation = { ...this.state.validation };
+    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
+
+    switch (event.target.name) {
+      case 'fullName':
+        if (!validateName.test(fullName)) {
+          formValidation.fullName = false;
+        }
+        break;
+      case 'phone':
+        if (phone.length < 10) {
+          formValidation.phone = false;
+        }
+        break;
+      case 'email':
+        if (!validateEmail.test(email)) {
+          formValidation.email = false;
+        }
+        break;
+      case 'address':
+        if (address.length < 6) {
+          formValidation.address = false;
+        }
+        break;
+      case 'city':
+        if (city.length < 3) {
+          formValidation.city = false;
+        }
+        break;
+      case 'state':
+        if (state.length < 2) {
+          formValidation.state = false;
+        }
+        break;
+      case 'zipCode':
+        if (zipCode.length < 5) {
+          formValidation.zipCode = false;
+        }
+        break;
+      case 'creditCard':
+        if (creditCard.length < 16) {
+          formValidation.creditCard = false;
+        }
+        break;
+      case 'month':
+        if (month.length < 2) {
+          formValidation.month = false;
+        }
+        break;
+      case 'year':
+        if (year.length < 2) {
+          formValidation.year = false;
+        }
+        break;
+      case 'cvv':
+        if (cvv.length < 3) {
+          formValidation.cvv = false;
+        }
+        break;
+      case 'agreementTerms':
+        if (!agreementTerms) {
+          formValidation.agreementTerms = false;
+        }
+        break;
     }
 
-    this.setState({ validation });
+    if (Object.values(formValidation).indexOf(false) === -1 && (Object.values(this.state).indexOf('') === -1)) {
+      this.setState({
+        validation: formValidation,
+        validFormComplete: true
+      });
+    } else {
+      this.setState({
+        validation: formValidation,
+        validFormComplete: false
+      });
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
+    const formValidation = { ...this.state.validation };
     const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
     const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
-    const validation = JSON.parse(JSON.stringify(this.state.validation));
 
-    if (fullName.length < 5 || !validateName.test(fullName)) {
-      validation.fullName = false;
+    if (!validateName.test(fullName)) {
+      formValidation.fullName = false;
     }
     if (phone.length < 10) {
-      validation.phone = false;
+      formValidation.phone = false;
     }
     if (!validateEmail.test(email)) {
-      validation.email = false;
+      formValidation.email = false;
     }
     if (address.length < 6) {
-      validation.address = false;
+      formValidation.address = false;
     }
     if (city.length < 3) {
-      validation.city = false;
+      formValidation.city = false;
     }
     if (state.length < 2) {
-      validation.state = false;
+      formValidation.state = false;
     }
     if (zipCode.length < 5) {
-      validation.zipCode = false;
+      formValidation.zipCode = false;
     }
     if (creditCard.length < 16) {
-      validation.creditCard = false;
+      formValidation.creditCard = false;
     }
     if (month.length < 2) {
-      validation.month = false;
+      formValidation.month = false;
     }
     if (year.length < 2) {
-      validation.year = false;
+      formValidation.year = false;
     }
     if (cvv.length < 3) {
-      validation.cvv = false;
+      formValidation.cvv = false;
     }
     if (!agreementTerms) {
-      validation.agreementTerms = false;
+      formValidation.agreementTerms = false;
     }
 
-    if (Object.values(validation).indexOf(false) === -1) {
+    if (Object.values(formValidation).indexOf(false) === -1) {
       const addOrder = {
         fullName: fullName.trim(),
         email: email,
@@ -132,21 +247,15 @@ class Checkout extends React.Component {
         cvv: cvv,
         shippingAddress: `${address.trim()} ${city.trim()} ${state} ${zipCode}`
       };
-
       setTimeout(() => {
         this.props.placeOrder(addOrder);
       }, 200);
-
       setTimeout(() => {
         this.props.resetCartLength();
       }, 200);
-
     } else {
       this.setState({
-        fullName: fullName.trim(),
-        address: address.trim(),
-        city: city.trim(),
-        validation: validation
+        validation: formValidation
       });
     }
   }
@@ -178,6 +287,27 @@ class Checkout extends React.Component {
     return cartItemArrayDisplay;
   }
 
+  showButtonIfFormValid() {
+    if (this.state.validFormComplete) {
+      return (
+        <button
+          className='d-flex btn btn-outline-primary justify-content-center mb-1'
+          onClick={this.handleSubmit}
+          style={{ cursor: 'pointer', width: '100%' }}> Process Order
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className='d-flex btn btn-outline-dark justify-content-center mb-1'
+          onClick={this.handleSubmit}
+          style={{ cursor: 'pointer', width: '100%' }}>
+          Process Order
+        </button>
+      );
+    }
+  }
+
   render() {
     const { fullName, phone, address, city, zipCode, creditCard, cvv, validation } = this.state;
     const left = { width: '50%', textAlign: 'left' };
@@ -189,7 +319,6 @@ class Checkout extends React.Component {
           <div className='col-sm-8'>
             <form
               className='p-3'
-              onChange={this.inputHandler}
               onSubmit={this.handleSubmit}
               noValidate>
               <div className='form-group'>
@@ -202,15 +331,15 @@ class Checkout extends React.Component {
                 </label>
                 <input
                   type='text'
-                  autoComplete='new-password'
                   name='fullName'
                   className={`form-control ${validation.fullName ? '' : 'is-invalid'}`}
                   onChange={this.inputHandler}
+                  onBlur={this.validation}
                   value={fullName}
                   minLength='5'
                   maxLength='65' />
                 <div className='invalid-feedback'>
-                  {fullName.length < 5 && fullName !== '' ? <div>Minimum of five characters</div> : <div>Invalid name input</div>}
+                  <small> Full Name is Required - Must be at least 5 letters</small>
                 </div>
               </div>
               <div className='form-row'>
@@ -221,13 +350,14 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type="email"
-                    autoComplete="new-password"
                     name='email'
+                    onChange={this.inputHandler}
+                    onBlur={this.validation}
                     className={`form-control ${validation.email ? '' : 'is-invalid'}`}
                     minLength="6"
                     maxLength="254" />
                   <div className='invalid-feedback'>
-                    <div>Invalid email address</div>
+                    <small>Invalid Email Address  (e.g. me@mydomain.com)</small>
                   </div>
                 </div>
                 <div className='form-group col-md-6'>
@@ -237,15 +367,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='phone'
                     className={`form-control ${validation.phone ? '' : 'is-invalid'}`}
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={phone}
                     minLength='10'
                     maxLength='11' />
                   <div className='invalid-feedback'>
-                    <div>Invalid phone number</div>
+                    <small>Invalid Phone Number - Must be at least 10 numbers</small>
                   </div>
                 </div>
               </div>
@@ -257,15 +387,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='text'
-                    autoComplete='new-password'
                     name='address'
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={address}
                     minLength='6'
                     maxLength='42'
                     className={`form-control ${validation.address ? '' : 'is-invalid'}`} />
                   <div className='invalid-feedback'>
-                    {address.length < 6 && address !== '' ? <div>Minimum of six characters</div> : <div>Invalid street address</div>}
+                    <small>Invalid Street Address - Must be at least 6 characters</small>
                   </div>
                 </div>
               </div>
@@ -277,15 +407,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='text'
-                    autoComplete='new-password'
                     name='city'
                     className={`form-control ${validation.city ? '' : 'is-invalid'}`}
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={city}
                     minLength='3'
                     maxLength='50' />
                   <div className='invalid-feedback'>
-                    {city.length < 3 && city !== '' ? <div>Minimum of three characters</div> : <div>Invalid city</div>}
+                    <small>Invalid City - Must be at least 3 letters</small>
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -295,7 +425,9 @@ class Checkout extends React.Component {
                   </label>
                   <select
                     className={`form-control ${validation.state ? '' : 'is-invalid'}`}
-                    name='state'>
+                    name='state'
+                    onChange={this.inputHandler}
+                    onBlur={this.validation}>
                     <option defaultValue hidden></option>
                     <option value='AL'>Alabama</option>
                     <option value='AK'>Alaska</option>
@@ -350,7 +482,7 @@ class Checkout extends React.Component {
                     <option value='WY'>Wyoming</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a state</div>
+                    <small>Select A State</small>
                   </div>
                 </div>
                 <div className='form-group col-md-3'>
@@ -360,15 +492,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='zipCode'
                     className={`form-control ${validation.zipCode ? '' : 'is-invalid'}`}
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={zipCode}
                     minLength='5'
                     maxLength='5' />
                   <div className='invalid-feedback'>
-                    <div>Invalid zipcode</div>
+                    <small>Invalid Zipcode - Must be 5 numbers</small>
                   </div>
                 </div>
               </div>
@@ -383,15 +515,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='creditCard'
                     className={`form-control ${validation.creditCard ? '' : 'is-invalid'}`}
                     minLength='16'
                     maxLength='16'
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={creditCard} />
                   <div className='invalid-feedback'>
-                    <div>Invalid credit card number</div>
+                    <small>Invalid Credit Card Number - Must be exactly 16 numbers </small>
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -401,7 +533,9 @@ class Checkout extends React.Component {
                   </label>
                   <select
                     className={`form-control ${validation.month ? '' : 'is-invalid'}`}
-                    name='month'>
+                    name='month'
+                    onChange={this.inputHandler}
+                    onBlur={this.validation}>
                     <option defaultValue hidden></option>
                     <option value='01'>01</option>
                     <option value='02'>02</option>
@@ -417,7 +551,7 @@ class Checkout extends React.Component {
                     <option value='12'>12</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a month </div>
+                    <small>Select a month </small>
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -427,7 +561,9 @@ class Checkout extends React.Component {
                   </label>
                   <select
                     className={`form-control ${validation.year ? '' : 'is-invalid'}`}
-                    name='year'>
+                    name='year'
+                    onChange={this.inputHandler}
+                    onBlur={this.validation}>
                     <option defaultValue hidden></option>
                     <option value='2020'>2020</option>
                     <option value='2021'>2021</option>
@@ -442,7 +578,7 @@ class Checkout extends React.Component {
                     <option value='2030'>2030</option>
                   </select>
                   <div className='invalid-feedback'>
-                    <div>Select a year</div>
+                    <small>Select A Year</small>
                   </div>
                 </div>
                 <div className='form-group col-md-2'>
@@ -452,15 +588,15 @@ class Checkout extends React.Component {
                   </label>
                   <input
                     type='tel'
-                    autoComplete='new-password'
                     name='cvv'
                     className={`form-control ${validation.cvv ? '' : 'is-invalid'}`}
                     onChange={this.inputHandler}
+                    onBlur={this.validation}
                     value={cvv}
                     minLength='3'
                     maxLength='4' />
                   <div className='invalid-feedback'>
-                    <div>Invalid CVV</div>
+                    <small>Invalid CVV - <br/> Must be at least 3 numbers</small>
                   </div>
                 </div>
               </div>
@@ -469,25 +605,23 @@ class Checkout extends React.Component {
                   <input className={`form-check-input ${validation.agreementTerms ? '' : 'is-invalid'}`}
                     name="agreementTerms"
                     type="checkbox"
-                    id="gridCheck" />
+                    id="gridCheck"
+                    onChange={this.inputHandler}
+                    onBlur={this.validation}/>
                   <label
                     className="form-check-label"
                     htmlFor="gridCheck">
                     I accept that this website is simply a demo site and not a real e-commerce store. <br/> I accept that no payment processing will be done, and that real personal information should not be used on submission of this form.
                   </label>
                   <div className="invalid-feedback">
-                    <div>Terms are required</div>
+                    <small>Terms are required</small>
                   </div>
                 </div>
               </div>
               <div
                 className='d-flex justify-content-center align-items-center flex-column'
                 style={{ padding: '0 25%' }}>
-                <button
-                  className='d-flex btn btn-outline-primary justify-content-center mb-1'
-                  onClick={this.handleSubmit}
-                  style={{ cursor: 'pointer', width: '100%' }}> Process Order
-                </button>
+                {this.showButtonIfFormValid()}
                 <button
                   className='d-flex btn btn-outline-dark justify-content-center'
                   onClick={() => this.props.setView('cart', {})}
