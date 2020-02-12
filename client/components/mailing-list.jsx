@@ -60,7 +60,7 @@ class MailingList extends React.Component {
           id='innerMailingListContainer'
           className='d-flex flex-column col-12'>
           <div
-            className='d-flex justify-content-center font-weight-bold'
+            className='mailingTitle d-flex justify-content-center font-weight-bold'
             style={{ fontSize: '5vh', marginBottom: '15vh' }}>
             MAILING LIST
           </div>
@@ -68,7 +68,7 @@ class MailingList extends React.Component {
             className='d-flex flex-column align-items-center'
             style={{ width: '100%' }}>
             <form
-              className='d-flex flex-column justify-content-center'
+              className='mailing d-flex flex-column justify-content-center'
               onSubmit={this.addEmail}
               style={{ width: '60%' }}>
               <div

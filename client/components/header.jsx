@@ -30,11 +30,11 @@ function Header(props) {
             {
               props.cartLength === undefined || props.cartLength === 0 || props.cartLength === null
                 ? <div
-                  className='text-secondary'
+                  className='headerText text-secondary'
                   style={{ fontSize: '15px', textAlign: 'center' }}> Cart <br />  (0)
                 </div>
                 : <div
-                  className='text-secondary'
+                  className='headerText text-secondary'
                   style={{ fontSize: '15px', textAlign: 'center' }}> Cart <br /> ({props.cartLength} {itemsInCartCount})
                 </div>
             }
