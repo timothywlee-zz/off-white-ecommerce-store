@@ -59,8 +59,8 @@ class CartSummaryItem extends React.Component {
     if (newQuantity < 1) {
       this.toggleClickHandler();
     }
-    if (newQuantity < 0) {
-      newQuantity = 0;
+    if (newQuantity < 1) {
+      newQuantity = 1;
     }
     this.setState({ quantity: newQuantity });
     this.props.updateCart({
