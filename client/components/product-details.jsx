@@ -61,8 +61,8 @@ class ProductDetails extends React.Component {
     let { quantity } = this.state;
     let newQuantity = --quantity;
 
-    if (newQuantity < 0) {
-      newQuantity = 0;
+    if (newQuantity < 1) {
+      newQuantity = 1;
     }
 
     this.setState({ quantity: newQuantity });
