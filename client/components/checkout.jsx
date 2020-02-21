@@ -39,6 +39,7 @@ class Checkout extends React.Component {
     this.taxCalculation = this.taxCalculation.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.showButtonIfFormValid = this.showButtonIfFormValid.bind(this);
+    this.checkValidOrder = this.checkValidOrder.bind(this);
   }
 
   componentDidMount() {
@@ -109,17 +110,18 @@ class Checkout extends React.Component {
         break;
     }
     this.setState({ validation: form });
+    setTimeout(this.checkValidOrder, 200);
   }
 
   validation() {
     const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
     const formValidation = { ...this.state.validation };
-    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
-    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
+    const validateName = new RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+    const validateEmail = new RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
 
     switch (event.target.name) {
       case 'fullName':
-        if (!validateName.test(fullName)) {
+        if (!validateName.test(fullName.trim())) {
           formValidation.fullName = false;
         }
         break;
@@ -129,7 +131,7 @@ class Checkout extends React.Component {
         }
         break;
       case 'email':
-        if (!validateEmail.test(email)) {
+        if (!validateEmail.test(email.trim())) {
           formValidation.email = false;
         }
         break;
@@ -180,7 +182,7 @@ class Checkout extends React.Component {
         break;
     }
 
-    if (Object.values(formValidation).indexOf(false) === -1 && (Object.values(this.state).indexOf('') === -1)) {
+    if (Object.values(formValidation).indexOf(false) === -1 && (Object.values(this.state).indexOf('') === -1 || Object.values(this.state).indexOf('') === 15)) {
       this.setState({
         validation: formValidation,
         validFormComplete: true
@@ -188,6 +190,59 @@ class Checkout extends React.Component {
     } else {
       this.setState({
         validation: formValidation,
+        validFormComplete: false
+      });
+    }
+  }
+
+  checkValidOrder() {
+    const { fullName, phone, email, address, city, state, zipCode, creditCard, month, year, cvv, agreementTerms } = this.state;
+    const validForm = { ...this.state.validation };
+    const validateName = RegExp(/^[a-zA-Z ,'-]{5,65}$/);
+    const validateEmail = RegExp(/^([a-zA-Z\d.-_]{1,64})@([a-z\d-]{1,227})\.([a-z]{2,28})$/);
+
+    if (!validateName.test(fullName.trim())) {
+      validForm.fullName = false;
+    }
+    if (phone.length < 10) {
+      validForm.phone = false;
+    }
+    if (!validateEmail.test(email.trim())) {
+      validForm.email = false;
+    }
+    if (address.length < 6) {
+      validForm.address = false;
+    }
+    if (city.length < 3) {
+      validForm.city = false;
+    }
+    if (state.length < 2) {
+      validForm.state = false;
+    }
+    if (zipCode.length < 5) {
+      validForm.zipCode = false;
+    }
+    if (creditCard.length < 16) {
+      validForm.creditCard = false;
+    }
+    if (month.length < 2) {
+      validForm.month = false;
+    }
+    if (year.length < 2) {
+      validForm.year = false;
+    }
+    if (cvv.length < 3) {
+      validForm.cvv = false;
+    }
+    if (!agreementTerms) {
+      validForm.agreementTerms = false;
+    }
+    if (Object.values(validForm).indexOf(false) === -1) {
+      this.setState({
+        validFormComplete: true
+      });
+    } else {
+      this.setState({
         validFormComplete: false
       });
     }
@@ -298,12 +353,11 @@ class Checkout extends React.Component {
       );
     } else {
       return (
-        <button
+        <div
           className='d-flex btn btn-outline-dark justify-content-center mb-1'
-          onClick={this.handleSubmit}
           style={{ cursor: 'pointer', width: '100%' }}>
           Process Order
-        </button>
+        </div>
       );
     }
   }
@@ -335,9 +389,7 @@ class Checkout extends React.Component {
                   className={`form-control ${validation.fullName ? '' : 'is-invalid'}`}
                   onChange={this.inputHandler}
                   onBlur={this.validation}
-                  value={fullName}
-                  minLength='5'
-                  maxLength='65' />
+                  value={fullName}/>
                 <div className='invalid-feedback'>
                   <small> Full Name is Required - Must be at least 5 letters</small>
                 </div>
@@ -353,9 +405,7 @@ class Checkout extends React.Component {
                     name='email'
                     onChange={this.inputHandler}
                     onBlur={this.validation}
-                    className={`form-control ${validation.email ? '' : 'is-invalid'}`}
-                    minLength="6"
-                    maxLength="254" />
+                    className={`form-control ${validation.email ? '' : 'is-invalid'}`}/>
                   <div className='invalid-feedback'>
                     <small>Invalid Email Address  (e.g. me@mydomain.com)</small>
                   </div>
@@ -391,8 +441,6 @@ class Checkout extends React.Component {
                     onChange={this.inputHandler}
                     onBlur={this.validation}
                     value={address}
-                    minLength='6'
-                    maxLength='42'
                     className={`form-control ${validation.address ? '' : 'is-invalid'}`} />
                   <div className='invalid-feedback'>
                     <small>Invalid Street Address - Must be at least 6 characters</small>
@@ -411,9 +459,7 @@ class Checkout extends React.Component {
                     className={`form-control ${validation.city ? '' : 'is-invalid'}`}
                     onChange={this.inputHandler}
                     onBlur={this.validation}
-                    value={city}
-                    minLength='3'
-                    maxLength='50' />
+                    value={city} />
                   <div className='invalid-feedback'>
                     <small>Invalid City - Must be at least 3 letters</small>
                   </div>
