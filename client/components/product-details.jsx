@@ -46,7 +46,7 @@ class ProductDetails extends React.Component {
     });
     setTimeout(() => {
       this.props.getCartItems();
-    }, 200);
+    }, 400);
 
     this.toggleClickHandler();
   }
