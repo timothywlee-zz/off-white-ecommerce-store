@@ -354,8 +354,8 @@ class Checkout extends React.Component {
     } else {
       return (
         <div
-          className='d-flex btn btn-outline-dark justify-content-center mb-1'
-          style={{ cursor: 'pointer', width: '100%' }}>
+          className='d-flex border border-dark rounded align-items-center justify-content-center mb-1'
+          style={{ width: '100%', height: '37px' }}>
           Process Order
         </div>
       );
