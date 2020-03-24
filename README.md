@@ -38,8 +38,8 @@ Link: https://off-white-shoes-shop.timothywlee.com
 ## Getting Started
 1. Clone the repository.
 ``` 
-git clone https://github.com/timothywlee/off-white-shoes-shop
-cd off-white-shoes-shop
+git clone https://github.com/timothywlee/off-white-ecommerce-store
+cd off-white-ecommerce-store
 ```
 2. Install all dependencies with NPM.
 ``` 
