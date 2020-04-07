@@ -262,7 +262,7 @@ export default class App extends React.Component {
           <ModalBody className='d-flex flex-row justify-content-center align-items-center'>
             <div className='d-flex justify-content-center align-items-center'>
               <h6 style={{ textAlign: 'center' }}>
-                Off White E-Commerce Store is a full stack JavaScript, React.js, and Node.js app that was created for demonstration purposes only. <br /><br />
+                Off White E-Commerce Store is a full stack React.js and Node.js app that was created for demonstration purposes only. <br /><br />
                 This is not a real e-commerce site. <br /><br />
                 By clicking the agree button below, you accept that no purchases will be made and that actual personal information should not be used at checkout.
               </h6>
